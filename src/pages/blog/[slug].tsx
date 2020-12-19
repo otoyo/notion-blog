@@ -245,6 +245,7 @@ const RenderPost = ({ post, redirect, preview }) => {
                 block_width,
                 block_height,
                 display_source,
+                properties: image_properties,
                 block_aspect_ratio,
               } = format
               const baseBlockWidth = 768
@@ -293,7 +294,7 @@ const RenderPost = ({ post, redirect, preview }) => {
                   <Comp
                     key={!useWrapper ? id : undefined}
                     src={`/api/asset?assetUrl=${encodeURIComponent(
-                      display_source as any
+                      value.properties.source[0][0] as string
                     )}&blockId=${id}`}
                     controls={!isImage}
                     alt={`An ${isImage ? 'image' : 'video'} from Notion`}
