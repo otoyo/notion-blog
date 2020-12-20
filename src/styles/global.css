@@ -360,6 +360,7 @@ code {
 footer {
   padding: 2em 0;
   text-align: center;
+  font-size: 14px;
 }
 
 footer img {
@@ -367,10 +368,10 @@ footer img {
   margin: 0.5rem auto;
 }
 
-footer span:nth-child(3) {
+footer span {
   color: #777777;
 }
 
-footer span:nth-child(3) a {
+footer span a {
   color: inherit;
 }
