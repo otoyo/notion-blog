@@ -31,6 +31,7 @@ export async function getStaticProps({ preview }) {
       return post
     })
     .filter(Boolean)
+    .splice(0, 10)
 
   const { users } = await getNotionUsers([...authorsToGet])
 
