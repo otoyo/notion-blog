@@ -81,16 +81,18 @@
   margin-top: 0;
 }
 
-.post :global(h2),
+.post :global(h2) {
+  margin: 2.5rem 0 1.25rem 0;
+}
 .post :global(h3) {
-  margin: 3rem 0 1.5rem 0;
+  margin: 2rem 0 1rem 0;
 }
 
 .post :global(video),
 .post :global(img),
 .post :global(.asset-wrapper) {
-  margin: 2rem auto;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  /*margin: 2rem auto;*/
+  /*box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);*/
   max-width: 100%;
   display: block;
 }
@@ -109,6 +111,10 @@
   border-style: solid;
   border-color: transparent;
   background: rgba(235, 236, 237, 0.6);
+  color: #222;
+  font-weight: 400;
+  font-size: 0.8rem;
+  line-height: 1.7rem;
 }
 
 .post :global(.callout .text) {
