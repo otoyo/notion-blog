@@ -19,7 +19,9 @@ export default ({ titlePre = '' }) => {
   return (
     <header className={styles.header}>
       <Head>
-        <title>{titlePre ? `${titlePre} |` : ''} アルパカログ</title>
+        <title>
+          {titlePre && titlePre != 'Home' ? `${titlePre} |` : ''} アルパカログ
+        </title>
         <meta
           name="description"
           content="An example Next.js site using Notion for the blog"
