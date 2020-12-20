@@ -15,7 +15,6 @@ export default () => (
         width="250"
         alt="Vercel + Notion"
       />
-      <h1>アルパカログ</h1>
       <h2>
         Blazing Fast Notion Blog with Next.js'{' '}
         <ExtLink

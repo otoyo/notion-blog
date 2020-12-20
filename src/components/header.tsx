@@ -30,6 +30,7 @@ export default ({ titlePre = '' }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={ogImageUrl} />
       </Head>
+      <h1>アルパカログ</h1>
       <ul>
         {navItems.map(({ label, page, link }) => (
           <li key={label}>
