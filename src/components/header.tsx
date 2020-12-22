@@ -12,6 +12,8 @@ const navItems: { label: string; page?: string; link?: string }[] = [
 
 const labels = navItems.map(navItem => navItem.label)
 const ogImageUrl = 'https://alpacat.com/og-image.png'
+const description =
+  'プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ'
 
 export default ({ titlePre = '' }) => {
   const { pathname } = useRouter()
@@ -22,10 +24,7 @@ export default ({ titlePre = '' }) => {
         <title>
           {labels.includes(titlePre) ? '' : `${titlePre} - `}アルパカログ
         </title>
-        <meta
-          name="description"
-          content="プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ"
-        />
+        <meta name="description" content={description} />
         <meta
           property="og:title"
           content={labels.includes(titlePre) ? 'アルパカログ' : titlePre}
