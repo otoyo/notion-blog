@@ -11,8 +11,9 @@ const navItems: { label: string; page?: string; link?: string }[] = [
 ]
 
 const labels = navItems.map(navItem => navItem.label)
-const ogImageUrl = 'https://alpacat.com/og-image.png'
-const description =
+const defaultTitle = 'アルパカログ'
+const defaultOgImageUrl = 'https://alpacat.com/og-image.png'
+const defaultDescription =
   'プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ'
 
 export default ({ titlePre = '' }) => {
@@ -22,17 +23,19 @@ export default ({ titlePre = '' }) => {
     <header className={styles.header}>
       <Head>
         <title>
-          {labels.includes(titlePre) ? '' : `${titlePre} - `}アルパカログ
+          {labels.includes(titlePre)
+            ? defaultTitle
+            : `${titlePre} - ${defaultTitle}`}
         </title>
-        <meta name="description" content={description} />
+        <meta name="description" content={defaultDescription} />
         <meta
           property="og:title"
-          content={labels.includes(titlePre) ? 'アルパカログ' : titlePre}
+          content={labels.includes(titlePre) ? defaultTitle : titlePre}
         />
-        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image" content={defaultOgImageUrl} />
         <meta name="twitter:site" content="@otoyo0122" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="twitter:image" content={defaultOgImageUrl} />
       </Head>
       <h1>アルパカログ</h1>
       <ul>
