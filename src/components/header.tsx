@@ -21,29 +21,29 @@ export default ({ titlePre = '', description = '', ogImageUrl = '' }) => {
     <header className={styles.header}>
       <Head>
         <title>
-          {titlePre == '' ? defaultTitle : `${titlePre} - ${defaultTitle}`}
+          {!titlePre ? defaultTitle : `${titlePre} - ${defaultTitle}`}
         </title>
         <meta
           name="description"
-          content={description == '' ? defaultDescription : description}
+          content={!description ? defaultDescription : description}
         />
         <meta
           property="og:title"
-          content={titlePre == '' ? defaultTitle : titlePre}
+          content={!titlePre ? defaultTitle : titlePre}
         />
         <meta
           property="og:description"
-          content={description == '' ? defaultDescription : description}
+          content={!description ? defaultDescription : description}
         />
         <meta
           property="og:image"
-          content={ogImageUrl == '' ? defaultOgImageUrl : ogImageUrl}
+          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
         <meta name="twitter:site" content="@otoyo0122" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content={ogImageUrl == '' ? defaultOgImageUrl : ogImageUrl}
+          content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
       </Head>
       <h1>アルパカログ</h1>
