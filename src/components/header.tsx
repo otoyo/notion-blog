@@ -25,7 +25,7 @@ export default ({ titlePre = '' }) => {
           name="description"
           content="プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ"
         />
-        <meta name="og:title" content="アルパカログ" />
+        <meta property="og:title" content="アルパカログ" />
         <meta property="og:image" content={ogImageUrl} />
         <meta name="twitter:site" content="@otoyo0122" />
         <meta name="twitter:card" content="summary_large_image" />
