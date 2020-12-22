@@ -10,7 +10,6 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Source Code', link: 'https://github.com/otoyo/notion-blog' },
 ]
 
-const labels = navItems.map(navItem => navItem.label)
 const defaultTitle = 'アルパカログ'
 const defaultOgImageUrl = 'https://alpacat.com/og-image.png'
 const defaultDescription =
@@ -23,14 +22,12 @@ export default ({ titlePre = '' }) => {
     <header className={styles.header}>
       <Head>
         <title>
-          {labels.includes(titlePre)
-            ? defaultTitle
-            : `${titlePre} - ${defaultTitle}`}
+          {titlePre == '' ? defaultTitle : `${titlePre} - ${defaultTitle}`}
         </title>
         <meta name="description" content={defaultDescription} />
         <meta
           property="og:title"
-          content={labels.includes(titlePre) ? defaultTitle : titlePre}
+          content={titlePre == '' ? defaultTitle : titlePre}
         />
         <meta property="og:image" content={defaultOgImageUrl} />
         <meta name="twitter:site" content="@otoyo0122" />
