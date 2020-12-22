@@ -23,7 +23,7 @@ export default ({ titlePre = '' }) => {
         </title>
         <meta
           name="description"
-          content="An example Next.js site using Notion for the blog"
+          content="プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ"
         />
         <meta name="og:title" content="アルパカログ" />
         <meta property="og:image" content={ogImageUrl} />
