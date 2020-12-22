@@ -14,7 +14,7 @@ const defaultOgImageUrl = 'https://alpacat.com/og-image.png'
 const defaultDescription =
   'プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ'
 
-export default ({ titlePre = '' }) => {
+export default ({ titlePre = '', description = '', ogImageUrl = '' }) => {
   const { pathname } = useRouter()
 
   return (
@@ -23,15 +23,28 @@ export default ({ titlePre = '' }) => {
         <title>
           {titlePre == '' ? defaultTitle : `${titlePre} - ${defaultTitle}`}
         </title>
-        <meta name="description" content={defaultDescription} />
+        <meta
+          name="description"
+          content={description == '' ? defaultDescription : description}
+        />
         <meta
           property="og:title"
           content={titlePre == '' ? defaultTitle : titlePre}
         />
-        <meta property="og:image" content={defaultOgImageUrl} />
+        <meta
+          property="og:description"
+          content={description == '' ? defaultDescription : description}
+        />
+        <meta
+          property="og:image"
+          content={ogImageUrl == '' ? defaultOgImageUrl : ogImageUrl}
+        />
         <meta name="twitter:site" content="@otoyo0122" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={defaultOgImageUrl} />
+        <meta
+          name="twitter:image"
+          content={ogImageUrl == '' ? defaultOgImageUrl : ogImageUrl}
+        />
       </Head>
       <h1>アルパカログ</h1>
       <ul>
