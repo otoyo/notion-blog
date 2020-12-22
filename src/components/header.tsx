@@ -7,7 +7,6 @@ import styles from '../styles/header.module.css'
 const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Blog', page: '/blog' },
-  { label: 'Source Code', link: 'https://github.com/otoyo/notion-blog' },
 ]
 
 const defaultTitle = 'アルパカログ'
