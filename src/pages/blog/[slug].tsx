@@ -139,6 +139,7 @@ const RenderPost = ({ post, redirect, preview }) => {
   return (
     <>
       <Header
+        path={`/blog/${post.Slug}`}
         titlePre={post.Page}
         description={post.Excerpt}
         ogImageUrl={post.OGImage}

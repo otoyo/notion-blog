@@ -9,12 +9,18 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Blog', page: '/blog' },
 ]
 
+const defaultUrl = 'https://alpacat.com'
 const defaultTitle = 'アルパカログ'
 const defaultOgImageUrl = 'https://alpacat.com/og-image.png'
 const defaultDescription =
   'プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ'
 
-export default ({ titlePre = '', description = '', ogImageUrl = '' }) => {
+export default ({
+  path = '',
+  titlePre = '',
+  description = '',
+  ogImageUrl = '',
+}) => {
   const { pathname } = useRouter()
 
   return (
@@ -27,6 +33,7 @@ export default ({ titlePre = '', description = '', ogImageUrl = '' }) => {
           name="description"
           content={!description ? defaultDescription : description}
         />
+        <meta property="og:url" content={`${defaultUrl}${path}`} />
         <meta
           property="og:title"
           content={!titlePre ? defaultTitle : titlePre}
