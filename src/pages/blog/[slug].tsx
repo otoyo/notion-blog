@@ -142,7 +142,13 @@ const RenderPost = ({ post, redirect, preview }) => {
         path={`/blog/${post.Slug}`}
         titlePre={post.Page}
         description={post.Excerpt}
-        ogImageUrl={post.OGImage}
+        ogImageUrl={
+          !post.OGImage
+            ? ''
+            : `https://alpacat.com/api/asset?assetUrl=${encodeURIComponent(
+                post.OGImage
+              )}&blockId=${post.dbRowBlockId}`
+        }
       />
       {preview && (
         <div className={blogStyles.previewAlertContainer}>

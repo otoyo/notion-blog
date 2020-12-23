@@ -20,9 +20,12 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
   const schema = col.recordMap.collection[colId].value.schema
   const schemaKeys = Object.keys(schema)
 
-  for (const entry of entries) {
+  for (const [entry, blockId] of entries.map((entry, i) => [
+    entry,
+    col.result.blockIds[i],
+  ])) {
     const props = entry.value && entry.value.properties
-    const row: any = {}
+    const row: any = { dbRowBlockId: blockId }
 
     if (!props) continue
     if (entry.value.content) {
