@@ -47,7 +47,10 @@ export default ({
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
         <meta name="twitter:site" content="@otoyo0122" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:card"
+          content={!ogImageUrl ? 'summary' : 'summary_large_image'}
+        />
         <meta
           name="twitter:image"
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
