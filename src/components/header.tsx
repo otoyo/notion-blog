@@ -61,7 +61,7 @@ export default ({
         {navItems.map(({ label, page, link }) => (
           <li key={label}>
             {page ? (
-              <Link href={page}>
+              <Link href={page} passHref>
                 <a className={pathname === page ? 'active' : undefined}>
                   {label}
                 </a>
