@@ -304,7 +304,7 @@ const RenderPost = ({ post, redirect, preview }) => {
                   <Comp
                     key={!useWrapper ? id : undefined}
                     src={`/api/asset?assetUrl=${encodeURIComponent(
-                      value.properties.source[0][0] as string
+                      properties.source[0][0] as string
                     )}&blockId=${id}`}
                     controls={!isImage}
                     alt={`An ${isImage ? 'image' : 'video'} from Notion`}
