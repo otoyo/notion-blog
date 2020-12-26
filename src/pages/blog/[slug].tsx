@@ -284,6 +284,7 @@ const RenderPost = ({ post, redirect, preview }) => {
                     display: 'block',
                     maxWidth: '100%',
                   }
+              const caption = properties.caption || ''
 
               let child = null
 
@@ -331,6 +332,11 @@ const RenderPost = ({ post, redirect, preview }) => {
                   child
                 )
               )
+              if (caption != '') {
+                toRender.push(
+                  <div className={blogStyles.caption}>{caption}</div>
+                )
+              }
               break
             }
             case 'header':

@@ -121,6 +121,11 @@
   margin-left: 8px;
 }
 
+.post .caption {
+  font-size: 0.9rem;
+  color: #666;
+}
+
 .post :global(.underline) {
   text-decoration: underline;
 }
