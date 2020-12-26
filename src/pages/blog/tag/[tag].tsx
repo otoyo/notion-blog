@@ -1,20 +1,22 @@
 import Link from 'next/link'
-import Header from '../../components/header'
+import { useRouter } from 'next/router'
+import Header from '../../../components/header'
 
-import blogStyles from '../../styles/blog.module.css'
-import sharedStyles from '../../styles/shared.module.css'
+import blogStyles from '../../../styles/blog.module.css'
+import sharedStyles from '../../../styles/shared.module.css'
 
 import {
   getBlogLink,
   getTagLink,
   getDateStr,
   postIsPublished,
-} from '../../lib/blog-helpers'
-import { textBlock } from '../../lib/notion/renderers'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
+} from '../../../lib/blog-helpers'
+import { textBlock } from '../../../lib/notion/renderers'
+import { useEffect } from 'react'
+import getNotionUsers from '../../../lib/notion/getNotionUsers'
+import getBlogIndex from '../../../lib/notion/getBlogIndex'
 
-export async function getStaticProps({ preview }) {
+export async function getStaticProps({ params: { tag }, preview }) {
   const postsTable = await getBlogIndex()
 
   const authorsToGet: Set<string> = new Set()
@@ -29,10 +31,23 @@ export async function getStaticProps({ preview }) {
       for (const author of post.Authors) {
         authorsToGet.add(author)
       }
+      if (post.Tags.indexOf(tag) === -1) {
+        return null
+      }
       return post
     })
     .filter(Boolean)
-    .splice(0, 10)
+
+  if (posts.length === 0) {
+    console.log(`Failed to find posts for tag: ${tag}`)
+    return {
+      props: {
+        redirect: '/blog',
+        preview: false,
+      },
+      unstable_revalidate: 5,
+    }
+  }
 
   const { users } = await getNotionUsers([...authorsToGet])
 
@@ -44,15 +59,57 @@ export async function getStaticProps({ preview }) {
     props: {
       preview: preview || false,
       posts,
+      tag,
     },
     unstable_revalidate: 10,
   }
 }
 
-export default ({ posts = [], preview }) => {
+// Return our list of tags to prerender
+export async function getStaticPaths() {
+  const postsTable = await getBlogIndex()
+
+  return {
+    paths: Object.keys(postsTable)
+      .filter(slug => postIsPublished(postsTable[slug]))
+      .map(slug => postsTable[slug].Tags)
+      .flat()
+      .filter((tag, index, self) => self.indexOf(tag) === index)
+      .map(tag => getTagLink(tag)),
+    fallback: true,
+  }
+}
+
+export default ({ tag, posts = [], redirect, preview }) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (redirect && posts.length === 0) {
+      router.replace(redirect)
+    }
+  }, [redirect, posts])
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
+  // if you don't have any posts at this point, and are not
+  // loading one from fallback then  redirect back to the index
+  if (posts.length === 0) {
+    return (
+      <div className={blogStyles.post}>
+        <p>
+          Woops! didn't find any posts, redirecting you back to the blog index
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
-      <Header path="/blog" titlePre="" />
+      <Header titlePre={`${tag}を含む記事`} />
       {preview && (
         <div className={blogStyles.previewAlertContainer}>
           <div className={blogStyles.previewAlert}>
@@ -65,6 +122,7 @@ export default ({ posts = [], preview }) => {
         </div>
       )}
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
+        <h2>{tag}</h2>
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
         )}
