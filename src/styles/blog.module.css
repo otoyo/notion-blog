@@ -147,3 +147,18 @@
 .post :global(a + p) {
   margin-top: 0;
 }
+
+.tagIndex {
+  max-width: calc(600px + 10%);
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.noTags {
+  text-align: center;
+}
+
+.tag {
+  font-size: 0.9rem;
+  padding-right: 0.8em;
+}
