@@ -32,6 +32,7 @@ export async function getStaticProps({ preview }) {
       return post
     })
     .filter(Boolean)
+    .sort((a, b) => (b.Date || 0) - (a.Date || 0))
     .splice(0, 10)
 
   const tags: string[] = Object.keys(postsTable)

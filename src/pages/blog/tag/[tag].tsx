@@ -37,6 +37,7 @@ export async function getStaticProps({ params: { tag }, preview }) {
       return post
     })
     .filter(Boolean)
+    .sort((a, b) => (b.Date || 0) - (a.Date || 0))
 
   if (posts.length === 0) {
     console.log(`Failed to find posts for tag: ${tag}`)
