@@ -34,6 +34,12 @@ export async function getStaticProps({ preview }) {
     .filter(Boolean)
     .splice(0, 10)
 
+  const tags: string[] = Object.keys(postsTable)
+    .filter(slug => postIsPublished(postsTable[slug]))
+    .map(slug => postsTable[slug].Tags)
+    .flat()
+    .filter((tag, index, self) => self.indexOf(tag) === index)
+
   const { users } = await getNotionUsers([...authorsToGet])
 
   posts.map(post => {
@@ -44,12 +50,13 @@ export async function getStaticProps({ preview }) {
     props: {
       preview: preview || false,
       posts,
+      tags,
     },
     unstable_revalidate: 10,
   }
 }
 
-export default ({ posts = [], preview }) => {
+export default ({ posts = [], tags = [], preview }) => {
   return (
     <>
       <Header path="/blog" titlePre="" />
@@ -113,6 +120,25 @@ export default ({ posts = [], preview }) => {
             </div>
           )
         })}
+      </div>
+      <div className={blogStyles.tagIndex}>
+        <h3>タグ</h3>
+        {tags.length === 0 && (
+          <div className={blogStyles.noTags}>There are no tags yet</div>
+        )}
+        {tags.length > 0 && (
+          <ul>
+            {tags.map(tag => {
+              return (
+                <li key={tag}>
+                  <Link href="/blog/tag/[tag]" as={getTagLink(tag)} passHref>
+                    <a>{tag}</a>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </div>
     </>
   )
