@@ -64,12 +64,7 @@
 
 .postPreview {
   max-width: 600px;
-  margin: 10px auto;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-}
-
-.postPreview:last-child {
-  border-bottom: none;
+  margin: 0 auto 40px;
 }
 
 .postPreview h3,
@@ -77,8 +72,17 @@
   margin-bottom: 0;
 }
 
+.postPreview p {
+  margin-top: 0.3em;
+}
+
 .post h1 {
   margin-top: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  /*font-size: 2.25rem;
+  font-weight: 800;*/
+  letter-spacing: -0.05rem;
 }
 
 .post :global(h2) {
@@ -131,7 +135,8 @@
 }
 
 .postPreview :global(.posted) {
-  margin-bottom: 0.5em;
+  margin-top: 0.3em;
+  margin-bottom: 0.1em;
 }
 
 .post {
@@ -159,6 +164,6 @@
 }
 
 .tag {
-  font-size: 0.9rem;
+  font-size: 0.8em;
   padding-right: 0.8em;
 }
