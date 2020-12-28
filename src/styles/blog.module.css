@@ -90,6 +90,7 @@
 }
 .post :global(h3) {
   margin: 2rem 0 1rem 0;
+  font-size: 1em;
 }
 
 .post :global(video),
@@ -166,4 +167,11 @@
 .tag {
   font-size: 0.8em;
   padding-right: 0.8em;
+}
+
+@media (max-width: 600px) {
+  .tag {
+    font-size: 0.75em;
+    padding-right: 0.75em;
+  }
 }

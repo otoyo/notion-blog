@@ -6,6 +6,11 @@
   letter-spacing: -0.02em;
 }
 
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
 .header ul {
   list-style: none;
   padding: 0;
@@ -28,6 +33,6 @@
 
 @media (max-width: 600px) {
   .header {
-    padding: .5em 0 2em;
+    padding: 0.5em 0;
   }
 }

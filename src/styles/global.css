@@ -374,21 +374,21 @@ code {
     font-size: 18px;
   }
   .explanation {
-    padding: 0 1rem 4rem;
+    padding: 0 1rem 1rem;
   }
 
   h1 {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     letter-spacing: 0;
   }
 
   h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     letter-spacing: 0;
   }
 
   h3 {
-    font-size: 0.95rem;
+    font-size: 1rem;
     letter-spacing: 0;
   }
 
