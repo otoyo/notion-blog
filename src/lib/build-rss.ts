@@ -36,13 +36,7 @@ function mapToEntry(post) {
       <updated>${new Date(post.date).toJSON()}</updated>
       <content type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
-          ${renderToStaticMarkup(
-            post.preview
-              ? (post.preview || []).map((block, idx) =>
-                  textBlock(block, false, post.title + idx)
-                )
-              : post.content
-          )}
+          ${renderToStaticMarkup(post.Excerpt)}
           <p class="more">
             <a href="${post.link}">Read more</a>
           </p>
@@ -61,12 +55,12 @@ function createRSS(blogPosts = []) {
 
   return `<?xml version="1.0" encoding="utf-8"?>
   <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>My Blog</title>
-    <subtitle>Blog</subtitle>
+    <title>アルパカログ</title>
+    <subtitle>アルパカログの更新情報</subtitle>
     <link href="/atom" rel="self" type="application/rss+xml"/>
     <link href="/" />
     <updated>${NOW}</updated>
-    <id>My Notion Blog</id>${postsString}
+    <id>alpacat.com/atom</id>${postsString}
   </feed>`
 }
 
@@ -87,6 +81,7 @@ async function main() {
       return post
     })
     .filter(Boolean)
+    .sort((a, b) => (b.Date || 0) - (a.Date || 0))
 
   const { users } = await getNotionUsers([...neededAuthors])
 
