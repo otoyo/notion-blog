@@ -30,15 +30,15 @@ function decode(string) {
 function mapToEntry(post) {
   return `
     <entry>
-      <id>${post.link}</id>
+      <id>https://alpacat.com${post.link}</id>
       <title>${decode(post.title)}</title>
-      <link href="${post.link}"/>
+      <link href="https://alpacat.com${post.link}"/>
       <updated>${new Date(post.date).toJSON()}</updated>
       <content type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
           ${renderToStaticMarkup(post.Excerpt)}
           <p class="more">
-            <a href="${post.link}">Read more</a>
+            <a href="https://alpacat.com${post.link}">Read more</a>
           </p>
         </div>
       </content>
@@ -57,8 +57,8 @@ function createRSS(blogPosts = []) {
   <feed xmlns="http://www.w3.org/2005/Atom">
     <title>アルパカログ</title>
     <subtitle>アルパカログの更新情報</subtitle>
-    <link href="/atom" rel="self" type="application/rss+xml"/>
-    <link href="/" />
+    <link href="https://alpacat.com/atom" rel="self" type="application/rss+xml"/>
+    <link href="https://alpacat.com" />
     <updated>${NOW}</updated>
     <id>alpacat.com/atom</id>${postsString}
   </feed>`
