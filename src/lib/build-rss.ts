@@ -37,9 +37,6 @@ function mapToEntry(post) {
       <content type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
           ${renderToStaticMarkup(post.Excerpt)}
-          <p class="more">
-            <a href="https://alpacat.com${post.link}">Read more</a>
-          </p>
         </div>
       </content>
       ${(post.authors || []).map(mapToAuthor).join('\n      ')}
