@@ -55,6 +55,12 @@ export default ({
           name="twitter:image"
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          href="/atom"
+          title="アルパカログのフィード"
+        />
       </Head>
       <h1>アルパカログ</h1>
       <ul>
