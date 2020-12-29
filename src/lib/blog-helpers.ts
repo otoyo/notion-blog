@@ -1,3 +1,7 @@
+// constants
+const NOW = new Date()
+const TIME_PUBLISHING = 9 * 60 * 60 // 09:00:00
+
 export const getBlogLink = (slug: string) => {
   return `/blog/${slug}`
 }
@@ -15,7 +19,7 @@ export const getDateStr = date => {
 }
 
 export const postIsPublished = (post: any) => {
-  return post.Published === 'Yes'
+  return post.Published === 'Yes' && new Date(post.Date + TIME_PUBLISHING) < NOW
 }
 
 export const normalizeSlug = slug => {
