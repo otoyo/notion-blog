@@ -62,7 +62,11 @@ export default ({
           title="アルパカログのフィード"
         />
       </Head>
-      <h1>アルパカログ</h1>
+      <h1>
+        <Link href="/" passHref>
+          <a>アルパカログ</a>
+        </Link>
+      </h1>
       <ul>
         {navItems.map(({ label, page, link }) => (
           <li key={label}>

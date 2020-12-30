@@ -11,6 +11,10 @@
   font-weight: 400;
 }
 
+.header h1 a {
+  color: #000;
+}
+
 .header ul {
   list-style: none;
   padding: 0;
@@ -21,12 +25,12 @@
   padding: 0 10px;
 }
 
-.header :global(a) {
+.header ul :global(a) {
   color: var(--accents-3);
   font-weight: 400;
 }
 
-.header :global(a.active) {
+.header ul :global(a.active) {
   color: #0070f3;
   font-weight: 600;
 }
