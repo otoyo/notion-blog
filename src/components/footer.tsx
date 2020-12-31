@@ -5,7 +5,7 @@ export default () => (
   <>
     <footer>
       <div>
-        <Link href="/atom" passHref>
+        <Link href="/atom" prefetch={false} passHref>
           <a>
             <img src="/rss-feed-symbol.svg" width="12" height="12" /> Atom feed
           </a>

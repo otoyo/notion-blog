@@ -25,7 +25,7 @@ export default () => (
         <p>
           CREというWebエンジニアでマネージャーな人です。エディタはNeoVimがお気に入り。記事内容に誤りがある際はお知らせください。CREでは一緒に働く仲間を募集しています。
           <Link
-            href="/blog/recruitment-cre"
+            href="/blog/[slug]"
             as={getBlogLink('recruitment-cre')}
             passHref
           >
