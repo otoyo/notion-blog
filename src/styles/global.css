@@ -408,8 +408,7 @@ footer {
 }
 
 footer img {
-  display: block;
-  margin: 0.5rem auto;
+  display: inline-block;
 }
 
 footer span {
