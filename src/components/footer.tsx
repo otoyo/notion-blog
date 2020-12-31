@@ -18,7 +18,7 @@ export default () => (
         </ExtLink>
       </div>
       <div>
-        <span>Copyright © 2015-2020 </span>
+        <span>Copyright © 2015-2021 </span>
         <ExtLink href="https://twitter.com/otoyo0122">@otoyo0122</ExtLink>
         <span>. All Rights Reserved.</span>
       </div>
