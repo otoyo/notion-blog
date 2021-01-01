@@ -1,15 +1,12 @@
-import Link from 'next/link'
 import ExtLink from './ext-link'
 
 export default () => (
   <>
     <footer>
       <div>
-        <Link href="/atom" prefetch={false} passHref>
-          <a>
-            <img src="/rss-feed-symbol.svg" width="12" height="12" /> Atom feed
-          </a>
-        </Link>
+        <ExtLink href="/atom">
+          <img src="/rss-feed-symbol.svg" width="12" height="12" /> Atom feed
+        </ExtLink>
       </div>
       <div>
         <span>Powered by </span>
