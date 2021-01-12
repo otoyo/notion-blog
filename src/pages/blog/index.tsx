@@ -53,7 +53,7 @@ export async function getStaticProps({ preview }) {
       posts,
       tags,
     },
-    unstable_revalidate: 10,
+    unstable_revalidate: 60,
   }
 }
 
