@@ -47,7 +47,10 @@ module.exports = {
   experimental: {
     modern: true,
     async rewrites() {
-      return [{ source: '/atom', destination: '/api/atom' }]
+      return [
+        { source: '/atom', destination: '/api/atom' },
+        { source: '/sitemap', destination: '/api/sitemap' },
+      ]
     },
     catchAllRouting: true,
   },
