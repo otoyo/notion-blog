@@ -458,6 +458,16 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
           }
           return toRender
         })}
+        <div>
+          <a
+            href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+            className="twitter-share-button"
+            data-show-count="false"
+          >
+            Tweet
+          </a>
+          <script async src="https://platform.twitter.com/widgets.js"></script>
+        </div>
       </div>
       <div className={blogStyles.tagIndex}>
         <h3>タグ</h3>
