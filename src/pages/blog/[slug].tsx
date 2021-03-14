@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import { useRouter } from 'next/router'
 import Header from '../../components/header'
 import Heading from '../../components/heading'
+import Share from '../../components/share'
 import components from '../../components/dynamic'
 import ReactJSXParser from '@zeit/react-jsx-parser'
 import blogStyles from '../../styles/blog.module.css'
@@ -459,14 +460,10 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
           return toRender
         })}
         <div>
-          <a
-            href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-            className="twitter-share-button"
-            data-show-count="false"
-          >
-            Tweet
-          </a>
-          <script async src="https://platform.twitter.com/widgets.js"></script>
+          <Share
+            text={post.Page}
+            url={'https://alpacat.com' + getBlogLink(post.Slug)}
+          />
         </div>
       </div>
       <div className={blogStyles.tagIndex}>
