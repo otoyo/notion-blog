@@ -26,13 +26,13 @@
 }
 
 .header ul :global(a) {
-  color: var(--accents-3);
+  color: #0070f3;
   font-weight: 400;
 }
 
 .header ul :global(a.active) {
-  color: #0070f3;
-  font-weight: 600;
+  color: var(--accents-3);
+  font-weight: 400;
 }
 
 @media (max-width: 600px) {
