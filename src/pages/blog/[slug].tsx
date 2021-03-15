@@ -269,6 +269,8 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
             case 'text':
               if (properties) {
                 toRender.push(textBlock(properties.title, false, id))
+              } else {
+                toRender.push(textBlock([['']], false, id))
               }
               break
             case 'image':
