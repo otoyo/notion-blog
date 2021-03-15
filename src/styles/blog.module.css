@@ -163,6 +163,10 @@
   margin-top: 0;
 }
 
+.post :global(p) {
+  min-height: 1.8em;
+}
+
 .tagIndex {
   max-width: calc(600px + 10%);
   margin: 0 auto;
