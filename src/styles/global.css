@@ -284,6 +284,13 @@ mark {
   max-width: calc(100vw - var(--gap-double));
 }
 
+.container {
+  margin: 0 auto;
+  width: 760px;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
 h1 {
   margin: var(--gap-double) 0 calc(0.5 * var(--gap)) 0;
   font-size: 2rem;
