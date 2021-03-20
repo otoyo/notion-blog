@@ -284,13 +284,6 @@ mark {
   max-width: calc(100vw - var(--gap-double));
 }
 
-.container {
-  margin: 0 auto;
-  width: 760px;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-}
-
 h1 {
   margin: var(--gap-double) 0 calc(0.5 * var(--gap)) 0;
   font-size: 2rem;
@@ -353,6 +346,14 @@ pre :global(code) {
   -webkit-overflow-scrolling: touch;
 }
 
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  margin: 1em 0;
+  background-color: #333;
+}
+
 code {
   font-size: 0.8rem;
   background: #f1f1f1;
@@ -374,6 +375,15 @@ code {
   width: 130%;
   background: #fff;
   transform: skew(-20deg);
+}
+
+@media (min-width: 760px) {
+  .container {
+    margin: 0 auto;
+    width: 760px;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+  }
 }
 
 @media (max-width: 600px) {

@@ -175,24 +175,27 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
         </div>
       )}
       <div className={blogStyles.post}>
+        {post.Date && (
+          <div className="posted">📅&nbsp;&nbsp;{getDateStr(post.Date)}</div>
+        )}
         <h1>{post.Page || ''}</h1>
         {post.Authors.length > 0 && (
           <div className="authors">By: {post.Authors.join(' ')}</div>
         )}
-        {post.Date && <div className="posted">{getDateStr(post.Date)}</div>}
-        {post.Tags &&
-          post.Tags.length > 0 &&
-          post.Tags.map(tag => (
-            <Link
-              href="/blog/tag/[tag]"
-              as={getTagLink(tag)}
-              key={tag}
-              passHref
-            >
-              <a className={blogStyles.tag}>🔖{tag}</a>
-            </Link>
-          ))}
-
+        <div className={blogStyles.tagContainer}>
+          {post.Tags &&
+            post.Tags.length > 0 &&
+            post.Tags.map(tag => (
+              <Link
+                href="/blog/tag/[tag]"
+                as={getTagLink(tag)}
+                key={tag}
+                passHref
+              >
+                <a className={blogStyles.tag}>🔖{tag}</a>
+              </Link>
+            ))}
+        </div>
         <hr />
 
         {(!post.content || post.content.length === 0) && (

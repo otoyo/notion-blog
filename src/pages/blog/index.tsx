@@ -79,6 +79,11 @@ export default ({ posts = [], tags = [], preview }) => {
         {posts.map(post => {
           return (
             <div className={blogStyles.postPreview} key={post.Slug}>
+              {post.Date && (
+                <div className="posted">
+                  📅&nbsp;&nbsp;{getDateStr(post.Date)}
+                </div>
+              )}
               <h3>
                 <div className={blogStyles.titleContainer}>
                   {!post.Published && (
@@ -96,21 +101,20 @@ export default ({ posts = [], tags = [], preview }) => {
               {post.Authors.length > 0 && (
                 <div className="authors">By: {post.Authors.join(' ')}</div>
               )}
-              {post.Date && (
-                <div className="posted">{getDateStr(post.Date)}</div>
-              )}
-              {post.Tags &&
-                post.Tags.length > 0 &&
-                post.Tags.map(tag => (
-                  <Link
-                    href="/blog/tag/[tag]"
-                    as={getTagLink(tag)}
-                    key={`${post.Slug}-${tag}`}
-                    passHref
-                  >
-                    <a className={blogStyles.tag}>🔖{tag}</a>
-                  </Link>
-                ))}
+              <div className={blogStyles.tagContainer}>
+                {post.Tags &&
+                  post.Tags.length > 0 &&
+                  post.Tags.map(tag => (
+                    <Link
+                      href="/blog/tag/[tag]"
+                      as={getTagLink(tag)}
+                      key={`${post.Slug}-${tag}`}
+                      passHref
+                    >
+                      <a className={blogStyles.tag}>🔖&nbsp;&nbsp;{tag}</a>
+                    </Link>
+                  ))}
+              </div>
               <p>
                 {(!post.preview || post.preview.length === 0) &&
                   'No preview available'}
@@ -118,6 +122,9 @@ export default ({ posts = [], tags = [], preview }) => {
                   textBlock(block, true, `${post.Slug}${idx}`)
                 )}
               </p>
+              <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>
+                <a className={blogStyles.expandButton}>続きを読む</a>
+              </Link>
             </div>
           )
         })}

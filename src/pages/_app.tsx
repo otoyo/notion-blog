@@ -21,7 +21,7 @@ export default ({ Component, pageProps }) => {
 
   return (
     <>
-      <div class="container">
+      <div className="container">
         <Component {...pageProps} />
         <Footer />
       </div>
