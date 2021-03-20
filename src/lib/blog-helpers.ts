@@ -11,11 +11,11 @@ export const getTagLink = (tag: string) => {
 }
 
 export const getDateStr = date => {
-  return new Date(date).toLocaleString('ja-JP', {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-  })
+  const dt = new Date(date)
+  const y = dt.getFullYear()
+  const m = ('00' + (dt.getMonth() + 1)).slice(-2)
+  const d = ('00' + dt.getDate()).slice(-2)
+  return y + '-' + m + '-' + d
 }
 
 export const postIsPublished = (post: any) => {
