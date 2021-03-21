@@ -24,6 +24,9 @@ function createSitemap(tags = []) {
       <loc>https://alpacat.com</loc>
     </url>
     <url>
+      <loc>https://alpacat.com/subscribe</loc>
+    </url>
+    <url>
       <loc>https://alpacat.com/blog</loc>
       <changefreq>weekly</changefreq>
     </url>${tagsString}
