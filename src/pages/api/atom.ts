@@ -20,12 +20,18 @@ function decode(string) {
 }
 
 function mapToEntry(post) {
+  const date = new Date(post.Date)
   return `
     <entry>
       <id>https://alpacat.com${post.link}</id>
       <title>${decode(post.Page)}</title>
       <link href="https://alpacat.com${post.link}"/>
-      <updated>${new Date(post.Date).toJSON()}</updated>
+      <published>${date.toJSON()}</published>
+      <updated>${date.toJSON()}</updated>
+      <author>
+        <name>@otoyo0122</name>
+        <uri>https://twitter.com/otoyo0122</uri>
+      </author>
       <content type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
           ${renderToStaticMarkup(post.Excerpt)}
@@ -40,15 +46,19 @@ function concat(total, item) {
 
 function createRSS(posts = []) {
   const postsString = posts.map(mapToEntry).reduce(concat, '')
+  const updated =
+    posts.length > 0
+      ? `
+    <updated>${new Date(posts[0].Date).toJSON()}</updated>`
+      : ''
 
   return `<?xml version="1.0" encoding="utf-8"?>
   <feed xmlns="http://www.w3.org/2005/Atom">
     <title>アルパカログ</title>
     <subtitle>アルパカログの更新情報</subtitle>
     <link href="https://alpacat.com/atom" rel="self" type="application/rss+xml"/>
-    <link href="https://alpacat.com" />
-    <updated>${new Date(posts[0].Date).toJSON()}</updated>
-    <id>alpacat.com/atom</id>${postsString}
+    <link href="https://alpacat.com" />${updated}
+    <id>https://alpacat.com/atom</id>${postsString}
   </feed>`
 }
 
