@@ -187,6 +187,20 @@
   padding: 0 5%;
 }
 
+.tagIndex h3 {
+  margin: 0;
+  font-weight: 400;
+}
+
+.tagIndex hr {
+  margin: 0;
+}
+
+.tagIndex ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 .noTags {
   text-align: center;
 }
