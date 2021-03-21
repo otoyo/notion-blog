@@ -23,6 +23,22 @@ import {
 export async function getStaticProps({ params: { slug }, preview }) {
   // load the postsTable so that we can get the page's ID
   const postsTable = await getBlogIndex()
+  const recentPosts: any[] = Object.keys(postsTable)
+    .map(slug => {
+      const post = postsTable[slug]
+      // remove draft posts in production
+      if (!preview && !postIsPublished(post)) {
+        return null
+      }
+      post.Authors = post.Authors || []
+      for (const author of post.Authors) {
+        authorsToGet.add(author)
+      }
+      return post
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.Date || 0) - (a.Date || 0))
+    .splice(0, 5)
   const post = postsTable[slug]
 
   // if we can't find the post or if it is unpublished and
@@ -74,6 +90,7 @@ export async function getStaticProps({ params: { slug }, preview }) {
   return {
     props: {
       post,
+      recentPosts,
       preview: preview || false,
       tags,
     },
@@ -96,7 +113,13 @@ export async function getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list'])
 
-const RenderPost = ({ post, tags = [], redirect, preview }) => {
+const RenderPost = ({
+  post,
+  recentPosts = [],
+  tags = [],
+  redirect,
+  preview,
+}) => {
   const router = useRouter()
 
   let listTagName: string | null = null
@@ -471,12 +494,37 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
           />
         </div>
       </div>
-      <div className={blogStyles.tagIndex}>
+      <div className={blogStyles.sideMenu}>
+        <h3>最新記事</h3>
+        <hr />
+
+        {recentPosts.length === 0 && (
+          <div className={blogStyles.noContents}>There are no posts yet</div>
+        )}
+        {recentPosts.length > 0 && (
+          <ul>
+            {recentPosts.map(recentPost => {
+              return (
+                <li key={recentPost.Slug}>
+                  <Link
+                    href="/blog/[slug]"
+                    as={getBlogLink(recentPost.Slug)}
+                    passHref
+                  >
+                    <a>{recentPost.Page}</a>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </div>
+      <div className={blogStyles.sideMenu}>
         <h3>カテゴリー</h3>
         <hr />
 
         {tags.length === 0 && (
-          <div className={blogStyles.noTags}>There are no tags yet</div>
+          <div className={blogStyles.noContents}>There are no tags yet</div>
         )}
         {tags.length > 0 && (
           <ul>
