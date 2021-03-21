@@ -435,3 +435,13 @@ footer span {
 footer span a {
   color: inherit;
 }
+
+ul.shareButtons {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul.shareButtons li {
+  display: inline-block;
+  margin-right: 0.5em;
+}
