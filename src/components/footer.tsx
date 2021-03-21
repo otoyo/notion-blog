@@ -4,11 +4,6 @@ export default () => (
   <>
     <footer>
       <div>
-        <ExtLink href="/atom">
-          <img src="/rss-feed-symbol.svg" width="12" height="12" /> Atom feed
-        </ExtLink>
-      </div>
-      <div>
         <span>Powered by </span>
         <ExtLink href="https://github.com/ijjk/notion-blog">
           Notion Blog
