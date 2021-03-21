@@ -181,7 +181,7 @@ export default ({ tag, posts = [], tags = [], redirect, preview }) => {
         })}
       </div>
       <div className={blogStyles.tagIndex}>
-        <h3>タグ</h3>
+        <h3>カテゴリー</h3>
         <hr />
 
         {tags.length === 0 && (
