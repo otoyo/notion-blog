@@ -129,12 +129,12 @@ export default ({ posts = [], tags = [], preview }) => {
           )
         })}
       </div>
-      <div className={blogStyles.tagIndex}>
+      <div className={blogStyles.sideMenu}>
         <h3>カテゴリー</h3>
         <hr />
 
         {tags.length === 0 && (
-          <div className={blogStyles.noTags}>There are no tags yet</div>
+          <div className={blogStyles.noContents}>There are no tags yet</div>
         )}
         {tags.length > 0 && (
           <ul>

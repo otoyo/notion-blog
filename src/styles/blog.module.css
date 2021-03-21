@@ -181,27 +181,27 @@
   list-style-type: square;
 }
 
-.tagIndex {
+.sideMenu {
   max-width: calc(600px + 10%);
   margin: 0 auto;
   padding: 0 5%;
 }
 
-.tagIndex h3 {
+.sideMenu h3 {
   margin: 0;
   font-weight: 400;
 }
 
-.tagIndex hr {
+.sideMenu hr {
   margin: 0;
 }
 
-.tagIndex ul {
+.sideMenu ul {
   list-style-type: none;
   padding: 0;
 }
 
-.noTags {
+.noContents {
   text-align: center;
 }
 
