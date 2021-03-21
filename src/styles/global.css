@@ -240,12 +240,16 @@ pre.dark[class*='language-'] {
 }
 
 .explanation {
-  font-size: 1rem;
+  font-size: 1em;
   width: 35rem;
   max-width: 100vw;
   padding: 0 2rem;
   background: var(--bg);
   margin: var(--gap-half) auto;
+}
+.explanation p {
+  color: #333;
+  font-size: 0.8em;
 }
 figure {
   font-size: 0.85rem;
@@ -290,20 +294,19 @@ h1 {
   font-weight: 700;
   /*font-size: 2.25rem;
   font-weight: 800;*/
-  letter-spacing: -0.05rem;
 }
 
 h2 {
+  color: #333;
   font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -0.02rem;
+  font-size: 1rem;
   /*color: var(--accents-3);*/
 }
 
 h3 {
+  color: #333;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: -0.02rem;
 }
 
 .video {
