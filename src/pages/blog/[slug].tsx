@@ -192,7 +192,7 @@ const RenderPost = ({ post, tags = [], redirect, preview }) => {
                 key={tag}
                 passHref
               >
-                <a className={blogStyles.tag}>🔖{tag}</a>
+                <a className={blogStyles.tag}>🔖&nbsp;&nbsp;{tag}</a>
               </Link>
             ))}
         </div>
