@@ -1,6 +1,6 @@
 // constants
 const NOW = new Date()
-const TIME_PUBLISHING = 9 * 60 * 60 // 09:00:00
+const TIME_PUBLISHING = 8 * 60 * 60 // 08:00:00
 
 export const getBlogLink = (slug: string) => {
   return `/blog/${slug}`
