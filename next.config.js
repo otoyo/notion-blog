@@ -3,6 +3,8 @@ const path = require('path')
 const {
   NOTION_TOKEN,
   BLOG_INDEX_ID,
+  NOTION_API_SECRET,
+  DATABASE_ID,
 } = require('./src/lib/notion/server-constants')
 
 try {
@@ -37,6 +39,24 @@ if (!BLOG_INDEX_ID) {
   // NOTION_TOKEN being populated
   warnOrError(
     `\nBLOG_INDEX_ID is missing from env, this will result in an error\n` +
+      `Make sure to provide one before starting Next.js`
+  )
+}
+
+if (!NOTION_API_SECRET) {
+  // We aren't able to build or serve images from Notion without the
+  // NOTION_TOKEN being populated
+  warnOrError(
+    `\nNOTION_API_SECRET is missing from env, this will result in an error\n` +
+      `Make sure to provide one before starting Next.js`
+  )
+}
+
+if (!DATABASE_ID) {
+  // We aren't able to build or serve images from Notion without the
+  // NOTION_TOKEN being populated
+  warnOrError(
+    `\nDATABASE_ID is missing from env, this will result in an error\n` +
       `Make sure to provide one before starting Next.js`
   )
 }
