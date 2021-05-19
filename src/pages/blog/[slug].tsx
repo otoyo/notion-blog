@@ -7,87 +7,42 @@ import Share from '../../components/share'
 import components from '../../components/dynamic'
 import ReactJSXParser from '@zeit/react-jsx-parser'
 import blogStyles from '../../styles/blog.module.css'
-import { textBlock } from '../../lib/notion/renderers'
 import getPageData from '../../lib/notion/getPageData'
 import React, { CSSProperties, useEffect } from 'react'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
+
+import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
+import { textBlock } from '../../lib/notion/renderers'
 import {
-  getBlogLink,
-  getTagLink,
-  getDateStr,
-  postIsPublished,
-} from '../../lib/blog-helpers'
+  getPosts,
+  getAllPosts,
+  getPostBySlug,
+  getAllTags,
+} from '../../lib/notion/client'
 
 // Get the data for each blog post
-export async function getStaticProps({ params: { slug }, preview }) {
-  // load the postsTable so that we can get the page's ID
-  const postsTable = await getBlogIndex()
-  const recentPosts: any[] = Object.keys(postsTable)
-    .map(slug => {
-      const post = postsTable[slug]
-      // remove draft posts in production
-      if (!preview && !postIsPublished(post)) {
-        return null
-      }
-      return post
-    })
-    .filter(Boolean)
-    .sort((a, b) => (b.Date || 0) - (a.Date || 0))
-    .splice(0, 5)
-  const post = postsTable[slug]
+export async function getStaticProps({ params: { slug } }) {
+  const post = await getPostBySlug(slug)
 
-  // if we can't find the post or if it is unpublished and
-  // viewed without preview mode then we just redirect to /blog
-  if (!post || (!postIsPublished(post) && !preview)) {
+  if (!post) {
     console.log(`Failed to find post for slug: ${slug}`)
     return {
       props: {
         redirect: '/blog',
-        preview: false,
       },
       unstable_revalidate: 30,
     }
   }
-  const postData = await getPageData(post.id)
-  post.content = postData.blocks
 
-  for (let i = 0; i < postData.blocks.length; i++) {
-    const { value } = postData.blocks[i]
-    const { type, properties } = value
-    if (type == 'tweet') {
-      const src = properties.source[0][0]
-      // parse id from https://twitter.com/_ijjk/status/TWEET_ID format
-      const tweetId = src.split('/')[5].split('?')[0]
-      if (!tweetId) continue
+  const postData = await getPageData(post.PageId)
+  post['content'] = postData.blocks
 
-      try {
-        const res = await fetch(
-          `https://api.twitter.com/1/statuses/oembed.json?id=${tweetId}`
-        )
-        const json = await res.json()
-        properties.html = json.html.split('<script')[0]
-        post.hasTweet = true
-      } catch (_) {
-        console.log(`Failed to get tweet embed for ${src}`)
-      }
-    }
-  }
-
-  const tags: string[] = Object.keys(postsTable)
-    .filter(slug => postIsPublished(postsTable[slug]))
-    .map(slug => postsTable[slug].Tags)
-    .flat()
-    .filter((tag, index, self) => self.indexOf(tag) === index)
-
-  const { users } = await getNotionUsers(post.Authors || [])
-  post.Authors = Object.keys(users).map(id => users[id].full_name)
+  const recentPosts = await getPosts(5)
+  const tags = await getAllTags()
 
   return {
     props: {
       post,
       recentPosts,
-      preview: preview || false,
       tags,
     },
     unstable_revalidate: 60,
@@ -96,26 +51,18 @@ export async function getStaticProps({ params: { slug }, preview }) {
 
 // Return our list of blog posts to prerender
 export async function getStaticPaths() {
-  const postsTable = await getBlogIndex()
+  const posts = await getAllPosts()
   // we fallback for any unpublished posts to save build time
   // for actually published ones
   return {
-    paths: Object.keys(postsTable)
-      .filter(slug => postIsPublished(postsTable[slug]))
-      .map(slug => getBlogLink(slug)),
+    paths: posts.map(post => getBlogLink(post.Slug)),
     fallback: true,
   }
 }
 
 const listTypes = new Set(['bulleted_list', 'numbered_list'])
 
-const RenderPost = ({
-  post,
-  recentPosts = [],
-  tags = [],
-  redirect,
-  preview,
-}) => {
+const RenderPost = ({ post, recentPosts = [], tags = [], redirect }) => {
   const router = useRouter()
 
   let listTagName: string | null = null
@@ -129,21 +76,6 @@ const RenderPost = ({
     }
   } = {}
 
-  useEffect(() => {
-    const twitterSrc = 'https://platform.twitter.com/widgets.js'
-    // make sure to initialize any new widgets loading on
-    // client navigation
-    if (post && post.hasTweet) {
-      if ((window as any)?.twttr?.widgets) {
-        ;(window as any).twttr.widgets.load()
-      } else if (!document.querySelector(`script[src="${twitterSrc}"]`)) {
-        const script = document.createElement('script')
-        script.async = true
-        script.src = twitterSrc
-        document.querySelector('body').appendChild(script)
-      }
-    }
-  }, [])
   useEffect(() => {
     if (redirect && !post) {
       router.replace(redirect)
@@ -172,35 +104,19 @@ const RenderPost = ({
     <>
       <Header
         path={`/blog/${post.Slug}`}
-        titlePre={post.Page}
+        titlePre={post.Title}
         description={post.Excerpt}
         ogImageUrl={
           !post.OGImage
             ? ''
             : `https://alpacat.com/api/asset?assetUrl=${encodeURIComponent(
                 post.OGImage
-              )}&blockId=${post.dbRowBlockId}`
+              )}&blockId=${post.PageId}`
         }
       />
-      {preview && (
-        <div className={blogStyles.previewAlertContainer}>
-          <div className={blogStyles.previewAlert}>
-            <b>Note:</b>
-            {` `}Viewing in preview mode{' '}
-            <Link href={`/api/clear-preview?slug=${post.Slug}`}>
-              <button className={blogStyles.escapePreview}>Exit Preview</button>
-            </Link>
-          </div>
-        </div>
-      )}
       <div className={blogStyles.post}>
-        {post.Date && (
-          <div className="posted">📅&nbsp;&nbsp;{getDateStr(post.Date)}</div>
-        )}
-        <h1>{post.Page || ''}</h1>
-        {post.Authors.length > 0 && (
-          <div className="authors">By: {post.Authors.join(' ')}</div>
-        )}
+        {post.Date && <div className="posted">📅&nbsp;&nbsp;{post.Date}</div>}
+        <h1>{post.Title || ''}</h1>
         <div className={blogStyles.tagContainer}>
           {post.Tags &&
             post.Tags.length > 0 &&
@@ -485,7 +401,7 @@ const RenderPost = ({
         })}
         <div>
           <Share
-            text={post.Page}
+            text={post.Title}
             url={'https://alpacat.com' + getBlogLink(post.Slug)}
           />
         </div>
@@ -507,7 +423,7 @@ const RenderPost = ({
                     as={getBlogLink(recentPost.Slug)}
                     passHref
                   >
-                    <a>{recentPost.Page}</a>
+                    <a>{recentPost.Title}</a>
                   </Link>
                 </li>
               )
