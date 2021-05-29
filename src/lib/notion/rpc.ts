@@ -9,6 +9,7 @@ export default async function rpc(fnName: string, body: any) {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
+      'Notion-Version': '2021-05-13',
       cookie: `token_v2=${NOTION_TOKEN}`,
     },
     body: JSON.stringify(body),
