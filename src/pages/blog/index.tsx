@@ -5,7 +5,6 @@ import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
-import { textBlock } from '../../lib/notion/renderers'
 import { getPosts, getAllTags } from '../../lib/notion/client'
 
 export async function getStaticProps() {

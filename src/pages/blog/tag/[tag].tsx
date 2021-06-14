@@ -6,7 +6,6 @@ import blogStyles from '../../../styles/blog.module.css'
 import sharedStyles from '../../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink } from '../../../lib/blog-helpers'
-import { textBlock } from '../../../lib/notion/renderers'
 import { useEffect } from 'react'
 import { getPostsByTag, getAllTags } from '../../../lib/notion/client'
 
