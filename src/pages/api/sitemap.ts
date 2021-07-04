@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http'
 
-import getBlogIndex from '../../lib/notion/getBlogIndex'
-import { postIsPublished, getTagLink } from '../../lib/blog-helpers'
+import { getTagLink } from '../../lib/blog-helpers'
+import { getAllTags } from '../../lib/notion/client'
 
 function mapToURL(tag) {
   return `
@@ -36,14 +36,7 @@ function createSitemap(tags = []) {
 export default async function(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   try {
-    const postsTable = await getBlogIndex()
-
-    const tags: string[] = Object.keys(postsTable)
-      .filter(slug => postIsPublished(postsTable[slug]))
-      .map(slug => postsTable[slug].Tags)
-      .flat()
-      .filter((tag, index, self) => self.indexOf(tag) === index)
-
+    const tags: string[] = await getAllTags()
     res.write(createSitemap(tags))
     res.end()
   } catch (e) {
