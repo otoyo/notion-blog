@@ -111,13 +111,6 @@ const RenderPost = ({
         path={`/blog/${post.Slug}`}
         titlePre={post.Title}
         description={post.Excerpt}
-        ogImageUrl={
-          !post.OGImage
-            ? ''
-            : `https://alpacat.com/api/asset?assetUrl=${encodeURIComponent(
-                post.OGImage
-              )}&blockId=${post.PageId}`
-        }
       />
       <div className={blogStyles.post}>
         {post.Date && <div className="posted">📅&nbsp;&nbsp;{post.Date}</div>}
