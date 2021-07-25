@@ -72,7 +72,11 @@ export default ({ tag, posts = [], tags = [], redirect }) => {
 
   return (
     <>
-      <Header titlePre={`${tag}を含む記事`} />
+      <Header
+        path={getTagLink(tag)}
+        titlePre={`${tag}を含む記事`}
+        description={`${tag}を含む記事`}
+      />
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         <h2>{tag}</h2>
         {posts.length === 0 && (

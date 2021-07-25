@@ -5,7 +5,11 @@ import sharedStyles from '../../styles/shared.module.css'
 
 export default () => (
   <>
-    <Header titlePre="" />
+    <Header
+      path="/subscribe"
+      titlePre="アルパカログを購読する"
+      description="アルパカログを購読する"
+    />
     <div className={sharedStyles.layout}>
       <h2>Twitterで更新情報を受け取る</h2>
       <div className="explanation">
