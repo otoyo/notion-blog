@@ -56,6 +56,7 @@ export default ({
           name="twitter:image"
           content={!ogImageUrl ? defaultOgImageUrl : ogImageUrl}
         />
+        <link rel="canonical" href={`${defaultUrl}${path}`} />
         <link
           rel="alternate"
           type="application/atom+xml"
