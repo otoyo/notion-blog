@@ -332,7 +332,7 @@ export async function getAllBlocksByPageId(pageId) {
             }),
           }
           break
-        case 'unsupported':
+        default:
           block = {
             Id: item.id,
             Type: item.type,
