@@ -212,6 +212,19 @@ const RenderPost = ({
             case 'heading_3':
               renderHeading('h3')
               break
+            case 'image':
+              toRender.push(<img src={block.Image.File.Url} />)
+              if (
+                block.Image.Caption.length > 0 &&
+                block.Image.Caption[0].Text.Content
+              ) {
+                toRender.push(
+                  <div className={blogStyles.caption}>
+                    {block.Image.Caption[0].Text.Content}
+                  </div>
+                )
+              }
+              break
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
