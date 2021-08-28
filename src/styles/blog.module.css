@@ -188,4 +188,8 @@
   .postPreview a.expandButton {
     width: 50%;
   }
+
+  .post .caption {
+    font-size: 0.9rem;
+  }
 }
