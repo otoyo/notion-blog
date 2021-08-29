@@ -111,6 +111,7 @@ const RenderPost = ({
         path={`/blog/${post.Slug}`}
         titlePre={post.Title}
         description={post.Excerpt}
+        ogImageUrl={post.OGImage}
       />
       <div className={blogStyles.post}>
         {post.Date && <div className="posted">📅&nbsp;&nbsp;{post.Date}</div>}
