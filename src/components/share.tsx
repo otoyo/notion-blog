@@ -5,6 +5,8 @@ import {
   FacebookShareButton,
   HatenaIcon,
   HatenaShareButton,
+  PocketIcon,
+  PocketShareButton,
   TwitterIcon,
   TwitterShareButton,
 } from 'react-share'
@@ -22,6 +24,11 @@ export default ({ text = '', url = '' }) => {
           <FacebookShareButton url={url}>
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
+        </li>
+        <li>
+          <PocketShareButton url={url} title={text}>
+            <PocketIcon size={32} round={true} />
+          </PocketShareButton>
         </li>
         <li>
           <HatenaShareButton url={url} title={text}>
