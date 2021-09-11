@@ -188,6 +188,55 @@ export async function getAllPosts() {
   return allPosts
 }
 
+export async function getPostsBefore(date: string, pageSize: number = 10) {
+  let params = {
+    database_id: DATABASE_ID,
+    filter: {
+      and: [
+        {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: 'Date',
+          date: {
+            before: date,
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: 'Date',
+        timestamp: 'created_time',
+        direction: 'descending',
+      },
+    ],
+    page_size: pageSize,
+  }
+
+  const data = await client.databases.query(params)
+
+  return data.results.map(item => {
+    const prop = item.properties
+
+    const post: Post = {
+      PageId: item.id,
+      Title: prop.Page.title[0].plain_text,
+      Slug: prop.Slug.rich_text[0].plain_text,
+      Date: prop.Date.date.start,
+      Tags: prop.Tags.multi_select.map(opt => opt.name),
+      Excerpt: prop.Excerpt.rich_text[0].plain_text,
+      OGImage:
+        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+    }
+
+    return post
+  })
+}
+
 export async function getPostBySlug(slug: string) {
   const data = await client.databases.query({
     database_id: DATABASE_ID,
