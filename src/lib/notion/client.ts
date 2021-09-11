@@ -237,6 +237,54 @@ export async function getPostsBefore(date: string, pageSize: number = 10) {
   })
 }
 
+export async function getFirstPost() {
+  let params = {
+    database_id: DATABASE_ID,
+    filter: {
+      and: [
+        {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
+        },
+        {
+          property: 'Date',
+          date: {
+            on_or_before: new Date().toISOString(),
+          },
+        },
+      ],
+    },
+    sorts: [
+      {
+        property: 'Date',
+        timestamp: 'created_time',
+        direction: 'ascending',
+      },
+    ],
+    page_size: 1,
+  }
+
+  const data = await client.databases.query(params)
+
+  const result = data.results[0]
+  const prop = result.properties
+
+  const post: Post = {
+    PageId: result.id,
+    Title: prop.Page.title[0].plain_text,
+    Slug: prop.Slug.rich_text[0].plain_text,
+    Date: prop.Date.date.start,
+    Tags: prop.Tags.multi_select.map(opt => opt.name),
+    Excerpt: prop.Excerpt.rich_text[0].plain_text,
+    OGImage:
+      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+  }
+
+  return post
+}
+
 export async function getPostBySlug(slug: string) {
   const data = await client.databases.query({
     database_id: DATABASE_ID,
