@@ -5,22 +5,24 @@ import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink, getBeforeLink } from '../../lib/blog-helpers'
-import { getPosts, getAllTags } from '../../lib/notion/client'
+import { getPosts, getFirstPost, getAllTags } from '../../lib/notion/client'
 
 export async function getStaticProps() {
   const posts = await getPosts()
+  const firstPost = await getFirstPost()
   const tags = await getAllTags()
 
   return {
     props: {
       posts,
+      firstPost,
       tags,
     },
     unstable_revalidate: 60,
   }
 }
 
-export default ({ posts = [], tags = [] }) => {
+export default ({ posts = [], firstPost, tags = [] }) => {
   return (
     <>
       <Header path="/blog" titlePre="" />
@@ -66,16 +68,18 @@ export default ({ posts = [], tags = [] }) => {
             </div>
           )
         })}
-        <div className={blogStyles.nextContainer}>
-          <hr />
-          <Link
-            href="/blog/before/[date]"
-            as={getBeforeLink(posts[posts.length - 1].Date)}
-            passHref
-          >
-            <a className={blogStyles.nextButton}>次のページ ＞</a>
-          </Link>
-        </div>
+        {firstPost.Date !== posts[posts.length - 1].Date && (
+          <div className={blogStyles.nextContainer}>
+            <hr />
+            <Link
+              href="/blog/before/[date]"
+              as={getBeforeLink(posts[posts.length - 1].Date)}
+              passHref
+            >
+              <a className={blogStyles.nextButton}>次のページ ＞</a>
+            </Link>
+          </div>
+        )}
       </div>
       <div className={blogStyles.sideMenu}>
         <h3>カテゴリー</h3>

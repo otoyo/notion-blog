@@ -17,17 +17,20 @@ import {
 import {
   getAllPosts,
   getPostsBefore,
+  getFirstPost,
   getAllTags,
 } from '../../../lib/notion/client'
 
 export async function getStaticProps({ params: { date } }) {
   const posts = await getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE)
+  const firstPost = await getFirstPost()
   const tags = await getAllTags()
 
   return {
     props: {
       date,
       posts,
+      firstPost,
       tags,
     },
     unstable_revalidate: 60,
@@ -54,7 +57,7 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({ date, posts = [], tags = [], redirect }) => {
+export default ({ date, posts = [], firstPost, tags = [], redirect }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -130,16 +133,18 @@ export default ({ date, posts = [], tags = [], redirect }) => {
             </div>
           )
         })}
-        <div className={blogStyles.nextContainer}>
-          <hr />
-          <Link
-            href="/blog/before/[date]"
-            as={getBeforeLink(posts[posts.length - 1].Date)}
-            passHref
-          >
-            <a className={blogStyles.nextButton}>次のページ ＞</a>
-          </Link>
-        </div>
+        {firstPost.Date !== posts[posts.length - 1].Date && (
+          <div className={blogStyles.nextContainer}>
+            <hr />
+            <Link
+              href="/blog/before/[date]"
+              as={getBeforeLink(posts[posts.length - 1].Date)}
+              passHref
+            >
+              <a className={blogStyles.nextButton}>次のページ ＞</a>
+            </Link>
+          </div>
+        )}
       </div>
       <div className={blogStyles.sideMenu}>
         <h3>カテゴリー</h3>
