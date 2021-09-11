@@ -1,18 +1,32 @@
+import { NUMBER_OF_POSTS_PER_PAGE } from '../../../lib/notion/server-constants'
+
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-import Header from '../../components/header'
+import { useRouter } from 'next/router'
 
-import blogStyles from '../../styles/blog.module.css'
-import sharedStyles from '../../styles/shared.module.css'
+import Header from '../../../components/header'
 
-import { getBlogLink, getTagLink, getBeforeLink } from '../../lib/blog-helpers'
-import { getPosts, getAllTags } from '../../lib/notion/client'
+import blogStyles from '../../../styles/blog.module.css'
+import sharedStyles from '../../../styles/shared.module.css'
 
-export async function getStaticProps() {
-  const posts = await getPosts()
+import {
+  getBlogLink,
+  getTagLink,
+  getBeforeLink,
+} from '../../../lib/blog-helpers'
+import {
+  getAllPosts,
+  getPostsBefore,
+  getAllTags,
+} from '../../../lib/notion/client'
+
+export async function getStaticProps({ params: { date } }) {
+  const posts = await getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE)
   const tags = await getAllTags()
 
   return {
     props: {
+      date,
       posts,
       tags,
     },
@@ -20,10 +34,60 @@ export async function getStaticProps() {
   }
 }
 
-export default ({ posts = [], tags = [] }) => {
+// Return our list of blog posts to prerender
+export async function getStaticPaths() {
+  const posts = await getAllPosts()
+
+  let dates = []
+  posts.forEach((post, i) => {
+    if (i % NUMBER_OF_POSTS_PER_PAGE === NUMBER_OF_POSTS_PER_PAGE - 1) {
+      let lastPostPerPage = posts[i]
+      dates.push(lastPostPerPage.Date)
+    }
+  })
+
+  // we fallback for any unpublished posts to save build time
+  // for actually published ones
+  return {
+    paths: dates.map(date => getBeforeLink(date)),
+    fallback: true,
+  }
+}
+
+export default ({ date, posts = [], tags = [], redirect }) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (redirect && !posts) {
+      router.replace(redirect)
+    }
+  }, [redirect, posts])
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
+  // if you don't have a post at this point, and are not
+  // loading one from fallback then  redirect back to the index
+  if (!posts) {
+    return (
+      <div className={blogStyles.post}>
+        <p>
+          Woops! didn't find that post, redirecting you back to the blog index
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
-      <Header path="/blog" titlePre="" />
+      <Header
+        path={getBeforeLink(date)}
+        titlePre={`${date}より前の記事`}
+        description={`${date}より前の記事`}
+      />
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
