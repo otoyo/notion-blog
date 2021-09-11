@@ -145,6 +145,28 @@
   list-style-type: square;
 }
 
+.nextContainer {
+  max-width: calc(600px + 10%);
+  margin: 40px auto;
+  padding: 0 5%;
+}
+
+.nextContainer hr {
+  background-color: #fff;
+  border-top: 1px dashed #666;
+}
+
+.nextContainer a.nextButton {
+  display: block;
+  width: 30%;
+  margin: 40px auto;
+  border: 1px solid #3291ff;
+  color: #333;
+  font-size: 0.7em;
+  text-align: center;
+  line-height: 3em;
+}
+
 .sideMenu {
   max-width: calc(600px + 10%);
   margin: 0 auto;
@@ -191,5 +213,12 @@
 
   .post .caption {
     font-size: 0.9rem;
+  }
+
+  .nextContainer {
+    padding: 0;
+  }
+  .nextContainer a.nextButton {
+    width: 50%;
   }
 }
