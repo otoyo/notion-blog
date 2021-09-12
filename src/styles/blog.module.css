@@ -1,5 +1,6 @@
 .blogIndex {
   padding: 0 5%;
+  max-width: calc(600px + 10%);
 }
 
 .blogIndex h1 {
@@ -118,8 +119,7 @@
 
 .post {
   max-width: calc(600px + 10%);
-  margin: 0 auto;
-  padding: 5%;
+  padding: 0 5% 5%;
 }
 
 .post :global(a + p) {
@@ -159,14 +159,12 @@
 }
 
 .sideMenu {
-  max-width: calc(600px + 10%);
-  margin: 0 auto;
   padding: 0 5%;
 }
 
 .sideMenu h3 {
   margin: 0;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .sideMenu hr {
@@ -184,12 +182,50 @@
 
 .tagContainer {
   display: block;
-  margin: 0.6em 0;
+  margin: 0.2em 0;
 }
 
 .tag {
   font-size: 0.65em;
   padding-right: 0.8em;
+}
+
+@media (min-width: 1024px) {
+  .flexContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .blogIndex {
+    padding: 0 5% 0 5%;
+  }
+
+  .post {
+    padding: 0 5% 0 5%;
+  }
+
+  .sideMenu {
+    width: 20vw;
+    padding: 0 3% 0 0;
+  }
+
+  .sideMenu h3 {
+    font-size: 0.8em;
+  }
+
+  .sideMenu ul {
+    margin-top: 0.3em;
+    font-size: 0.75em;
+  }
+
+  .sideMenu li {
+    margin: 0.65em 0;
+    line-height: 1.3em;
+  }
+
+  .nextContainer {
+    padding: 0;
+  }
 }
 
 @media (max-width: 600px) {
