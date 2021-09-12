@@ -14,6 +14,7 @@ import { textBlock } from '../../lib/notion/renderers'
 import {
   getPosts,
   getAllPosts,
+  getRankedPosts,
   getPostBySlug,
   getAllTags,
   getAllBlocksByPageId,
@@ -34,6 +35,7 @@ export async function getStaticProps({ params: { slug } }) {
   }
 
   const blocks = await getAllBlocksByPageId(post.PageId)
+  const rankedPosts = await getRankedPosts()
   const recentPosts = await getPosts(5)
   const tags = await getAllTags()
 
@@ -41,6 +43,7 @@ export async function getStaticProps({ params: { slug } }) {
     props: {
       post,
       blocks,
+      rankedPosts,
       recentPosts,
       tags,
     },
@@ -64,6 +67,7 @@ const listTypes = new Set(['bulleted_list', 'numbered_list'])
 const RenderPost = ({
   post,
   blocks = [],
+  rankedPosts = [],
   recentPosts = [],
   tags = [],
   redirect,
@@ -251,6 +255,29 @@ const RenderPost = ({
           </div>
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>おすすめ記事</h3>
+          <hr />
+
+          {rankedPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {rankedPosts.length > 0 && (
+            <ul>
+              {rankedPosts.map(rankedPost => {
+                return (
+                  <li key={rankedPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(rankedPost.Slug)}
+                      passHref
+                    >
+                      <a>{rankedPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>最新記事</h3>
           <hr />
 

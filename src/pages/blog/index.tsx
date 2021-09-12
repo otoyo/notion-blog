@@ -5,24 +5,31 @@ import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink, getBeforeLink } from '../../lib/blog-helpers'
-import { getPosts, getFirstPost, getAllTags } from '../../lib/notion/client'
+import {
+  getPosts,
+  getFirstPost,
+  getRankedPosts,
+  getAllTags,
+} from '../../lib/notion/client'
 
 export async function getStaticProps() {
   const posts = await getPosts()
   const firstPost = await getFirstPost()
+  const rankedPosts = await getRankedPosts()
   const tags = await getAllTags()
 
   return {
     props: {
       posts,
       firstPost,
+      rankedPosts,
       tags,
     },
     unstable_revalidate: 60,
   }
 }
 
-export default ({ posts = [], firstPost, tags = [] }) => {
+export default ({ posts = [], firstPost, rankedPosts = [], tags = [] }) => {
   return (
     <>
       <Header path="/blog" titlePre="" />
@@ -83,6 +90,29 @@ export default ({ posts = [], firstPost, tags = [] }) => {
           )}
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>おすすめ記事</h3>
+          <hr />
+
+          {rankedPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {rankedPosts.length > 0 && (
+            <ul>
+              {rankedPosts.map(rankedPost => {
+                return (
+                  <li key={rankedPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(rankedPost.Slug)}
+                      passHref
+                    >
+                      <a>{rankedPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>カテゴリー</h3>
           <hr />
 
