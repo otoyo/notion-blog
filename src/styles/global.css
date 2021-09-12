@@ -241,7 +241,7 @@ pre.dark[class*='language-'] {
 
 .explanation {
   font-size: 1em;
-  width: 35rem;
+  width: 40rem;
   max-width: 100vw;
   padding: 0 2rem;
   background: var(--bg);
@@ -380,10 +380,10 @@ code {
   transform: skew(-20deg);
 }
 
-@media (min-width: 760px) {
+@media (min-width: 960px) {
   .container {
     margin: 0 auto;
-    width: 760px;
+    width: 960px;
     border-left: 1px solid #333;
     border-right: 1px solid #333;
   }
