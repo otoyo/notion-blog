@@ -11,15 +11,6 @@
   align-items: center;
   justify-content: flex-start;
 }
-.draftBadge {
-  border-radius: 16px;
-  background-color: black;
-  color: white;
-  font-size: 14px;
-  font-weight: 200;
-  padding: 2px 7px;
-  margin-right: 6px;
-}
 
 .noPosts {
   text-align: center;
