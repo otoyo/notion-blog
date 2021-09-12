@@ -7,10 +7,16 @@ import sharedStyles from '../../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink } from '../../../lib/blog-helpers'
 import { useEffect } from 'react'
-import { getPosts, getPostsByTag, getAllTags } from '../../../lib/notion/client'
+import {
+  getPosts,
+  getRankedPosts,
+  getPostsByTag,
+  getAllTags,
+} from '../../../lib/notion/client'
 
 export async function getStaticProps({ params: { tag } }) {
   const posts = await getPostsByTag(tag)
+  const rankedPosts = await getRankedPosts()
   const recentPosts = await getPosts(5)
   const tags = await getAllTags()
 
@@ -27,6 +33,7 @@ export async function getStaticProps({ params: { tag } }) {
   return {
     props: {
       posts,
+      rankedPosts,
       recentPosts,
       tags,
       tag,
@@ -45,7 +52,14 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({ tag, posts = [], recentPosts = [], tags = [], redirect }) => {
+export default ({
+  tag,
+  posts = [],
+  rankedPosts,
+  recentPosts = [],
+  tags = [],
+  redirect,
+}) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -125,6 +139,29 @@ export default ({ tag, posts = [], recentPosts = [], tags = [], redirect }) => {
           })}
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>おすすめ記事</h3>
+          <hr />
+
+          {rankedPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {rankedPosts.length > 0 && (
+            <ul>
+              {rankedPosts.map(rankedPost => {
+                return (
+                  <li key={rankedPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(rankedPost.Slug)}
+                      passHref
+                    >
+                      <a>{rankedPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>最新記事</h3>
           <hr />
 

@@ -16,6 +16,7 @@ import {
 } from '../../../lib/blog-helpers'
 import {
   getAllPosts,
+  getRankedPosts,
   getPostsBefore,
   getFirstPost,
   getAllTags,
@@ -24,6 +25,7 @@ import {
 export async function getStaticProps({ params: { date } }) {
   const posts = await getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE)
   const firstPost = await getFirstPost()
+  const rankedPosts = await getRankedPosts()
   const tags = await getAllTags()
 
   return {
@@ -31,6 +33,7 @@ export async function getStaticProps({ params: { date } }) {
       date,
       posts,
       firstPost,
+      rankedPosts,
       tags,
     },
     unstable_revalidate: 60,
@@ -57,7 +60,14 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({ date, posts = [], firstPost, tags = [], redirect }) => {
+export default ({
+  date,
+  posts = [],
+  firstPost,
+  rankedPosts = [],
+  tags = [],
+  redirect,
+}) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -148,6 +158,29 @@ export default ({ date, posts = [], firstPost, tags = [], redirect }) => {
           )}
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>おすすめ記事</h3>
+          <hr />
+
+          {rankedPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {rankedPosts.length > 0 && (
+            <ul>
+              {rankedPosts.map(rankedPost => {
+                return (
+                  <li key={rankedPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(rankedPost.Slug)}
+                      passHref
+                    >
+                      <a>{rankedPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>カテゴリー</h3>
           <hr />
 
