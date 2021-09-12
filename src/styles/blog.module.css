@@ -7,6 +7,10 @@
   margin-bottom: 50px;
 }
 
+.blogIndex h2 {
+  margin-top: 0;
+}
+
 .titleContainer {
   display: inline-flex;
   align-items: center;

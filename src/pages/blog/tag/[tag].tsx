@@ -7,10 +7,11 @@ import sharedStyles from '../../../styles/shared.module.css'
 
 import { getBlogLink, getTagLink } from '../../../lib/blog-helpers'
 import { useEffect } from 'react'
-import { getPostsByTag, getAllTags } from '../../../lib/notion/client'
+import { getPosts, getPostsByTag, getAllTags } from '../../../lib/notion/client'
 
 export async function getStaticProps({ params: { tag } }) {
   const posts = await getPostsByTag(tag)
+  const recentPosts = await getPosts(5)
   const tags = await getAllTags()
 
   if (posts.length === 0) {
@@ -26,6 +27,7 @@ export async function getStaticProps({ params: { tag } }) {
   return {
     props: {
       posts,
+      recentPosts,
       tags,
       tag,
     },
@@ -43,7 +45,7 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({ tag, posts = [], tags = [], redirect }) => {
+export default ({ tag, posts = [], recentPosts = [], tags = [], redirect }) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -123,6 +125,29 @@ export default ({ tag, posts = [], tags = [], redirect }) => {
           })}
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>最新記事</h3>
+          <hr />
+
+          {recentPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {recentPosts.length > 0 && (
+            <ul>
+              {recentPosts.map(recentPost => {
+                return (
+                  <li key={recentPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(recentPost.Slug)}
+                      passHref
+                    >
+                      <a>{recentPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>カテゴリー</h3>
           <hr />
 

@@ -12,7 +12,9 @@ export default () => (
 
       <div className="explanation">
         <p>
-          プログラミングやマネジメント、読んだ本のまとめを中心に書いているエンジニアブログ
+          Notion
+          Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ。このブログはNotion
+          Blogでできています。
         </p>
       </div>
 
@@ -21,7 +23,7 @@ export default () => (
       <div className="explanation">
         <ExtLink href="https://twitter.com/otoyo0122">@otoyo0122</ExtLink>
         <p>
-          CREというWebエンジニアでマネージャーな人です。エディタはNeoVimがお気に入り。記事内容に誤りがある際はお知らせください。CREでは一緒に働く仲間を募集しています。
+          CREというカスタマーサポートのために働くWebエンジニアでマネジメントも少し。記事内容に誤りがある際はお知らせください。CREでは一緒に働く仲間を募集しています。
           <Link
             href="/blog/[slug]"
             as={getBlogLink('recruitment-cre')}
