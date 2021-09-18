@@ -1,4 +1,3 @@
-const path = require('path')
 const fs = require('fs')
 
 const {
@@ -13,11 +12,11 @@ const notionClient = new Client({
 })
 
 exports.exists = function() {
-  return fs.existsSync(path.resolve(BLOG_INDEX_CACHE))
+  return fs.existsSync(BLOG_INDEX_CACHE)
 }
 
 exports.get = function() {
-  return JSON.parse(fs.readFileSync(path.resolve(BLOG_INDEX_CACHE)))
+  return JSON.parse(fs.readFileSync(BLOG_INDEX_CACHE))
 }
 
 exports.set = async function() {
@@ -63,12 +62,12 @@ exports.set = async function() {
     params['start_cursor'] = data.next_cursor
   }
 
-  fs.writeFileSync(path.resolve(BLOG_INDEX_CACHE), JSON.stringify(results))
+  fs.writeFileSync(BLOG_INDEX_CACHE, JSON.stringify(results))
   console.log(`Cached ${results.length} posts into ${BLOG_INDEX_CACHE}`)
 
   return
 }
 
 exports.expire = function() {
-  return fs.unlinkSync(path.resolve(BLOG_INDEX_CACHE))
+  return fs.unlinkSync(BLOG_INDEX_CACHE)
 }
