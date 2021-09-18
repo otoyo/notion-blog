@@ -5,12 +5,6 @@ const {
   DATABASE_ID,
 } = require('./src/lib/notion/server-constants')
 
-try {
-  fs.unlinkSync(path.resolve('.blog_index_data'))
-} catch (_) {
-  /* non fatal */
-}
-
 const warnOrError =
   process.env.NODE_ENV !== 'production'
     ? console.warn
