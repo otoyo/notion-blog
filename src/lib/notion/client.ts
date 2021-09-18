@@ -73,7 +73,12 @@ interface Link {
   Url: string
 }
 
-export async function getPosts(pageSize: number = 10, cursor?: string) {
+export async function getPosts(pageSize: number = 10) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.slice(0, pageSize)
+  }
+
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -100,10 +105,6 @@ export async function getPosts(pageSize: number = 10, cursor?: string) {
       },
     ],
     page_size: pageSize,
-  }
-
-  if (!!cursor) {
-    params['start_cursor'] = cursor
   }
 
   const data = await client.databases.query(params)
