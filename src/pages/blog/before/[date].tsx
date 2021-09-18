@@ -47,7 +47,9 @@ export async function getStaticPaths() {
   // we fallback for any unpublished posts to save build time
   // for actually published ones
   return {
-    paths: posts.map(post => getBeforeLink(post.Date)),
+    paths: posts
+      .slice(0, posts.length - 1)
+      .map(post => getBeforeLink(post.Date)),
     fallback: true,
   }
 }
