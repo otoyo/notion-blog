@@ -1,5 +1,6 @@
 import { NOTION_API_SECRET, DATABASE_ID } from './server-constants'
 const { Client } = require('@notionhq/client')
+const blogIndexCache = require('./blog-index-cache.js')
 
 const client = new Client({
   auth: NOTION_API_SECRET,
@@ -13,6 +14,7 @@ interface Post {
   Tags: string[]
   Excerpt: string
   OGImage: string
+  Rank: number
 }
 
 interface Block {
@@ -72,7 +74,12 @@ interface Link {
   Url: string
 }
 
-export async function getPosts(pageSize: number = 10, cursor?: string) {
+export async function getPosts(pageSize: number = 10) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.slice(0, pageSize)
+  }
+
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -101,95 +108,79 @@ export async function getPosts(pageSize: number = 10, cursor?: string) {
     page_size: pageSize,
   }
 
-  if (!!cursor) {
-    params['start_cursor'] = cursor
-  }
-
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getAllPosts() {
-  let allPosts: Post[] = []
+  let results = []
 
-  let params = {
-    database_id: DATABASE_ID,
-    filter: {
-      and: [
-        {
-          property: 'Published',
-          checkbox: {
-            equals: true,
+  if (blogIndexCache.exists()) {
+    results = blogIndexCache.get()
+    console.log('Found cached posts.')
+  } else {
+    let params = {
+      database_id: DATABASE_ID,
+      filter: {
+        and: [
+          {
+            property: 'Published',
+            checkbox: {
+              equals: true,
+            },
           },
-        },
+          {
+            property: 'Date',
+            date: {
+              on_or_before: new Date().toISOString(),
+            },
+          },
+        ],
+      },
+      sorts: [
         {
           property: 'Date',
-          date: {
-            on_or_before: new Date().toISOString(),
-          },
+          timestamp: 'created_time',
+          direction: 'descending',
         },
       ],
-    },
-    sorts: [
-      {
-        property: 'Date',
-        timestamp: 'created_time',
-        direction: 'descending',
-      },
-    ],
-    page_size: 100,
-  }
-
-  while (true) {
-    const data = await client.databases.query(params)
-
-    const posts = data.results.map(item => {
-      const prop = item.properties
-
-      const post: Post = {
-        PageId: item.id,
-        Title: prop.Page.title[0].plain_text,
-        Slug: prop.Slug.rich_text[0].plain_text,
-        Date: prop.Date.date.start,
-        Tags: prop.Tags.multi_select.map(opt => opt.name),
-        Excerpt: prop.Excerpt.rich_text[0].plain_text,
-        OGImage:
-          prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-      }
-
-      return post
-    })
-
-    allPosts = allPosts.concat(posts)
-
-    if (!data.has_more) {
-      break
+      page_size: 100,
     }
 
-    params['start_cursor'] = data.next_cursor
+    while (true) {
+      const data = await client.databases.query(params)
+
+      results = results.concat(data.results)
+
+      if (!data.has_more) {
+        break
+      }
+
+      params['start_cursor'] = data.next_cursor
+    }
   }
 
-  return allPosts
+  return results.map(item => _buildPost(item))
 }
 
 export async function getRankedPosts(pageSize: number = 10) {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts
+      .filter(post => !!post.Rank)
+      .sort((a, b) => {
+        if (a.Rank > b.Rank) {
+          return -1
+        } else if (a.Rank === b.Rank) {
+          return 0
+        }
+        return 1
+      })
+      .slice(0, pageSize)
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -224,26 +215,16 @@ export async function getRankedPosts(pageSize: number = 10) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getPostsBefore(date: string, pageSize: number = 10) {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.filter(post => post.Date < date).slice(0, pageSize)
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -273,26 +254,16 @@ export async function getPostsBefore(date: string, pageSize: number = 10) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getFirstPost() {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts[allPosts.length - 1]
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -322,24 +293,15 @@ export async function getFirstPost() {
 
   const data = await client.databases.query(params)
 
-  const result = data.results[0]
-  const prop = result.properties
-
-  const post: Post = {
-    PageId: result.id,
-    Title: prop.Page.title[0].plain_text,
-    Slug: prop.Slug.rich_text[0].plain_text,
-    Date: prop.Date.date.start,
-    Tags: prop.Tags.multi_select.map(opt => opt.name),
-    Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    OGImage:
-      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-  }
-
-  return post
+  return _buildPost(data.results[0])
 }
 
 export async function getPostBySlug(slug: string) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.find(post => post.Slug === slug)
+  }
+
   const data = await client.databases.query({
     database_id: DATABASE_ID,
     filter: {
@@ -373,24 +335,15 @@ export async function getPostBySlug(slug: string) {
     ],
   })
 
-  const result = data.results[0]
-  const prop = result.properties
-
-  const post: Post = {
-    PageId: result.id,
-    Title: prop.Page.title[0].plain_text,
-    Slug: prop.Slug.rich_text[0].plain_text,
-    Date: prop.Date.date.start,
-    Tags: prop.Tags.multi_select.map(opt => opt.name),
-    Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    OGImage:
-      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-  }
-
-  return post
+  return _buildPost(data.results[0])
 }
 
-export async function getPostsByTag(tag: string, cursor?: string) {
+export async function getPostsByTag(tag: string) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.filter(post => post.Tags.includes(tag))
+  }
+
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -424,28 +377,9 @@ export async function getPostsByTag(tag: string, cursor?: string) {
     ],
   }
 
-  if (!!cursor) {
-    params['start_cursor'] = cursor
-  }
-
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getAllBlocksByPageId(pageId) {
@@ -566,4 +500,22 @@ export async function getAllTags() {
     database_id: DATABASE_ID,
   })
   return data.properties.Tags.multi_select.options.map(option => option.name)
+}
+
+function _buildPost(data) {
+  const prop = data.properties
+
+  const post: Post = {
+    PageId: data.id,
+    Title: prop.Page.title[0].plain_text,
+    Slug: prop.Slug.rich_text[0].plain_text,
+    Date: prop.Date.date.start,
+    Tags: prop.Tags.multi_select.map(opt => opt.name),
+    Excerpt: prop.Excerpt.rich_text[0].plain_text,
+    OGImage:
+      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+    Rank: prop.Rank.number,
+  }
+
+  return post
 }
