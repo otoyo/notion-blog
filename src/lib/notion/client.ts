@@ -165,7 +165,22 @@ export async function getAllPosts() {
 }
 
 export async function getRankedPosts(pageSize: number = 10) {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts
+      .filter(post => !!post.Rank)
+      .sort((a, b) => {
+        if (a.Rank > b.Rank) {
+          return -1
+        } else if (a.Rank === b.Rank) {
+          return 0
+        }
+        return 1
+      })
+      .slice(0, pageSize)
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -204,7 +219,12 @@ export async function getRankedPosts(pageSize: number = 10) {
 }
 
 export async function getPostsBefore(date: string, pageSize: number = 10) {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.filter(post => post.Date < date).slice(0, pageSize)
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -238,7 +258,12 @@ export async function getPostsBefore(date: string, pageSize: number = 10) {
 }
 
 export async function getFirstPost() {
-  let params = {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts[allPosts.length - 1]
+  }
+
+  const params = {
     database_id: DATABASE_ID,
     filter: {
       and: [
@@ -272,6 +297,11 @@ export async function getFirstPost() {
 }
 
 export async function getPostBySlug(slug: string) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.find(post => post.Slug === slug)
+  }
+
   const data = await client.databases.query({
     database_id: DATABASE_ID,
     filter: {
@@ -308,7 +338,12 @@ export async function getPostBySlug(slug: string) {
   return _buildPost(data.results[0])
 }
 
-export async function getPostsByTag(tag: string, cursor?: string) {
+export async function getPostsByTag(tag: string) {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return allPosts.filter(post => post.Tags.includes(tag))
+  }
+
   let params = {
     database_id: DATABASE_ID,
     filter: {
@@ -340,10 +375,6 @@ export async function getPostsByTag(tag: string, cursor?: string) {
         direction: 'descending',
       },
     ],
-  }
-
-  if (!!cursor) {
-    params['start_cursor'] = cursor
   }
 
   const data = await client.databases.query(params)
