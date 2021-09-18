@@ -44,18 +44,10 @@ export async function getStaticProps({ params: { date } }) {
 export async function getStaticPaths() {
   const posts = await getAllPosts()
 
-  let dates = []
-  posts.forEach((post, i) => {
-    if (i % NUMBER_OF_POSTS_PER_PAGE === NUMBER_OF_POSTS_PER_PAGE - 1) {
-      let lastPostPerPage = posts[i]
-      dates.push(lastPostPerPage.Date)
-    }
-  })
-
   // we fallback for any unpublished posts to save build time
   // for actually published ones
   return {
-    paths: dates.map(date => getBeforeLink(date)),
+    paths: posts.map(post => getBeforeLink(post.Date)),
     fallback: true,
   }
 }
