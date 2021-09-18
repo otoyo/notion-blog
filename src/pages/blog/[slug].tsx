@@ -16,6 +16,7 @@ import {
   getAllPosts,
   getRankedPosts,
   getPostBySlug,
+  getPostsByTag,
   getAllTags,
   getAllBlocksByPageId,
 } from '../../lib/notion/client'
@@ -39,12 +40,20 @@ export async function getStaticProps({ params: { slug } }) {
   const recentPosts = await getPosts(5)
   const tags = await getAllTags()
 
+  let sameTagPosts = []
+  if (post.Tags.length > 0) {
+    sameTagPosts = (await getPostsByTag(post.Tags[0], 6)).filter(
+      p => p.Slug !== post.Slug
+    )
+  }
+
   return {
     props: {
       post,
       blocks,
       rankedPosts,
       recentPosts,
+      sameTagPosts,
       tags,
     },
     unstable_revalidate: 60,
@@ -69,6 +78,7 @@ const RenderPost = ({
   blocks = [],
   rankedPosts = [],
   recentPosts = [],
+  sameTagPosts = [],
   tags = [],
   redirect,
 }) => {
@@ -255,6 +265,29 @@ const RenderPost = ({
           </div>
         </div>
         <div className={blogStyles.sideMenu}>
+          <h3>同じカテゴリーの記事</h3>
+          <hr />
+
+          {sameTagPosts.length === 0 && (
+            <div className={blogStyles.noContents}>There are no posts yet</div>
+          )}
+          {sameTagPosts.length > 0 && (
+            <ul>
+              {sameTagPosts.map(sameTagPost => {
+                return (
+                  <li key={sameTagPost.Slug}>
+                    <Link
+                      href="/blog/[slug]"
+                      as={getBlogLink(sameTagPost.Slug)}
+                      passHref
+                    >
+                      <a>{sameTagPost.Title}</a>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
           <h3>おすすめ記事</h3>
           <hr />
 
