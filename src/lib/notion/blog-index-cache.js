@@ -68,3 +68,7 @@ exports.set = async function() {
 
   return
 }
+
+exports.expire = function() {
+  return fs.unlinkSync(path.resolve(BLOG_INDEX_CACHE))
+}
