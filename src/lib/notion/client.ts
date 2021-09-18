@@ -14,6 +14,7 @@ interface Post {
   Tags: string[]
   Excerpt: string
   OGImage: string
+  Rank: number
 }
 
 interface Block {
@@ -109,22 +110,7 @@ export async function getPosts(pageSize: number = 10) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getAllPosts() {
@@ -175,22 +161,7 @@ export async function getAllPosts() {
     }
   }
 
-  return results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return results.map(item => _buildPost(item))
 }
 
 export async function getRankedPosts(pageSize: number = 10) {
@@ -229,22 +200,7 @@ export async function getRankedPosts(pageSize: number = 10) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getPostsBefore(date: string, pageSize: number = 10) {
@@ -278,22 +234,7 @@ export async function getPostsBefore(date: string, pageSize: number = 10) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getFirstPost() {
@@ -327,21 +268,7 @@ export async function getFirstPost() {
 
   const data = await client.databases.query(params)
 
-  const result = data.results[0]
-  const prop = result.properties
-
-  const post: Post = {
-    PageId: result.id,
-    Title: prop.Page.title[0].plain_text,
-    Slug: prop.Slug.rich_text[0].plain_text,
-    Date: prop.Date.date.start,
-    Tags: prop.Tags.multi_select.map(opt => opt.name),
-    Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    OGImage:
-      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-  }
-
-  return post
+  return _buildPost(data.results[0])
 }
 
 export async function getPostBySlug(slug: string) {
@@ -378,21 +305,7 @@ export async function getPostBySlug(slug: string) {
     ],
   })
 
-  const result = data.results[0]
-  const prop = result.properties
-
-  const post: Post = {
-    PageId: result.id,
-    Title: prop.Page.title[0].plain_text,
-    Slug: prop.Slug.rich_text[0].plain_text,
-    Date: prop.Date.date.start,
-    Tags: prop.Tags.multi_select.map(opt => opt.name),
-    Excerpt: prop.Excerpt.rich_text[0].plain_text,
-    OGImage:
-      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-  }
-
-  return post
+  return _buildPost(data.results[0])
 }
 
 export async function getPostsByTag(tag: string, cursor?: string) {
@@ -435,22 +348,7 @@ export async function getPostsByTag(tag: string, cursor?: string) {
 
   const data = await client.databases.query(params)
 
-  return data.results.map(item => {
-    const prop = item.properties
-
-    const post: Post = {
-      PageId: item.id,
-      Title: prop.Page.title[0].plain_text,
-      Slug: prop.Slug.rich_text[0].plain_text,
-      Date: prop.Date.date.start,
-      Tags: prop.Tags.multi_select.map(opt => opt.name),
-      Excerpt: prop.Excerpt.rich_text[0].plain_text,
-      OGImage:
-        prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
-    }
-
-    return post
-  })
+  return data.results.map(item => _buildPost(item))
 }
 
 export async function getAllBlocksByPageId(pageId) {
@@ -571,4 +469,22 @@ export async function getAllTags() {
     database_id: DATABASE_ID,
   })
   return data.properties.Tags.multi_select.options.map(option => option.name)
+}
+
+function _buildPost(data) {
+  const prop = data.properties
+
+  const post: Post = {
+    PageId: data.id,
+    Title: prop.Page.title[0].plain_text,
+    Slug: prop.Slug.rich_text[0].plain_text,
+    Date: prop.Date.date.start,
+    Tags: prop.Tags.multi_select.map(opt => opt.name),
+    Excerpt: prop.Excerpt.rich_text[0].plain_text,
+    OGImage:
+      prop.OGImage.files.length > 0 ? prop.OGImage.files[0].file.url : null,
+    Rank: prop.Rank.number,
+  }
+
+  return post
 }
