@@ -338,10 +338,10 @@ export async function getPostBySlug(slug: string) {
   return _buildPost(data.results[0])
 }
 
-export async function getPostsByTag(tag: string) {
+export async function getPostsByTag(tag: string, pageSize: number = 100) {
   if (blogIndexCache.exists()) {
     const allPosts = await getAllPosts()
-    return allPosts.filter(post => post.Tags.includes(tag))
+    return allPosts.filter(post => post.Tags.includes(tag)).slice(0, pageSize)
   }
 
   let params = {
@@ -375,6 +375,7 @@ export async function getPostsByTag(tag: string) {
         direction: 'descending',
       },
     ],
+    page_size: pageSize,
   }
 
   const data = await client.databases.query(params)
