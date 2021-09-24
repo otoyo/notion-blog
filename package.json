@@ -5,7 +5,8 @@
     "dev": "next dev",
     "start": "next start",
     "build": "node scripts/set-blog-index-cache.js && next build && node scripts/expire-blog-index-cache.js",
-    "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\" --ignore-path .gitignore"
+    "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\" --ignore-path .gitignore",
+    "lint": "next lint"
   },
   "husky": {
     "hooks": {
@@ -29,6 +30,8 @@
     "@types/katex": "^0.11.0",
     "@types/node": "^13.1.2",
     "@types/react": "^16.9.17",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
