@@ -10,7 +10,14 @@ const RenderPage = () => (
   <>
     <Header titlePre="" />
     <div className={sharedStyles.layout}>
-      <Image src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Image src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
+      </div>
 
       <div className="explanation">
         <p>
