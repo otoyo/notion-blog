@@ -198,47 +198,6 @@ pre.dark[class*='language-'] {
   color: #50e3c2;
 }
 
-.links {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 4rem auto;
-  width: 920px;
-  max-width: calc(100vw - var(--gap-double));
-}
-
-.feature {
-  flex: 0 0 25%;
-  align-items: center;
-  display: inline-flex;
-  padding: 0 0.5rem 1.5rem;
-  margin: 0 auto;
-}
-
-.feature h4 {
-  margin: 0 0 0 0.5rem;
-  font-weight: 700;
-  font-size: 0.95rem;
-  white-space: nowrap;
-}
-
-@media (max-width: 600px) {
-  .feature div {
-    flex-basis: auto;
-    padding-left: 0;
-  }
-
-  .feature h4 {
-    font-size: 0.75rem;
-  }
-}
-
 .explanation {
   font-size: 1em;
   width: 40rem;
@@ -268,10 +227,6 @@ a {
 }
 a:hover {
   color: #3291ff;
-}
-
-.links {
-  margin-top: var(--gap);
 }
 
 mark {

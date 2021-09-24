@@ -1,11 +1,9 @@
-import { NUMBER_OF_POSTS_PER_PAGE } from '../../../lib/notion/server-constants'
-
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { NUMBER_OF_POSTS_PER_PAGE } from '../../../lib/notion/server-constants'
 import Header from '../../../components/header'
-
 import blogStyles from '../../../styles/blog.module.css'
 import sharedStyles from '../../../styles/shared.module.css'
 
@@ -36,7 +34,7 @@ export async function getStaticProps({ params: { date } }) {
       rankedPosts,
       tags,
     },
-    unstable_revalidate: 60,
+    revalidate: 60,
   }
 }
 
@@ -54,7 +52,7 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({
+const RenderPostsBeforeDate = ({
   date,
   posts = [],
   firstPost,
@@ -68,7 +66,7 @@ export default ({
     if (redirect && !posts) {
       router.replace(redirect)
     }
-  }, [redirect, posts])
+  }, [router, redirect, posts])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -82,7 +80,7 @@ export default ({
     return (
       <div className={blogStyles.post}>
         <p>
-          Woops! didn't find that post, redirecting you back to the blog index
+          Woops! did not find that post, redirecting you back to the blog index
         </p>
       </div>
     )
@@ -199,3 +197,5 @@ export default ({
     </>
   )
 }
+
+export default RenderPostsBeforeDate

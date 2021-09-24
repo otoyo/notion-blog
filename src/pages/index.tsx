@@ -1,14 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
+
 import Header from '../components/header'
 import ExtLink from '../components/ext-link'
 import sharedStyles from '../styles/shared.module.css'
 import { getBlogLink } from '../lib/blog-helpers'
 
-export default () => (
+const RenderPage = () => (
   <>
     <Header titlePre="" />
     <div className={sharedStyles.layout}>
-      <img src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Image src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
+      </div>
 
       <div className="explanation">
         <p>
@@ -36,3 +45,5 @@ export default () => (
     </div>
   </>
 )
+
+export default RenderPage

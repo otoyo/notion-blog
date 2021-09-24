@@ -1,6 +1,6 @@
 import ExtLink from './ext-link'
 
-export default () => (
+const Footer = () => (
   <>
     <footer>
       <div>
@@ -17,3 +17,5 @@ export default () => (
     </footer>
   </>
 )
+
+export default Footer

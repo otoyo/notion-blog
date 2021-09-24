@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Header from '../../../components/header'
 
+import Header from '../../../components/header'
 import blogStyles from '../../../styles/blog.module.css'
 import sharedStyles from '../../../styles/shared.module.css'
-
 import { getBlogLink, getTagLink } from '../../../lib/blog-helpers'
 import { useEffect } from 'react'
 import {
@@ -26,7 +25,7 @@ export async function getStaticProps({ params: { tag } }) {
       props: {
         redirect: '/blog',
       },
-      unstable_revalidate: 30,
+      revalidate: 30,
     }
   }
 
@@ -38,7 +37,7 @@ export async function getStaticProps({ params: { tag } }) {
       tags,
       tag,
     },
-    unstable_revalidate: 60,
+    revalidate: 60,
   }
 }
 
@@ -52,7 +51,7 @@ export async function getStaticPaths() {
   }
 }
 
-export default ({
+const RenderPostsByTags = ({
   tag,
   posts = [],
   rankedPosts,
@@ -66,7 +65,7 @@ export default ({
     if (redirect && posts.length === 0) {
       router.replace(redirect)
     }
-  }, [redirect, posts])
+  }, [router, redirect, posts])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -80,7 +79,7 @@ export default ({
     return (
       <div className={blogStyles.post}>
         <p>
-          Woops! didn't find any posts, redirecting you back to the blog index
+          Woops! did not find any posts, redirecting you back to the blog index
         </p>
       </div>
     )
@@ -209,3 +208,5 @@ export default ({
     </>
   )
 }
+
+export default RenderPostsByTags

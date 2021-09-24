@@ -1,14 +1,14 @@
+import React, { useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import fetch from 'node-fetch'
 import { useRouter } from 'next/router'
+
 import Header from '../../components/header'
 import Heading from '../../components/heading'
 import Share from '../../components/share'
 import components from '../../components/dynamic'
-import ReactJSXParser from '@zeit/react-jsx-parser'
 import blogStyles from '../../styles/blog.module.css'
-import React, { CSSProperties, useEffect } from 'react'
-
 import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
 import { textBlock } from '../../lib/notion/renderers'
 import {
@@ -31,7 +31,7 @@ export async function getStaticProps({ params: { slug } }) {
       props: {
         redirect: '/blog',
       },
-      unstable_revalidate: 30,
+      revalidate: 30,
     }
   }
 
@@ -56,7 +56,7 @@ export async function getStaticProps({ params: { slug } }) {
       sameTagPosts,
       tags,
     },
-    unstable_revalidate: 60,
+    revalidate: 60,
   }
 }
 
@@ -99,7 +99,7 @@ const RenderPost = ({
     if (redirect && !post) {
       router.replace(redirect)
     }
-  }, [redirect, post])
+  }, [router, redirect, post])
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -113,7 +113,7 @@ const RenderPost = ({
     return (
       <div className={blogStyles.post}>
         <p>
-          Woops! didn't find that post, redirecting you back to the blog index
+          Woops! did not find that post, redirecting you back to the blog index
         </p>
       </div>
     )
@@ -231,7 +231,9 @@ const RenderPost = ({
                 renderHeading('h3')
                 break
               case 'image':
-                toRender.push(<img src={block.Image.File.Url} />)
+                toRender.push(
+                  <img src={block.Image.File.Url} alt="image in the content" />
+                )
                 if (
                   block.Image.Caption.length > 0 &&
                   block.Image.Caption[0].Text.Content
