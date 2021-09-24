@@ -232,10 +232,7 @@ const RenderPost = ({
                 break
               case 'image':
                 toRender.push(
-                  <Image
-                    src={block.Image.File.Url}
-                    alt="image in the content"
-                  />
+                  <img src={block.Image.File.Url} alt="image in the content" />
                 )
                 if (
                   block.Image.Caption.length > 0 &&
