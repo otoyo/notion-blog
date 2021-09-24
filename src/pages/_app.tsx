@@ -1,9 +1,11 @@
 import '../styles/global.css'
 import 'katex/dist/katex.css'
-import Footer from '../components/footer'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+
 import * as gtag from '../lib/gtag'
+import Footer from '../components/footer'
+import GoogleAnalytics from '../components/google-analytics'
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter()
@@ -21,6 +23,7 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <>
+      <GoogleAnalytics />
       <div className="container">
         <Component {...pageProps} />
         <Footer />
