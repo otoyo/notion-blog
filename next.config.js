@@ -33,6 +33,10 @@ if (!DATABASE_ID) {
 module.exports = {
   target: 'experimental-serverless-trace',
 
+  images: {
+    domains: ['s3.us-west-2.amazonaws.com'],
+  },
+
   experimental: {
     modern: true,
     async rewrites() {
