@@ -33,7 +33,7 @@ function createSitemap(tags = []) {
   </urlset>`
 }
 
-export default async function(req: IncomingMessage, res: ServerResponse) {
+const Sitemap = async function(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   try {
     const tags: string[] = await getAllTags()
@@ -45,3 +45,5 @@ export default async function(req: IncomingMessage, res: ServerResponse) {
     res.end()
   }
 }
+
+export default Sitemap

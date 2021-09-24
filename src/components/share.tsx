@@ -10,9 +10,10 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from 'react-share'
+
 import * as gtag from '../lib/gtag'
 
-export default ({ text = '', url = '' }) => {
+const Share = ({ text = '', url = '' }) => {
   return (
     <>
       <ul className="shareButtons">
@@ -79,3 +80,5 @@ export default ({ text = '', url = '' }) => {
     </>
   )
 }
+
+export default Share

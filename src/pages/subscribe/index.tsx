@@ -3,7 +3,7 @@ import Header from '../../components/header'
 import ExtLink from '../../components/ext-link'
 import sharedStyles from '../../styles/shared.module.css'
 
-export default () => (
+const RenderSubscribePage = () => (
   <>
     <Header
       path="/subscribe"
@@ -50,3 +50,5 @@ export default () => (
     </div>
   </>
 )
+
+export default RenderSubscribePage

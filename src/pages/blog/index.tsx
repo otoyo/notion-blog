@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import Header from '../../components/header'
 
+import Header from '../../components/header'
 import blogStyles from '../../styles/blog.module.css'
 import sharedStyles from '../../styles/shared.module.css'
-
 import { getBlogLink, getTagLink, getBeforeLink } from '../../lib/blog-helpers'
 import {
   getPosts,
@@ -29,7 +28,12 @@ export async function getStaticProps() {
   }
 }
 
-export default ({ posts = [], firstPost, rankedPosts = [], tags = [] }) => {
+const RenderPosts = ({
+  posts = [],
+  firstPost,
+  rankedPosts = [],
+  tags = [],
+}) => {
   return (
     <>
       <Header path="/blog" titlePre="" />
@@ -137,3 +141,5 @@ export default ({ posts = [], firstPost, rankedPosts = [], tags = [] }) => {
     </>
   )
 }
+
+export default RenderPosts

@@ -56,7 +56,7 @@ function createRSS(posts = []) {
   </feed>`
 }
 
-export default async function(req: IncomingMessage, res: ServerResponse) {
+const Atom = async function(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   try {
     const posts = await getAllPosts()
@@ -68,3 +68,5 @@ export default async function(req: IncomingMessage, res: ServerResponse) {
     res.end()
   }
 }
+
+export default Atom
