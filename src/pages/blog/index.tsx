@@ -25,7 +25,7 @@ export async function getStaticProps() {
       rankedPosts,
       tags,
     },
-    unstable_revalidate: 60,
+    revalidate: 60,
   }
 }
 
