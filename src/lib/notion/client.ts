@@ -497,10 +497,17 @@ export async function getAllBlocksByPageId(pageId) {
 }
 
 export async function getAllTags() {
+  if (blogIndexCache.exists()) {
+    const allPosts = await getAllPosts()
+    return [...new Set(allPosts.flatMap(post => post.Tags))].sort()
+  }
+
   const data = await client.databases.retrieve({
     database_id: DATABASE_ID,
   })
-  return data.properties.Tags.multi_select.options.map(option => option.name)
+  return data.properties.Tags.multi_select.options
+    .map(option => option.name)
+    .sort()
 }
 
 function _buildPost(data) {
