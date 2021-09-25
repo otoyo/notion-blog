@@ -13,7 +13,7 @@ import {
   getBeforeLink,
 } from '../../../lib/blog-helpers'
 import {
-  getAllPosts,
+  getPosts,
   getRankedPosts,
   getPostsBefore,
   getFirstPost,
@@ -21,6 +21,10 @@ import {
 } from '../../../lib/notion/client'
 
 export async function getStaticProps({ params: { date } }) {
+  if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
+    return { notFound: true }
+  }
+
   const posts = await getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE)
   const firstPost = await getFirstPost()
   const rankedPosts = await getRankedPosts()
@@ -38,17 +42,14 @@ export async function getStaticProps({ params: { date } }) {
   }
 }
 
-// Return our list of blog posts to prerender
 export async function getStaticPaths() {
-  const posts = await getAllPosts()
+  const posts = await getPosts()
+  const path = getBeforeLink(posts[posts.length - 1].Date)
 
-  // we fallback for any unpublished posts to save build time
-  // for actually published ones
+  // only latest 1 page will be returned in order to reduce build time
   return {
-    paths: posts
-      .slice(0, posts.length - 1)
-      .map(post => getBeforeLink(post.Date)),
-    fallback: true,
+    paths: [path],
+    fallback: 'blocking',
   }
 }
 
@@ -68,19 +69,13 @@ const RenderPostsBeforeDate = ({
     }
   }, [router, redirect, posts])
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
-
   // if you don't have a post at this point, and are not
   // loading one from fallback then  redirect back to the index
   if (!posts) {
     return (
       <div className={blogStyles.post}>
         <p>
-          Woops! did not find that post, redirecting you back to the blog index
+          Woops! did not find the posts, redirecting you back to the blog index
         </p>
       </div>
     )
