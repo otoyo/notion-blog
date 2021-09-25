@@ -261,8 +261,9 @@ const RenderPost = ({
           })}
           <div>
             <Share
-              text={post.Title}
+              title={post.Title}
               url={'https://alpacat.com' + getBlogLink(post.Slug)}
+              id={post.Slug}
             />
           </div>
         </div>

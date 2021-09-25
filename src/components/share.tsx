@@ -13,19 +13,19 @@ import {
 
 import * as gtag from '../lib/gtag'
 
-const Share = ({ text = '', url = '' }) => {
+const Share = ({ title = '', url, id = null }) => {
   return (
     <>
       <ul className="shareButtons">
         <li>
           <TwitterShareButton
             url={url}
-            title={text}
+            title={title}
             beforeOnClick={() =>
-              gtag.event({
-                action: 'share',
-                category: 'engagement',
-                label: 'twitter',
+              gtag.share({
+                method: 'twitter',
+                contentType: 'article',
+                itemId: id,
               })
             }
           >
@@ -36,10 +36,10 @@ const Share = ({ text = '', url = '' }) => {
           <FacebookShareButton
             url={url}
             beforeOnClick={() =>
-              gtag.event({
-                action: 'share',
-                category: 'engagement',
-                label: 'facebook',
+              gtag.share({
+                method: 'facebook',
+                contentType: 'article',
+                itemId: id,
               })
             }
           >
@@ -49,12 +49,12 @@ const Share = ({ text = '', url = '' }) => {
         <li>
           <PocketShareButton
             url={url}
-            title={text}
+            title={title}
             beforeOnClick={() =>
-              gtag.event({
-                action: 'share',
-                category: 'engagement',
-                label: 'pocket',
+              gtag.share({
+                method: 'pocket',
+                contentType: 'article',
+                itemId: id,
               })
             }
           >
@@ -64,12 +64,12 @@ const Share = ({ text = '', url = '' }) => {
         <li>
           <HatenaShareButton
             url={url}
-            title={text}
+            title={title}
             beforeOnClick={() =>
-              gtag.event({
-                action: 'share',
-                category: 'engagement',
-                label: 'hatena',
+              gtag.share({
+                method: 'hatena',
+                contentType: 'article',
+                itemId: id,
               })
             }
           >
