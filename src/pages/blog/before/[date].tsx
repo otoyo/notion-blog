@@ -34,7 +34,7 @@ export async function getStaticProps({ params: { date } }) {
       rankedPosts,
       tags,
     },
-    revalidate: 60,
+    revalidate: 3600,
   }
 }
 
