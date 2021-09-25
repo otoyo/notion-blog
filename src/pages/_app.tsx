@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }) => {
   useEffect(() => {
     const handleRouteChange = url => {
       if (location.host === 'alpacat.com') {
-        gtag.pageview(url)
+        gtag.pageview(pageProps.title, url)
       }
     }
     router.events.on('routeChangeComplete', handleRouteChange)
