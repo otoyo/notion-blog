@@ -47,7 +47,7 @@ export async function getStaticPaths() {
 
   return {
     paths: tags.map(tag => getTagLink(tag)),
-    fallback: true,
+    fallback: false,
   }
 }
 
@@ -66,24 +66,6 @@ const RenderPostsByTags = ({
       router.replace(redirect)
     }
   }, [router, redirect, posts])
-
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
-
-  // if you don't have any posts at this point, and are not
-  // loading one from fallback then  redirect back to the index
-  if (posts.length === 0) {
-    return (
-      <div className={blogStyles.post}>
-        <p>
-          Woops! did not find any posts, redirecting you back to the blog index
-        </p>
-      </div>
-    )
-  }
 
   return (
     <>

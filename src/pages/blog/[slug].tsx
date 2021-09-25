@@ -63,11 +63,9 @@ export async function getStaticProps({ params: { slug } }) {
 // Return our list of blog posts to prerender
 export async function getStaticPaths() {
   const posts = await getAllPosts()
-  // we fallback for any unpublished posts to save build time
-  // for actually published ones
   return {
     paths: posts.map(post => getBlogLink(post.Slug)),
-    fallback: true,
+    fallback: false,
   }
 }
 
@@ -100,24 +98,6 @@ const RenderPost = ({
       router.replace(redirect)
     }
   }, [router, redirect, post])
-
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
-
-  // if you don't have a post at this point, and are not
-  // loading one from fallback then  redirect back to the index
-  if (!post) {
-    return (
-      <div className={blogStyles.post}>
-        <p>
-          Woops! did not find that post, redirecting you back to the blog index
-        </p>
-      </div>
-    )
-  }
 
   return (
     <>
