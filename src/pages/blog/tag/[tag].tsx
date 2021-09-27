@@ -47,7 +47,7 @@ export async function getStaticPaths() {
 
   return {
     paths: tags.map(tag => getTagLink(tag)),
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -66,6 +66,16 @@ const RenderPostsByTags = ({
       router.replace(redirect)
     }
   }, [router, redirect, posts])
+
+  if (!posts) {
+    return (
+      <div className={blogStyles.post}>
+        <p>
+          Woops! did not find the posts, redirecting you back to the blog index
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>
