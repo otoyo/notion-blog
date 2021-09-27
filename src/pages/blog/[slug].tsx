@@ -65,7 +65,7 @@ export async function getStaticPaths() {
   const posts = await getAllPosts()
   return {
     paths: posts.map(post => getBlogLink(post.Slug)),
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -98,6 +98,16 @@ const RenderPost = ({
       router.replace(redirect)
     }
   }, [router, redirect, post])
+
+  if (!post) {
+    return (
+      <div className={blogStyles.post}>
+        <p>
+          Woops! did not find the posts, redirecting you back to the blog index
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>
