@@ -235,6 +235,16 @@ const RenderPost = ({
                   )
                 }
                 break
+              case 'code':
+                toRender.push(
+                  <components.Code
+                    key={block.Id}
+                    language={block.Language || ''}
+                  >
+                    {block.Code.Text.map(richText => richText.Text.Content)}
+                  </components.Code>
+                )
+                break
               default:
                 if (
                   process.env.NODE_ENV !== 'production' &&
