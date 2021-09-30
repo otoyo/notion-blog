@@ -39,6 +39,10 @@ interface ImageBlock extends Block {
   Image: Image
 }
 
+interface CodeBlock extends Block {
+  Code: Code
+}
+
 interface Image {
   Caption: RichText[]
   Type: string
@@ -47,6 +51,11 @@ interface Image {
 
 interface File {
   Url: string
+}
+
+interface Code {
+  Text: RichText[]
+  Language: string
 }
 
 interface RichText {
@@ -470,6 +479,42 @@ export async function getAllBlocksByPageId(pageId) {
             Type: item.type,
             HasChildren: item.has_children,
             Image: image,
+          }
+          break
+        case 'code':
+          const code: Code = {
+            Text: item[item.type].text.map(item => {
+              const text: Text = {
+                Content: item.text.content,
+                Link: item.text.link,
+              }
+
+              const annotation: Annotation = {
+                Bold: item.annotations.bold,
+                Italic: item.annotations.italic,
+                Strikethrough: item.annotations.strikethrough,
+                Underline: item.annotations.underline,
+                Code: item.annotations.code,
+                Color: item.annotations.color,
+              }
+
+              const richText: RichText = {
+                Text: text,
+                Annotation: annotation,
+                PlainText: item.plain_text,
+                Href: item.href,
+              }
+
+              return richText
+            }),
+            Language: item.code.language,
+          }
+
+          block = {
+            Id: item.id,
+            Type: item.type,
+            HasChildren: item.has_children,
+            Code: code,
           }
           break
         default:
