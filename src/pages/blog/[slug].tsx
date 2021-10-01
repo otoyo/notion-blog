@@ -241,7 +241,9 @@ const RenderPost = ({
                     key={block.Id}
                     language={block.Language || ''}
                   >
-                    {block.Code.Text.map(richText => richText.Text.Content)}
+                    {block.Code.Text.map(
+                      richText => richText.Text.Content
+                    ).join('')}
                   </components.Code>
                 )
                 break
