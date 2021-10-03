@@ -12,11 +12,11 @@ import {
 import * as gtag from '../lib/gtag'
 import sharedStyles from '../styles/shared.module.css'
 
-const Share = ({ title = '', url, id = null }) => {
+const SocialButtons = ({ title = '', url, id = null }) => {
   return (
     <>
-      <ul className={sharedStyles.shareButtons}>
-        <li className={sharedStyles.shareButton}>
+      <ul className={sharedStyles.socialButtons}>
+        <li className={sharedStyles.socialButtonsItem}>
           <TwitterShareButton
             url={url}
             title={title}
@@ -31,7 +31,7 @@ const Share = ({ title = '', url, id = null }) => {
             <TwitterIcon size={32} round={true} />
           </TwitterShareButton>
         </li>
-        <li className={sharedStyles.shareButton}>
+        <li className={sharedStyles.socialButtonsItem}>
           <FacebookShareButton
             url={url}
             beforeOnClick={() =>
@@ -45,7 +45,7 @@ const Share = ({ title = '', url, id = null }) => {
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
         </li>
-        <li className={sharedStyles.shareButton}>
+        <li className={sharedStyles.socialButtonsItem}>
           <PocketShareButton
             url={url}
             title={title}
@@ -60,7 +60,7 @@ const Share = ({ title = '', url, id = null }) => {
             <PocketIcon size={32} round={true} />
           </PocketShareButton>
         </li>
-        <li className={sharedStyles.shareButton}>
+        <li className={sharedStyles.socialButtonsItem}>
           <HatenaShareButton
             url={url}
             title={title}
@@ -80,4 +80,4 @@ const Share = ({ title = '', url, id = null }) => {
   )
 }
 
-export default Share
+export default SocialButtons
