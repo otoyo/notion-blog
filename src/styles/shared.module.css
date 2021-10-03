@@ -2,3 +2,13 @@
 .layout h2 {
   text-align: center;
 }
+
+ul.shareButtons {
+  list-style-type: none;
+  padding: 0;
+}
+
+li.shareButton {
+  display: inline-block;
+  margin-right: 0.5em;
+}

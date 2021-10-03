@@ -10,12 +10,13 @@ import {
 } from 'react-share'
 
 import * as gtag from '../lib/gtag'
+import sharedStyles from '../styles/shared.module.css'
 
 const Share = ({ title = '', url, id = null }) => {
   return (
     <>
-      <ul className="shareButtons">
-        <li>
+      <ul className={sharedStyles.shareButtons}>
+        <li className={sharedStyles.shareButton}>
           <TwitterShareButton
             url={url}
             title={title}
@@ -30,7 +31,7 @@ const Share = ({ title = '', url, id = null }) => {
             <TwitterIcon size={32} round={true} />
           </TwitterShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.shareButton}>
           <FacebookShareButton
             url={url}
             beforeOnClick={() =>
@@ -44,7 +45,7 @@ const Share = ({ title = '', url, id = null }) => {
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.shareButton}>
           <PocketShareButton
             url={url}
             title={title}
@@ -59,7 +60,7 @@ const Share = ({ title = '', url, id = null }) => {
             <PocketIcon size={32} round={true} />
           </PocketShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.shareButton}>
           <HatenaShareButton
             url={url}
             title={title}
