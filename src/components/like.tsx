@@ -16,7 +16,7 @@ class Like extends React.Component {
   handleClick() {
     gtag.like({
       contentType: 'article',
-      itemId: this.props.id,
+      itemId: this.props.slug,
     })
     this.setState({ active: 1 })
   }

@@ -13,7 +13,7 @@ import * as gtag from '../lib/gtag'
 import sharedStyles from '../styles/shared.module.css'
 import Like from './like'
 
-const SocialButtons = ({ title = '', url, id = null }) => {
+const SocialButtons = ({ title = '', url, slug = null }) => {
   return (
     <>
       <ul className={sharedStyles.socialButtons}>
@@ -25,7 +25,7 @@ const SocialButtons = ({ title = '', url, id = null }) => {
               gtag.share({
                 method: 'twitter',
                 contentType: 'article',
-                itemId: id,
+                itemId: slug,
               })
             }
           >
@@ -39,7 +39,7 @@ const SocialButtons = ({ title = '', url, id = null }) => {
               gtag.share({
                 method: 'facebook',
                 contentType: 'article',
-                itemId: id,
+                itemId: slug,
               })
             }
           >
@@ -54,7 +54,7 @@ const SocialButtons = ({ title = '', url, id = null }) => {
               gtag.share({
                 method: 'pocket',
                 contentType: 'article',
-                itemId: id,
+                itemId: slug,
               })
             }
           >
@@ -69,7 +69,7 @@ const SocialButtons = ({ title = '', url, id = null }) => {
               gtag.share({
                 method: 'hatena',
                 contentType: 'article',
-                itemId: id,
+                itemId: slug,
               })
             }
           >
@@ -77,7 +77,7 @@ const SocialButtons = ({ title = '', url, id = null }) => {
           </HatenaShareButton>
         </li>
         <li className={sharedStyles.socialButtonsItemLast}>
-          <Like id={id} />
+          <Like slug={slug} />
         </li>
       </ul>
     </>
