@@ -1,5 +1,3 @@
-// components/Share.tsx
-import React from 'react'
 import {
   FacebookIcon,
   FacebookShareButton,
