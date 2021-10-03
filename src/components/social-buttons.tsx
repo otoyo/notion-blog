@@ -1,5 +1,3 @@
-// components/Share.tsx
-import React from 'react'
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -12,12 +10,14 @@ import {
 } from 'react-share'
 
 import * as gtag from '../lib/gtag'
+import sharedStyles from '../styles/shared.module.css'
+import Like from './like'
 
-const Share = ({ title = '', url, id = null }) => {
+const SocialButtons = ({ title = '', url, id = null }) => {
   return (
     <>
-      <ul className="shareButtons">
-        <li>
+      <ul className={sharedStyles.socialButtons}>
+        <li className={sharedStyles.socialButtonsItem}>
           <TwitterShareButton
             url={url}
             title={title}
@@ -32,7 +32,7 @@ const Share = ({ title = '', url, id = null }) => {
             <TwitterIcon size={32} round={true} />
           </TwitterShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.socialButtonsItem}>
           <FacebookShareButton
             url={url}
             beforeOnClick={() =>
@@ -46,7 +46,7 @@ const Share = ({ title = '', url, id = null }) => {
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.socialButtonsItem}>
           <PocketShareButton
             url={url}
             title={title}
@@ -61,7 +61,7 @@ const Share = ({ title = '', url, id = null }) => {
             <PocketIcon size={32} round={true} />
           </PocketShareButton>
         </li>
-        <li>
+        <li className={sharedStyles.socialButtonsItem}>
           <HatenaShareButton
             url={url}
             title={title}
@@ -76,9 +76,12 @@ const Share = ({ title = '', url, id = null }) => {
             <HatenaIcon size={32} round={true} />
           </HatenaShareButton>
         </li>
+        <li className={sharedStyles.socialButtonsItemLast}>
+          <Like id={id} />
+        </li>
       </ul>
     </>
   )
 }
 
-export default Share
+export default SocialButtons

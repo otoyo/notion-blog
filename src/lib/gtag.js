@@ -16,3 +16,10 @@ export const share = ({ method, contentType, itemId = null }) => {
     item_id: itemId,
   })
 }
+
+export const like = ({ contentType, itemId }) => {
+  window.gtag('event', 'like', {
+    content_type: contentType,
+    item_id: itemId,
+  })
+}

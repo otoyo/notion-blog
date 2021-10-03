@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 import Header from '../../components/header'
 import Heading from '../../components/heading'
-import Share from '../../components/share'
+import SocialButtons from '../../components/social-buttons'
 import components from '../../components/dynamic'
 import blogStyles from '../../styles/blog.module.css'
 import { getBlogLink, getTagLink } from '../../lib/blog-helpers'
@@ -262,7 +262,7 @@ const RenderPost = ({
             return toRender
           })}
           <div>
-            <Share
+            <SocialButtons
               title={post.Title}
               url={'https://alpacat.com' + getBlogLink(post.Slug)}
               id={post.Slug}
