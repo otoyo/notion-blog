@@ -11,6 +11,7 @@ import {
 
 import * as gtag from '../lib/gtag'
 import sharedStyles from '../styles/shared.module.css'
+import Like from './like'
 
 const SocialButtons = ({ title = '', url, id = null }) => {
   return (
@@ -74,6 +75,9 @@ const SocialButtons = ({ title = '', url, id = null }) => {
           >
             <HatenaIcon size={32} round={true} />
           </HatenaShareButton>
+        </li>
+        <li className={sharedStyles.socialButtonsItemLast}>
+          <Like id={id} />
         </li>
       </ul>
     </>
