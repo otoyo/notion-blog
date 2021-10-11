@@ -37,14 +37,10 @@ module.exports = {
     domains: ['s3.us-west-2.amazonaws.com'],
   },
 
-  experimental: {
-    modern: true,
-    async rewrites() {
-      return [
-        { source: '/atom', destination: '/api/atom' },
-        { source: '/sitemap', destination: '/api/sitemap' },
-      ]
-    },
-    catchAllRouting: true,
+  async rewrites() {
+    return [
+      { source: '/atom', destination: '/api/atom' },
+      { source: '/sitemap', destination: '/api/sitemap' },
+    ]
   },
 }
