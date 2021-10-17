@@ -11,6 +11,7 @@ const Dynamic = {
   a: ExtLink,
 
   Code: dynamic(() => import('./code')),
+  Callout: dynamic(() => import('./callout')),
   Equation: dynamic(() => import('./equation')),
 }
 

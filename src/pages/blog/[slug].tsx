@@ -258,6 +258,13 @@ const RenderPost = ({
                   )
                 )
                 break
+              case 'callout':
+                toRender.push(
+                  <components.Callout key={block.Id} icon={block.Callout.Icon}>
+                    {textBlock(block.Callout, false, block.Id)}
+                  </components.Callout>
+                )
+                break
               default:
                 if (
                   process.env.NODE_ENV !== 'production' &&
