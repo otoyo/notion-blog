@@ -86,12 +86,16 @@
   background: rgba(235, 236, 237, 0.6);
   color: #222;
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.7rem;
 }
 
 .post :global(.callout .text) {
   margin-left: 8px;
+}
+
+.post :global(.callout .text p) {
+  margin: 0;
 }
 
 .post .caption {
