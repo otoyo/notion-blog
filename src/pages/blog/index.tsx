@@ -80,18 +80,20 @@ const RenderPosts = ({
               </div>
             )
           })}
-          {firstPost.Date !== posts[posts.length - 1].Date && (
-            <div className={blogStyles.nextContainer}>
-              <hr />
-              <Link
-                href="/blog/before/[date]"
-                as={getBeforeLink(posts[posts.length - 1].Date)}
-                passHref
-              >
-                <a className={blogStyles.nextButton}>次のページ ＞</a>
-              </Link>
-            </div>
-          )}
+          {!!firstPost &&
+            posts.length > 0 &&
+            firstPost.Date !== posts[posts.length - 1].Date && (
+              <div className={blogStyles.nextContainer}>
+                <hr />
+                <Link
+                  href="/blog/before/[date]"
+                  as={getBeforeLink(posts[posts.length - 1].Date)}
+                  passHref
+                >
+                  <a className={blogStyles.nextButton}>次のページ ＞</a>
+                </Link>
+              </div>
+            )}
         </div>
         <div className={blogStyles.sideMenu}>
           <h3>おすすめ記事</h3>
