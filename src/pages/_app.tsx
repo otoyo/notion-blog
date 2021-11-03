@@ -1,5 +1,4 @@
 import '../styles/global.css'
-import 'katex/dist/katex.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
