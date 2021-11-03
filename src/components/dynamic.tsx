@@ -12,7 +12,6 @@ const Dynamic = {
 
   Code: dynamic(() => import('./code')),
   Callout: dynamic(() => import('./callout')),
-  Equation: dynamic(() => import('./equation')),
 }
 
 export default Dynamic

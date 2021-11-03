@@ -2,6 +2,10 @@ import Script from 'next/script'
 import { GA_TRACKING_ID } from '../lib/gtag'
 
 const GoogleAnalytics = () => {
+  if (!GA_TRACKING_ID) {
+    return <></>
+  }
+
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
