@@ -1,7 +1,7 @@
-# Notion Blog
+# otoyo/notion-blog
 
-by using [Notion official API](https://developers.notion.com/reference/intro)
+otoyo's personal blog
 
-```sh
-yarn dev
-```
+## Getting started
+
+You can start notion-blog by using [my-notion-blog](https://github.com/otoyo/my-notion-blog). Please see it.
