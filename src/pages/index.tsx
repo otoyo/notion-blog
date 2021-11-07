@@ -22,8 +22,11 @@ const RenderPage = () => (
       <div className="explanation">
         <p>
           Notion
-          Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ。このブログはNotion
-          Blogでできています。
+          Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ。このブログは
+          <ExtLink href="https://github.com/otoyo/easy-notion-blog">
+            easy-notion-blog
+          </ExtLink>
+          を使ってNotionで書かれています。
         </p>
       </div>
 
