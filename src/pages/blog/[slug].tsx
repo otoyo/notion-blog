@@ -227,7 +227,10 @@ const RenderPost = ({
                 break
               case 'image':
                 toRender.push(
-                  <img src={block.Image.File.Url} alt="image in the content" />
+                  <img
+                    src={block.Image.File.Url}
+                    alt="画像が読み込まれない場合はページを更新してみてください。"
+                  />
                 )
                 if (
                   block.Image.Caption.length > 0 &&
