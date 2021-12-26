@@ -29,7 +29,7 @@ export async function getStaticProps() {
       rankedPosts,
       tags,
     },
-    revalidate: 60,
+    revalidate: 300,
   }
 }
 

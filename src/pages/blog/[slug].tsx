@@ -57,7 +57,7 @@ export async function getStaticProps({ params: { slug } }) {
       sameTagPosts,
       tags,
     },
-    revalidate: 60,
+    revalidate: 600,
   }
 }
 
