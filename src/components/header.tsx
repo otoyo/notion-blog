@@ -13,7 +13,7 @@ const navItems: { label: string; page?: string; link?: string }[] = [
 
 const defaultUrl = 'https://alpacat.com'
 const defaultTitle = 'アルパカログ'
-const defaultOgImageUrl = 'https://alpacat.com/og-image.png'
+const defaultOgImageUrl = 'https://alpacat.com/og-image.jpeg'
 const defaultDescription =
   'Notion Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ'
 
