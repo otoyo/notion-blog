@@ -1,10 +1,10 @@
 import React from 'react'
 
 import * as gtag from '../lib/gtag'
-import sharedStyles from '../styles/shared.module.css'
+import styles from '../styles/like-button.module.css'
 import Heart from './svgs/heart'
 
-class Like extends React.Component<any, any> {
+class LikeButton extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,13 +23,11 @@ class Like extends React.Component<any, any> {
 
   render() {
     return (
-      <>
-        <button className={sharedStyles.likeButton} onClick={this.handleClick}>
-          <Heart width={32} height={32} active={this.state.active} />
-        </button>
-      </>
+      <button className={styles.likeButton} onClick={this.handleClick}>
+        <Heart width={32} height={32} active={this.state.active} />
+      </button>
     )
   }
 }
 
-export default Like
+export default LikeButton
