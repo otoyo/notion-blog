@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
@@ -23,11 +24,20 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <h1>
-        <Link href="/" passHref>
-          <a>{SITE_TITLE}</a>
-        </Link>
-      </h1>
+      <Link href="/" passHref>
+        <a>
+          <Image
+            src="/site-logo.jpeg"
+            alt="logo"
+            width={64}
+            height={64}
+            layout="fixed"
+            quality={100}
+            className={styles.logo}
+          />
+          <h1>{SITE_TITLE}</h1>
+        </a>
+      </Link>
 
       <ul>
         {navItems.map(({ label, path }) => (

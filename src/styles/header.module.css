@@ -3,13 +3,21 @@
   padding: 15px 0;
   text-align: center;
 }
-.header h1 {
+.header > a {
+  display: flex;
+  justify-content: center;
   padding: 0.5rem 0;
-  font-weight: 400;
-  color: #000;
 }
-.header h1 a {
-  color: inherit;
+.header > a h1 {
+  padding-top: 10px;
+  color: #000;
+  font-weight: 400;
+}
+@media (max-width: 600px) {
+  .header > a h1 {
+    margin-right: 14px;
+    padding-top: 14px;
+  }
 }
 .header ul {
   list-style: none;
