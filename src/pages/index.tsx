@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import DocumentHead from '../components/document-head'
 import ExtLink from '../components/ext-link'
@@ -9,15 +8,6 @@ import { getBlogLink } from '../lib/blog-helpers'
 const RenderPage = () => (
   <div className={styles.container}>
     <DocumentHead />
-
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <Image src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
-    </div>
 
     <div className="explanation">
       <p>
