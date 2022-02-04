@@ -11,7 +11,7 @@ const DocumentHead = ({ title = '', description = '', urlOgImage = '' }) => {
   const { asPath, pathname } = useRouter()
 
   const currentURL = new URL(asPath, NEXT_PUBLIC_URL)
-  const defaultImageURL = new URL('/og-image.jpeg', NEXT_PUBLIC_URL)
+  const defaultImageURL = new URL('/site-logo.jpeg', NEXT_PUBLIC_URL)
 
   return (
     <Head>

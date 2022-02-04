@@ -10,36 +10,84 @@ const RenderPage = () => (
   <div className={styles.container}>
     <DocumentHead />
 
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <Image src="/young_alpaca.png" height="473" width="200" alt="Alpacat" />
+    <div>
+      <h2>About</h2>
+      <p>
+        アルパカログは Notion Blog が好きな Web エンジニアの個人ブログです。
+      </p>
+      <p>下記のような話題がよく登場します。</p>
+      <ul>
+        <li>Notion Blog のカスタマイズ</li>
+        <li>Web アプリケーション開発</li>
+        <li>ピープルマネジメント</li>
+        <li>プログラミング (Ruby, Python, Go, TypeScript etc.)</li>
+      </ul>
+      <p>更新は毎週月曜です。</p>
+      <p>
+        このブログも Notion で書かれています。興味がある方は下記をご覧ください。
+      </p>
+      <ul>
+        <li>
+          <Link
+            href="/blog/[slug]"
+            as={getBlogLink('easy-notion-blog')}
+            passHref
+          >
+            <a>
+              Notion Blog 始めたい人に向けてスタートキットを作ったので紹介する
+            </a>
+          </Link>
+        </li>
+      </ul>
     </div>
 
-    <div className="explanation">
+    <div>
+      <h2>Profile</h2>
+      <Image
+        src="/profile.png"
+        alt="profile"
+        width={64}
+        height={64}
+        layout="fixed"
+        quality={100}
+        className={styles.profile}
+      />
       <p>
-        Notion
-        Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ。このブログは
-        <ExtLink href="https://github.com/otoyo/easy-notion-blog">
-          easy-notion-blog
-        </ExtLink>
-        を使ってNotionで書かれています。
+        渋谷の Web
+        系企業で働くソフトウェアエンジニア兼エンジニアリング・マネージャー兼
+        Customer Reliability Engineer(CRE)。
       </p>
+      <p>ブログが好きすぎて気がつけば自分で作っていた。</p>
+      <p>アルパカがトレードマーク。</p>
     </div>
 
-    <h2>書いている人</h2>
+    <div>
+      <h2>Social accounts</h2>
+      <ul>
+        <li>
+          <ExtLink href="https://github.com/otoyo">GitHub</ExtLink>
+        </li>
+        <li>
+          <ExtLink href="https://twitter.com/otoyo0122">Twitter</ExtLink>
+        </li>
+        <li>
+          <ExtLink href="https://www.wantedly.com/id/otoyo">Wantedly</ExtLink>
+        </li>
+      </ul>
+    </div>
 
-    <div className="explanation">
-      <ExtLink href="https://twitter.com/otoyo0122">@otoyo0122</ExtLink>
+    <div>
+      <h2>Contact</h2>
       <p>
-        CREというカスタマーサポートのために働くWebエンジニアでマネジメントも少し。記事内容に誤りがある際はお知らせください。CREでは一緒に働く仲間を募集しています。
-        <Link href="/blog/[slug]" as={getBlogLink('recruitment-cre')} passHref>
-          <a>→詳しく</a>
-        </Link>
+        GitHub で公開しているソフトウェアに関しては GitHub Issues
+        でお願いします。
       </p>
+      <p>
+        リクルーティングに関しては Wantedly
+        からお願いします(現在求職中ではありません)。
+      </p>
+      <p>その他は Twitter でご連絡ください。</p>
+      <p>メールはご遠慮ください。</p>
     </div>
   </div>
 )
