@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import * as gtag from '../lib/gtag'
+import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import GoogleAnalytics from '../components/google-analytics'
@@ -13,7 +14,7 @@ const App = ({ Component, pageProps }) => {
   const router = useRouter()
   useEffect(() => {
     const handleRouteChange = url => {
-      if (location.host === 'alpacat.com') {
+      if (location.host === new URL(NEXT_PUBLIC_URL).hostname) {
         gtag.pageview(pageProps.title, url)
       }
     }

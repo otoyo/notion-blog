@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
 
+import { SITE_TITLE } from '../components/document-head'
 import styles from '../styles/header.module.css'
 
 interface NavItem {
@@ -24,7 +25,7 @@ const Header = () => {
     <header className={styles.header}>
       <h1>
         <Link href="/" passHref>
-          <a>アルパカログ</a>
+          <a>{SITE_TITLE}</a>
         </Link>
       </h1>
 
