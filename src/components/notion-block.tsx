@@ -210,11 +210,19 @@ const NotionBlock = ({ block }) => {
     return <Embed block={block} />
   } else if (block.Type === 'bookmark') {
     return (
-      <LinkPreview url={block.Bookmark.Url} className={styles.linkPreview} />
+      <LinkPreview
+        url={block.Bookmark.Url}
+        className={styles.linkPreview}
+        descriptionLength={60}
+      />
     )
   } else if (block.Type === 'link_preview') {
     return (
-      <LinkPreview url={block.LinkPreview.Url} className={styles.linkPreview} />
+      <LinkPreview
+        url={block.LinkPreview.Url}
+        className={styles.linkPreview}
+        descriptionLength={60}
+      />
     )
   } else if (block.Type === 'divider') {
     return <hr className="divider" />

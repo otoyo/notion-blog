@@ -50,8 +50,19 @@
 
 .linkPreview {
   width: 100%;
+  max-width: 600px;
   margin: 20px auto;
   font-size: 0.9rem;
+}
+@media (max-width: 1024px) {
+  .linkPreview {
+    max-height: 320px;
+  }
+}
+@media (max-width: 600px) {
+  .linkPreview {
+    max-height: 240px;
+  }
 }
 .linkPreview h3 {
   width: 100%;
@@ -62,4 +73,11 @@
   text-overflow: ellipsis;
   margin: 0;
   font-size: 1.1rem;
+}
+@media (max-width: 600px) {
+  .linkPreview h3 {
+    height: 1.1rem;
+    line-height: 1.1rem;
+    font-size: 1rem;
+  }
 }
