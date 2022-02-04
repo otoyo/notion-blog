@@ -81,10 +81,7 @@ const RenderPostsByTags = ({
 
   return (
     <div className={styles.container}>
-      <DocumentHead
-        title={`${tag}を含む記事`}
-        description={`${tag}を含む記事`}
-      />
+      <DocumentHead description={`${tag}を含む記事`} />
 
       <div className={styles.mainContent}>
         <header>
