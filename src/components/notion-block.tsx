@@ -126,32 +126,31 @@ const Embed = ({ block }) => {
 
 const Table = ({ block }) => (
   <table>
-    {block.Table.Rows.map((rowBlock, j) => {
-      return (
-        <tr key={`${rowBlock.Id}-${j}`}>
-          {rowBlock.TableRow.Cells.map((cell, i) => {
-            let tag = 'td'
-            if (
-              (block.Table.HasRowHeader && i === 0) ||
-              (block.Table.HasColumnHeader && j === 0)
-            ) {
-              tag = 'th'
-            }
+    <tbody>
+      {block.Table.Rows.map((rowBlock, j) => {
+        return (
+          <tr key={`${rowBlock.Id}-${j}`}>
+            {rowBlock.TableRow.Cells.map((cell, i) => {
+              let tag = 'td'
+              if (
+                (block.Table.HasRowHeader && i === 0) ||
+                (block.Table.HasColumnHeader && j === 0)
+              ) {
+                tag = 'th'
+              }
 
-            return React.createElement(
-              tag,
-              {},
-              cell.RichTexts.map((richText, i) => (
-                <RichText
-                  richText={richText}
-                  key={`table-cell-${cell.Id}-${j}-${i}`}
-                />
-              ))
-            )
-          })}
-        </tr>
-      )
-    })}
+              return React.createElement(
+                tag,
+                { key: `${rowBlock.Id}-${j}-${i}` },
+                cell.RichTexts.map((richText, k) => (
+                  <RichText richText={richText} key={`${cell.Id}-${k}`} />
+                ))
+              )
+            })}
+          </tr>
+        )
+      })}
+    </tbody>
   </table>
 )
 
