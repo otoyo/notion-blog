@@ -3,6 +3,11 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { getBlogLink } from '../../lib/blog-helpers'
 import { getAllPosts } from '../../lib/notion/client'
+import { BLOG_INDEX_CACHE } from '../../lib/notion/server-constants'
+
+export const config = {
+  unstable_excludeFiles: [BLOG_INDEX_CACHE],
+}
 
 function decode(string) {
   return string

@@ -17,6 +17,11 @@ import {
   getRankedPosts,
   getAllTags,
 } from '../../lib/notion/client'
+import { BLOG_INDEX_CACHE } from '../../lib/notion/server-constants'
+
+export const config = {
+  unstable_excludeFiles: [BLOG_INDEX_CACHE],
+}
 
 export async function getStaticProps() {
   const posts = await getPosts()

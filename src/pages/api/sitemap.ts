@@ -2,6 +2,11 @@ import { IncomingMessage, ServerResponse } from 'http'
 
 import { getTagLink } from '../../lib/blog-helpers'
 import { getAllTags } from '../../lib/notion/client'
+import { BLOG_INDEX_CACHE } from '../../lib/notion/server-constants'
+
+export const config = {
+  unstable_excludeFiles: [BLOG_INDEX_CACHE],
+}
 
 function mapToURL(tag) {
   return `

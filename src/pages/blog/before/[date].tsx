@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { NUMBER_OF_POSTS_PER_PAGE } from '../../../lib/notion/server-constants'
+import {
+  NUMBER_OF_POSTS_PER_PAGE,
+  BLOG_INDEX_CACHE,
+} from '../../../lib/notion/server-constants'
 import DocumentHead from '../../../components/document-head'
 import {
   BlogPostLink,
@@ -25,6 +28,10 @@ import {
   getFirstPost,
   getAllTags,
 } from '../../../lib/notion/client'
+
+export const config = {
+  unstable_excludeFiles: [BLOG_INDEX_CACHE],
+}
 
 export async function getStaticProps({ params: { date } }) {
   if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
