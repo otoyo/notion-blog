@@ -10,6 +10,11 @@
 .image {
   padding: 1rem 0;
 }
+.image > div:first-child {
+  position: relative;
+  width: 90%;
+  height: 360px;
+}
 
 .code {
   display: block;
