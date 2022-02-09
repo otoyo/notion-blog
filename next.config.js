@@ -37,6 +37,8 @@ module.exports = {
     domains: ['s3.us-west-2.amazonaws.com'],
   },
 
+  outputFileTracing: false,
+
   async rewrites() {
     return [
       { source: '/atom', destination: '/api/atom' },
