@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RenderPage renders the page unchanged 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div>
+      <h2>
+        About
+      </h2>
+      <p>
+        アルパカログは Notion Blog が好きな Web エンジニアの個人ブログです。
+      </p>
+      <p>
+        下記のような話題がよく登場します。
+      </p>
+      <ul>
+        <li>
+          Notion Blog のカスタマイズ
+        </li>
+        <li>
+          Web アプリケーション開発
+        </li>
+        <li>
+          ピープルマネジメント
+        </li>
+        <li>
+          プログラミング (Ruby, Python, Go, TypeScript etc.)
+        </li>
+      </ul>
+      <p>
+        更新は毎週月曜です。
+      </p>
+      <p>
+        このブログも Notion で書かれています。興味がある方は下記をご覧ください。
+      </p>
+      <ul>
+        <li>
+          <a
+            href="/blog/easy-notion-blog"
+          >
+            Notion Blog 始めたい人に向けてスタートキットを作ったので紹介する
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>
+        Profile
+      </h2>
+      <span
+        style="box-sizing: border-box; display: inline-block; overflow: hidden; width: 64px; height: 64px; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;"
+      >
+        <img
+          alt="profile"
+          class="profile"
+          data-nimg="fixed"
+          decoding="async"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+        />
+        <noscript />
+      </span>
+      <p>
+        渋谷の Web 系企業で働くソフトウェアエンジニア兼エンジニアリング・マネージャー兼 Customer Reliability Engineer(CRE)。
+      </p>
+      <p>
+        ブログが好きすぎて気がつけば自分で作っていた。
+      </p>
+      <p>
+        アルパカがトレードマーク。
+      </p>
+    </div>
+    <div>
+      <h2>
+        Social accounts
+      </h2>
+      <ul>
+        <li>
+          <a
+            href="https://github.com/otoyo"
+            rel="noopener"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://twitter.com/otoyo0122"
+            rel="noopener"
+            target="_blank"
+          >
+            Twitter
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.wantedly.com/id/otoyo"
+            rel="noopener"
+            target="_blank"
+          >
+            Wantedly
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2>
+        Contact
+      </h2>
+      <p>
+        GitHub で公開しているソフトウェアに関しては GitHub Issues でお願いします。
+      </p>
+      <p>
+        リクルーティングに関しては Wantedly からお願いします(現在求職中ではありません)。
+      </p>
+      <p>
+        その他は Twitter でご連絡ください。
+      </p>
+      <p>
+        メールはご遠慮ください。
+      </p>
+    </div>
+  </div>
+</div>
+`;
