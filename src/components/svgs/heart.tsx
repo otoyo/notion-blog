@@ -1,10 +1,12 @@
 import React from 'react'
 
-class Heart extends React.Component<any, any> {
-  constructor(props) {
-    super(props)
-  }
+type Props = {
+  width: number
+  height: number
+  active: number
+}
 
+class Heart extends React.Component<Props, null> {
   render() {
     return (
       <>
