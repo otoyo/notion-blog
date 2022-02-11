@@ -4,7 +4,15 @@ import * as gtag from '../lib/gtag'
 import styles from '../styles/like-button.module.css'
 import Heart from './svgs/heart'
 
-class LikeButton extends React.Component<any, any> {
+type Props = {
+  id: string
+}
+
+type State = {
+  active: number
+}
+
+class LikeButton extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
