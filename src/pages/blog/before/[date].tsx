@@ -17,16 +17,14 @@ import {
 } from '../../../components/blog-parts'
 import styles from '../../../styles/blog.module.css'
 
-import { getBeforeLink } from '../../../lib/blog-helpers'
 import {
-  getPosts,
   getRankedPosts,
   getPostsBefore,
   getFirstPost,
   getAllTags,
 } from '../../../lib/notion/client'
 
-export async function getStaticProps({ params: { date } }) {
+export async function getServerSideProps({ params: { date } }) {
   if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
     return { notFound: true }
   }
@@ -44,17 +42,6 @@ export async function getStaticProps({ params: { date } }) {
       rankedPosts,
       tags,
     },
-    revalidate: 3600,
-  }
-}
-
-export async function getStaticPaths() {
-  const posts = await getPosts()
-  const path = getBeforeLink(posts[posts.length - 1].Date)
-
-  return {
-    paths: [path],
-    fallback: 'blocking',
   }
 }
 

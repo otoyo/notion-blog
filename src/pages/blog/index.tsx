@@ -18,7 +18,7 @@ import {
   getAllTags,
 } from '../../lib/notion/client'
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const posts = await getPosts()
   const firstPost = await getFirstPost()
   const rankedPosts = await getRankedPosts()
@@ -31,7 +31,6 @@ export async function getStaticProps() {
       rankedPosts,
       tags,
     },
-    revalidate: 300,
   }
 }
 

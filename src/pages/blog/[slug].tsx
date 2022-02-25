@@ -18,7 +18,6 @@ import styles from '../../styles/blog.module.css'
 import { getBlogLink } from '../../lib/blog-helpers'
 import {
   getPosts,
-  getAllPosts,
   getRankedPosts,
   getPostBySlug,
   getPostsByTag,
@@ -26,17 +25,11 @@ import {
   getAllBlocksByBlockId,
 } from '../../lib/notion/client'
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getServerSideProps({ params: { slug } }) {
   const post = await getPostBySlug(slug)
 
   if (!post) {
-    console.log(`Failed to find post for slug: ${slug}`)
-    return {
-      props: {
-        redirect: '/blog',
-      },
-      revalidate: 30,
-    }
+    return { notFound: true }
   }
 
   const blocks = await getAllBlocksByBlockId(post.PageId)
@@ -60,15 +53,6 @@ export async function getStaticProps({ params: { slug } }) {
       sameTagPosts,
       tags,
     },
-    revalidate: 600,
-  }
-}
-
-export async function getStaticPaths() {
-  const posts = await getAllPosts()
-  return {
-    paths: posts.map(post => getBlogLink(post.Slug)),
-    fallback: 'blocking',
   }
 }
 
