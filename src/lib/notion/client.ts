@@ -18,7 +18,6 @@ import {
 } from './interfaces'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Client } = require('@notionhq/client')
-import * as blogIndexCache from './blog-index-cache'
 import * as imageCache from './image-cache'
 import { fetchImageAsBlob, getImageSize } from './image-utils'
 
@@ -27,11 +26,6 @@ const client = new Client({
 })
 
 export async function getPosts(pageSize = 10) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts.slice(0, pageSize)
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter(),
@@ -55,55 +49,35 @@ export async function getPosts(pageSize = 10) {
 export async function getAllPosts() {
   let results = []
 
-  if (blogIndexCache.exists()) {
-    results = blogIndexCache.get()
-    console.log('Found cached posts.')
-  } else {
-    const params = {
-      database_id: DATABASE_ID,
-      filter: _buildFilter(),
-      sorts: [
-        {
-          property: 'Date',
-          timestamp: 'created_time',
-          direction: 'descending',
-        },
-      ],
-      page_size: 100,
+  const params = {
+    database_id: DATABASE_ID,
+    filter: _buildFilter(),
+    sorts: [
+      {
+        property: 'Date',
+        timestamp: 'created_time',
+        direction: 'descending',
+      },
+    ],
+    page_size: 100,
+  }
+
+  while (true) {
+    const data = await client.databases.query(params)
+
+    results = results.concat(data.results)
+
+    if (!data.has_more) {
+      break
     }
 
-    while (true) {
-      const data = await client.databases.query(params)
-
-      results = results.concat(data.results)
-
-      if (!data.has_more) {
-        break
-      }
-
-      params['start_cursor'] = data.next_cursor
-    }
+    params['start_cursor'] = data.next_cursor
   }
 
   return results.filter(item => _validPost(item)).map(item => _buildPost(item))
 }
 
 export async function getRankedPosts(pageSize = 10) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts
-      .filter(post => !!post.Rank)
-      .sort((a, b) => {
-        if (a.Rank > b.Rank) {
-          return -1
-        } else if (a.Rank === b.Rank) {
-          return 0
-        }
-        return 1
-      })
-      .slice(0, pageSize)
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter([
@@ -131,11 +105,6 @@ export async function getRankedPosts(pageSize = 10) {
 }
 
 export async function getPostsBefore(date: string, pageSize = 10) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts.filter(post => post.Date < date).slice(0, pageSize)
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter([
@@ -164,11 +133,6 @@ export async function getPostsBefore(date: string, pageSize = 10) {
 }
 
 export async function getFirstPost() {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts[allPosts.length - 1]
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter(),
@@ -196,11 +160,6 @@ export async function getFirstPost() {
 }
 
 export async function getPostBySlug(slug: string) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts.find(post => post.Slug === slug)
-  }
-
   const data = await client.databases.query({
     database_id: DATABASE_ID,
     filter: _buildFilter([
@@ -232,11 +191,6 @@ export async function getPostBySlug(slug: string) {
 }
 
 export async function getPostsByTag(tag: string, pageSize = 100) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts.filter(post => post.Tags.includes(tag)).slice(0, pageSize)
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter([
@@ -478,11 +432,6 @@ export async function getAllBlocksByBlockId(blockId) {
 }
 
 export async function getAllTags() {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return [...new Set(allPosts.flatMap(post => post.Tags))].sort()
-  }
-
   const data = await client.databases.retrieve({
     database_id: DATABASE_ID,
   })
