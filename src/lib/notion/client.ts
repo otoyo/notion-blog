@@ -18,7 +18,6 @@ import {
 } from './interfaces'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Client } = require('@notionhq/client')
-import * as imageCache from './image-cache'
 import { fetchImageAsBlob, getImageSize } from './image-utils'
 
 const client = new Client({
@@ -420,10 +419,6 @@ export async function getAllBlocksByBlockId(blockId) {
       if (dimensions) {
         block.Image.Width = dimensions.width
         block.Image.Height = dimensions.height
-      }
-
-      if (block.Image.File) {
-        imageCache.store(block.Id, blob)
       }
     }
   }

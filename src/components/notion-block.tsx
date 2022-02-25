@@ -77,9 +77,7 @@ const ImageBlock = ({ block }) => (
     <div>
       <Image
         src={
-          block.Image.External
-            ? block.Image.External.Url
-            : `/notion_images/${block.Id}.png`
+          block.Image.External ? block.Image.External.Url : block.Image.File.Url
         }
         width={block.Image.Width || 100}
         height={block.Image.Height || 100}
