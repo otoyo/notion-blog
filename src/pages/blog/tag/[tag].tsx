@@ -21,7 +21,7 @@ import {
   getAllTags,
 } from '../../../lib/notion/client'
 
-export async function getServerSideProps({ params: { tag } }) {
+export async function getServerSideProps({ res, params: { tag } }) {
   const tags = await getAllTags()
 
   if (!tags.includes(tag)) {
@@ -36,6 +36,11 @@ export async function getServerSideProps({ params: { tag } }) {
 
   const rankedPosts = await getRankedPosts()
   const recentPosts = await getPosts(5)
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=900, stale-while-revalidate=86400'
+  )
 
   return {
     props: {

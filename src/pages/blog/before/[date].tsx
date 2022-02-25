@@ -24,7 +24,7 @@ import {
   getAllTags,
 } from '../../../lib/notion/client'
 
-export async function getServerSideProps({ params: { date } }) {
+export async function getServerSideProps({ res, params: { date } }) {
   if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
     return { notFound: true }
   }
@@ -33,6 +33,11 @@ export async function getServerSideProps({ params: { date } }) {
   const firstPost = await getFirstPost()
   const rankedPosts = await getRankedPosts()
   const tags = await getAllTags()
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=900, stale-while-revalidate=86400'
+  )
 
   return {
     props: {
