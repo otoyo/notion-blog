@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import RenderPost from '../../../src/pages/blog/[slug]'
 
 import {
@@ -44,6 +44,8 @@ describe('RenderPost', () => {
         redirect={null}
       />
     )
-    expect(container).toMatchSnapshot()
+    await waitFor(() => {
+      expect(container).toMatchSnapshot()
+    })
   })
 })
