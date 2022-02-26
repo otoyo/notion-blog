@@ -18,7 +18,6 @@ import {
 } from './interfaces'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Client } = require('@notionhq/client')
-import { fetchImageAsBlob, getImageSize } from './image-utils'
 
 const client = new Client({
   auth: NOTION_API_SECRET,
@@ -409,17 +408,6 @@ export async function getAllBlocksByBlockId(blockId) {
     ) {
       // Fetch nested list_item
       block.Children = await getAllBlocksByBlockId(block.Id)
-    } else if (block.Type === 'image') {
-      // Get image size and cache to local (only type: file)
-      const blob = await fetchImageAsBlob(
-        block.Image.File ? block.Image.File.Url : block.Image.External.Url
-      )
-      const dimensions = await getImageSize(blob)
-
-      if (dimensions) {
-        block.Image.Width = dimensions.width
-        block.Image.Height = dimensions.height
-      }
     }
   }
 
