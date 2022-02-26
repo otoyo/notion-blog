@@ -29,10 +29,12 @@ export async function getServerSideProps({ res, params: { date } }) {
     return { notFound: true }
   }
 
-  const posts = await getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE)
-  const firstPost = await getFirstPost()
-  const rankedPosts = await getRankedPosts()
-  const tags = await getAllTags()
+  const [posts, firstPost, rankedPosts, tags] = await Promise.all([
+    getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE),
+    getFirstPost(),
+    getRankedPosts(),
+    getAllTags(),
+  ])
 
   res.setHeader(
     'Cache-Control',

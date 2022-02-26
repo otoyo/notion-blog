@@ -32,17 +32,19 @@ export async function getServerSideProps({ res, params: { slug } }) {
     return { notFound: true }
   }
 
-  const blocks = await getAllBlocksByBlockId(post.PageId)
-  const rankedPosts = await getRankedPosts()
-  const recentPosts = await getPosts(5)
-  const tags = await getAllTags()
-
-  let sameTagPosts = []
-  if (post.Tags.length > 0) {
-    sameTagPosts = (await getPostsByTag(post.Tags[0], 6)).filter(
-      p => p.Slug !== post.Slug
-    )
-  }
+  const [
+    blocks,
+    rankedPosts,
+    recentPosts,
+    sameTagPosts,
+    tags,
+  ] = await Promise.all([
+    getAllBlocksByBlockId(post.PageId),
+    getRankedPosts(),
+    getPosts(5),
+    getPostsByTag(post.Tags[0], 6),
+    getAllTags(),
+  ])
 
   res.setHeader(
     'Cache-Control',
@@ -55,8 +57,8 @@ export async function getServerSideProps({ res, params: { slug } }) {
       blocks,
       rankedPosts,
       recentPosts,
-      sameTagPosts,
       tags,
+      sameTagPosts: sameTagPosts.filter(p => p.Slug !== post.Slug),
     },
   }
 }

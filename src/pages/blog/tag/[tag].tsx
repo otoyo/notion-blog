@@ -22,20 +22,17 @@ import {
 } from '../../../lib/notion/client'
 
 export async function getServerSideProps({ res, params: { tag } }) {
-  const tags = await getAllTags()
-
-  if (!tags.includes(tag)) {
-    return { notFound: true }
-  }
-
   const posts = await getPostsByTag(tag)
 
   if (posts.length === 0) {
     return { notFound: true }
   }
 
-  const rankedPosts = await getRankedPosts()
-  const recentPosts = await getPosts(5)
+  const [rankedPosts, recentPosts, tags] = await Promise.all([
+    getRankedPosts(),
+    getPosts(5),
+    getAllTags(),
+  ])
 
   res.setHeader(
     'Cache-Control',
