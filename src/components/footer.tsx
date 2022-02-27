@@ -11,7 +11,7 @@ const Footer = () => (
       </ExtLink>
     </div>
     <div>
-      <span>Copyright © 2015-2022 otoyo. All Rights Reserved.</span>
+      <span>© 2015 otoyo</span>
     </div>
   </footer>
 )
