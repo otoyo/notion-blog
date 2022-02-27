@@ -11,9 +11,7 @@ const Footer = () => (
       </ExtLink>
     </div>
     <div>
-      <span>Copyright © 2015-2022 </span>
-      <ExtLink href="https://twitter.com/otoyo0122">@otoyo0122</ExtLink>
-      <span>. All Rights Reserved.</span>
+      <span>Copyright © 2015-2022 otoyo. All Rights Reserved.</span>
     </div>
   </footer>
 )
