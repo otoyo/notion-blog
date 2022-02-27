@@ -13,7 +13,6 @@ import {
   ReadMoreLink,
 } from '../../../components/blog-parts'
 import styles from '../../../styles/blog.module.css'
-import { getTagLink } from '../../../lib/blog-helpers'
 import { useEffect } from 'react'
 import {
   getPosts,
@@ -22,21 +21,23 @@ import {
   getAllTags,
 } from '../../../lib/notion/client'
 
-export async function getStaticProps({ params: { tag } }) {
+export async function getServerSideProps({ res, params: { tag } }) {
   const posts = await getPostsByTag(tag)
-  const rankedPosts = await getRankedPosts()
-  const recentPosts = await getPosts(5)
-  const tags = await getAllTags()
 
   if (posts.length === 0) {
-    console.log(`Failed to find posts for tag: ${tag}`)
-    return {
-      props: {
-        redirect: '/blog',
-      },
-      revalidate: 30,
-    }
+    return { notFound: true }
   }
+
+  const [rankedPosts, recentPosts, tags] = await Promise.all([
+    getRankedPosts(),
+    getPosts(5),
+    getAllTags(),
+  ])
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=900, stale-while-revalidate=86400'
+  )
 
   return {
     props: {
@@ -46,16 +47,6 @@ export async function getStaticProps({ params: { tag } }) {
       tags,
       tag,
     },
-    revalidate: 600,
-  }
-}
-
-export async function getStaticPaths() {
-  const tags = await getAllTags()
-
-  return {
-    paths: tags.map(tag => getTagLink(tag)),
-    fallback: 'blocking',
   }
 }
 

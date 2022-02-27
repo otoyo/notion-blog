@@ -1,10 +1,9 @@
 import React from 'react'
-import Image from 'next/image'
-import Prism from 'prismjs'
-import 'prismjs/components/prism-jsx'
-import TweetEmbed from './tweet-embed'
-import Mermaid from './mermaid'
-import { LinkPreview } from '@dhaiwat10/react-link-preview'
+import dynamic from 'next/dynamic'
+
+const Code = dynamic(() => import('./notion-blocks/code'))
+const Embed = dynamic(() => import('./notion-blocks/embed'))
+const Bookmark = dynamic(() => import('./notion-blocks/bookmark'))
 
 import styles from '../styles/notion-block.module.css'
 
@@ -59,62 +58,23 @@ const Heading = ({ block, level = 1 }) => {
   )
 }
 
-const Caption = ({ caption, type = 'figure' }) => {
-  if (caption.length === 0 || !caption[0].Text.Content) return null
-
-  if (type === 'figure') {
-    return (
-      <figcaption className={styles.caption}>
-        {caption[0].Text.Content}
-      </figcaption>
-    )
-  }
-  return <div className={styles.caption}>{caption[0].Text.Content}</div>
-}
-
 const ImageBlock = ({ block }) => (
   <figure className={styles.image}>
     <div>
-      <Image
+      <img
         src={
-          block.Image.External
-            ? block.Image.External.Url
-            : `/notion_images/${block.Id}.png`
+          block.Image.External ? block.Image.External.Url : block.Image.File.Url
         }
-        width={block.Image.Width || 100}
-        height={block.Image.Height || 100}
         alt="画像が読み込まれない場合はページを更新してみてください。"
       />
     </div>
-    <Caption caption={block.Image.Caption} type="figure" />
+    {block.Image.Caption.length > 0 && block.Image.Caption[0].Text.Content ? (
+      <figcaption className={styles.caption}>
+        {block.Image.Caption[0].Text.Content}
+      </figcaption>
+    ) : null}
   </figure>
 )
-
-const Code = ({ block }) => {
-  const code = block.Code.Text.map(richText => richText.Text.Content).join('')
-  const language = block.Code.Language || 'javascript'
-
-  return (
-    <div className={styles.code}>
-      {language === 'mermaid' ? (
-        <Mermaid id={`mermaid-${block.Id}`} definition={code} />
-      ) : (
-        <pre>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: Prism.highlight(
-                code,
-                Prism.languages[language.toLowerCase()] ||
-                  Prism.languages.javascript
-              ),
-            }}
-          />
-        </pre>
-      )}
-      <Caption caption={block.Code.Caption} />
-    </div>
-  )
-}
 
 const Quote = ({ block }) => (
   <blockquote>
@@ -134,16 +94,6 @@ const Callout = ({ block }) => (
     </div>
   </div>
 )
-
-const Embed = ({ block }) => {
-  if (/^https:\/\/twitter\.com/.test(block.Embed.Url)) {
-    return <TweetEmbed url={block.Embed.Url} />
-  } else if (/^https:\/\/gist\.github\.com/.test(block.Embed.Url)) {
-    return <LinkPreview url={block.Embed.Url} className={styles.linkPreview} />
-  }
-
-  return null
-}
 
 const Table = ({ block }) => (
   <table>
@@ -209,7 +159,7 @@ const BulletedListItems = ({ blocks }) =>
       </li>
     ))
 
-const NumberedListItems = ({ blocks }) =>
+const NumberedListItems = ({ blocks, level = 1 }) =>
   blocks
     .filter(b => b.Type === 'numbered_list_item')
     .map(listItem => (
@@ -221,9 +171,19 @@ const NumberedListItems = ({ blocks }) =>
           />
         ))}
         {listItem.HasChildren ? (
-          <ol>
-            <NumberedListItems blocks={listItem.Children} />
-          </ol>
+          level % 3 === 0 ? (
+            <ol type="1">
+              <NumberedListItems blocks={listItem.Children} level={level + 1} />
+            </ol>
+          ) : level % 3 === 1 ? (
+            <ol type="a">
+              <NumberedListItems blocks={listItem.Children} level={level + 1} />
+            </ol>
+          ) : (
+            <ol type="i">
+              <NumberedListItems blocks={listItem.Children} level={level + 1} />
+            </ol>
+          )
         ) : null}
       </li>
     ))
@@ -247,22 +207,8 @@ const NotionBlock = ({ block }) => {
     return <Callout block={block} />
   } else if (block.Type === 'embed') {
     return <Embed block={block} />
-  } else if (block.Type === 'bookmark') {
-    return (
-      <LinkPreview
-        url={block.Bookmark.Url}
-        className={styles.linkPreview}
-        descriptionLength={60}
-      />
-    )
-  } else if (block.Type === 'link_preview') {
-    return (
-      <LinkPreview
-        url={block.LinkPreview.Url}
-        className={styles.linkPreview}
-        descriptionLength={60}
-      />
-    )
+  } else if (block.Type === 'bookmark' || block.Type === 'link_preview') {
+    return <Bookmark block={block} />
   } else if (block.Type === 'divider') {
     return <hr className="divider" />
   } else if (block.Type === 'table') {

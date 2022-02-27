@@ -1,5 +1,3 @@
-jest.mock('../../../src/lib/notion/blog-index-cache')
-
 import { render } from '@testing-library/react'
 import RenderPosts from '../../../src/pages/blog/index'
 

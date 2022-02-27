@@ -18,7 +18,6 @@ import styles from '../../styles/blog.module.css'
 import { getBlogLink } from '../../lib/blog-helpers'
 import {
   getPosts,
-  getAllPosts,
   getRankedPosts,
   getPostBySlug,
   getPostsByTag,
@@ -26,30 +25,31 @@ import {
   getAllBlocksByBlockId,
 } from '../../lib/notion/client'
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getServerSideProps({ res, params: { slug } }) {
   const post = await getPostBySlug(slug)
 
   if (!post) {
-    console.log(`Failed to find post for slug: ${slug}`)
-    return {
-      props: {
-        redirect: '/blog',
-      },
-      revalidate: 30,
-    }
+    return { notFound: true }
   }
 
-  const blocks = await getAllBlocksByBlockId(post.PageId)
-  const rankedPosts = await getRankedPosts()
-  const recentPosts = await getPosts(5)
-  const tags = await getAllTags()
+  const [
+    blocks,
+    rankedPosts,
+    recentPosts,
+    sameTagPosts,
+    tags,
+  ] = await Promise.all([
+    getAllBlocksByBlockId(post.PageId),
+    getRankedPosts(),
+    getPosts(5),
+    getPostsByTag(post.Tags[0], 6),
+    getAllTags(),
+  ])
 
-  let sameTagPosts = []
-  if (post.Tags.length > 0) {
-    sameTagPosts = (await getPostsByTag(post.Tags[0], 6)).filter(
-      p => p.Slug !== post.Slug
-    )
-  }
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=900, stale-while-revalidate=86400'
+  )
 
   return {
     props: {
@@ -57,18 +57,9 @@ export async function getStaticProps({ params: { slug } }) {
       blocks,
       rankedPosts,
       recentPosts,
-      sameTagPosts,
       tags,
+      sameTagPosts: sameTagPosts.filter(p => p.Slug !== post.Slug),
     },
-    revalidate: 600,
-  }
-}
-
-export async function getStaticPaths() {
-  const posts = await getAllPosts()
-  return {
-    paths: posts.map(post => getBlogLink(post.Slug)),
-    fallback: 'blocking',
   }
 }
 

@@ -89,7 +89,6 @@
 .post :global(video),
 .post :global(img) {
   max-width: 100%;
-  display: block;
 }
 .post :global(blockquote) {
   margin: 0.6rem 0;

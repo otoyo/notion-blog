@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "node scripts/set-blog-index-cache.js && next build && node scripts/expire-blog-index-cache.js",
+    "build": "next build",
     "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\" --ignore-path .gitignore",
     "lint": "next lint",
     "test": "jest --watch"
@@ -21,9 +21,9 @@
     "@zeit/react-jsx-parser": "^2.0.0",
     "async-sema": "^3.1.0",
     "github-slugger": "^1.2.1",
-    "image-size": "^1.0.1",
     "mermaid": "^8.14.0",
     "next": "12",
+    "nextjs-progressbar": "^0.0.13",
     "prismjs": "^1.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
