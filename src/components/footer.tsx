@@ -5,13 +5,13 @@ import styles from '../styles/footer.module.css'
 const Footer = () => (
   <footer className={styles.footer}>
     <div>
+      <span>© 2015 otoyo</span>
+    </div>
+    <div>
       <span>Powered by </span>
       <ExtLink href="https://github.com/otoyo/easy-notion-blog">
         easy-notion-blog
       </ExtLink>
-    </div>
-    <div>
-      <span>© 2015 otoyo</span>
     </div>
   </footer>
 )
