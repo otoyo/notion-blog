@@ -118,7 +118,12 @@ export const PostLinkList = ({ posts }) => {
       {posts.map(post => {
         return (
           <li key={post.Slug}>
-            <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>
+            <Link
+              href="/blog/[slug]"
+              as={getBlogLink(post.Slug)}
+              passHref
+              prefetch={false}
+            >
               <a>{post.Title}</a>
             </Link>
           </li>
@@ -136,7 +141,12 @@ export const TagLinkList = ({ tags }) => {
       {tags.map(tag => {
         return (
           <li key={tag}>
-            <Link href="/blog/tag/[tag]" as={getTagLink(tag)} passHref>
+            <Link
+              href="/blog/tag/[tag]"
+              as={getTagLink(tag)}
+              passHref
+              prefetch={false}
+            >
               <a>{tag}</a>
             </Link>
           </li>
