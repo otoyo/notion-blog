@@ -452,7 +452,7 @@ function _uniqueConditions(conditions = []) {
   const properties = []
 
   return conditions.filter(cond => {
-    if (conditions.includes(cond.property)) {
+    if (properties.includes(cond.property)) {
       return false
     }
     properties.push(cond.property)
