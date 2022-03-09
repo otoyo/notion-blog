@@ -5,6 +5,29 @@ module.exports = {
 
   outputFileTracing: false,
 
+  headers() {
+    return [
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, stale-while-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=2592000, stale-while-revalidate',
+          },
+        ],
+      },
+    ]
+  },
+
   async rewrites() {
     return [
       { source: '/atom', destination: '/api/atom' },
