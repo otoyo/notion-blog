@@ -44,5 +44,7 @@ substitutions:
 options:
   dynamic_substitutions: true
 
+timeout: 720s
+
 images:
   - '${_IMAGE_NAME}'
