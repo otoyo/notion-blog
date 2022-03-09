@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
@@ -26,13 +25,11 @@ const Header = () => {
     <header className={styles.header}>
       <Link href="/" passHref>
         <a>
-          <Image
-            src="/images/site-logo.jpeg"
+          <img
+            src="/images/site-logo@64x64.jpeg"
             alt="logo"
-            width={64}
-            height={64}
-            layout="fixed"
-            quality={100}
+            width="64"
+            height="64"
             className={styles.logo}
           />
           <h1>{SITE_TITLE}</h1>

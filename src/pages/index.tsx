@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import DocumentHead from '../components/document-head'
 import ExtLink from '../components/ext-link'
@@ -43,15 +42,15 @@ const RenderPage = () => (
 
     <div>
       <h2>Profile</h2>
-      <Image
-        src="/images/profile.png"
-        alt="profile"
-        width={64}
-        height={64}
-        layout="fixed"
-        quality={100}
-        className={styles.profile}
-      />
+      <figure>
+        <img
+          src="/images/profile.png"
+          width="64"
+          height="64"
+          alt="profile"
+          className={styles.profile}
+        />
+      </figure>
       <p>
         渋谷の Web
         系企業で働くソフトウェアエンジニア兼エンジニアリング・マネージャー兼
