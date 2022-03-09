@@ -27,7 +27,7 @@ const Header = () => {
       <Link href="/" passHref>
         <a>
           <Image
-            src="/site-logo.jpeg"
+            src="/images/site-logo.jpeg"
             alt="logo"
             width={64}
             height={64}

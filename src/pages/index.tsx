@@ -44,7 +44,7 @@ const RenderPage = () => (
     <div>
       <h2>Profile</h2>
       <Image
-        src="/profile.png"
+        src="/images/profile.png"
         alt="profile"
         width={64}
         height={64}
