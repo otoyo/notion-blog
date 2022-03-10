@@ -3,7 +3,6 @@ import RenderPost from '../../../src/pages/blog/[slug]'
 
 import {
   getPosts,
-  getAllPosts,
   getRankedPosts,
   getPostBySlug,
   getPostsByTag,

@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { getBlogLink } from '../../lib/blog-helpers'
-import { getAllPosts } from '../../lib/notion/client'
+import { getPosts } from '../../lib/notion/client'
 
 function decode(string) {
   return string
@@ -64,7 +64,7 @@ const Atom = async function(req: IncomingMessage, res: ServerResponse) {
   )
 
   try {
-    const posts = await getAllPosts()
+    const posts = await getPosts()
     res.write(createRSS(posts))
     res.end()
   } catch (e) {
