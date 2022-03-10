@@ -25,6 +25,24 @@ module.exports = {
           },
         ],
       },
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/subscribe',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate',
+          },
+        ],
+      },
     ]
   },
 
