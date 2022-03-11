@@ -233,7 +233,11 @@ export async function getAllBlocksByBlockId(blockId) {
     const data = await client.blocks.children.list(params)
 
     const blocks = data.results.map(item => {
-      let block = null
+      const block: Block = {
+        Id: item.id,
+        Type: item.type,
+        HasChildren: item.has_children,
+      }
 
       switch (item.type) {
         case 'paragraph':
@@ -242,12 +246,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.paragraph.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Paragraph: paragraph,
-          }
+          block.Paragraph = paragraph
           break
         case 'heading_1':
           const heading1: Heading1 = {
@@ -255,12 +254,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.heading_1.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Heading1: heading1,
-          }
+          block.Heading1 = heading1
           break
         case 'heading_2':
           const heading2: Heading2 = {
@@ -268,12 +262,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.heading_2.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Heading2: heading2,
-          }
+          block.Heading2 = heading2
           break
         case 'heading_3':
           const heading3: Heading3 = {
@@ -281,12 +270,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.heading_3.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Heading3: heading3,
-          }
+          block.Heading3 = heading3
           break
         case 'bulleted_list_item':
           const bulletedListItem: BulletedListItem = {
@@ -294,12 +278,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.bulleted_list_item.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            BulletedListItem: bulletedListItem,
-          }
+          block.BulletedListItem = bulletedListItem
           break
         case 'numbered_list_item':
           const numberedListItem: NumberedListItem = {
@@ -307,12 +286,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Color: item.numbered_list_item.color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            NumberedListItem: numberedListItem,
-          }
+          block.NumberedListItem = numberedListItem
           break
         case 'image':
           const image: Image = {
@@ -326,12 +300,7 @@ export async function getAllBlocksByBlockId(blockId) {
             image.File = { Url: item.image.file.url }
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Image: image,
-          }
+          block.Image = image
           break
         case 'code':
           const code: Code = {
@@ -340,24 +309,14 @@ export async function getAllBlocksByBlockId(blockId) {
             Language: item.code.language,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Code: code,
-          }
+          block.Code = code
           break
         case 'quote':
           const quote: Quote = {
             Text: item[item.type].rich_text.map(_buildRichText),
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Quote: quote,
-          }
+          block.Quote = quote
           break
         case 'callout':
           const callout: Callout = {
@@ -367,48 +326,28 @@ export async function getAllBlocksByBlockId(blockId) {
             },
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Callout: callout,
-          }
+          block.Callout = callout
           break
         case 'embed':
           const embed: Embed = {
             Url: item.embed.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Embed: embed,
-          }
+          block.Embed = embed
           break
         case 'bookmark':
           const bookmark: Bookmark = {
             Url: item.bookmark.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Bookmark: bookmark,
-          }
+          block.Bookmark = bookmark
           break
         case 'link_preview':
           const linkPreview: LinkPreview = {
             Url: item.link_preview.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            LinkPreview: linkPreview,
-          }
+          block.LinkPreview = linkPreview
           break
         case 'table':
           const table: Table = {
@@ -418,12 +357,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Rows: [],
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Table: table,
-          }
+          block.Table = table
           break
         case 'table_row':
           const cells: TableCell[] = item.table_row.cells.map(cell => {
@@ -438,19 +372,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Cells: cells,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            TableRow: tableRow,
-          }
-          break
-        default:
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-          }
+          block.TableRow = tableRow
           break
       }
 
