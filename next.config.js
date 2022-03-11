@@ -12,7 +12,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate',
+            value: 'public, max-age=2592000, stale-while-revalidate=86400',
           },
         ],
       },
@@ -21,7 +21,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate',
+            value: 'public, max-age=2592000, stale-while-revalidate=86400',
           },
         ],
       },
@@ -30,7 +30,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, stale-while-revalidate',
+            value: 'public, max-age=86400, stale-while-revalidate=86400',
           },
         ],
       },
@@ -39,7 +39,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, stale-while-revalidate',
+            value: 'public, max-age=86400, stale-while-revalidate=86400',
           },
         ],
       },
