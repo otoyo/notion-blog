@@ -60,7 +60,7 @@ const Atom = async function(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=1800, stale-while-revalidate=86400'
+    'public, max-age=1800, stale-while-revalidate=86400'
   )
 
   try {
