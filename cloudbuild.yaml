@@ -22,7 +22,7 @@ steps:
   - id: 'Delete all objects from GCS'
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gsutil'
-    args: ['rm', '-a', 'gs://${_BACKEND_BUCKET_NAME}/**']
+    args: ['rm', '-a', 'gs://${_BACKEND_BUCKET_NAME}/**', '2>', '/dev/null']
 
   - id: 'Upload public files to GCS'
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
