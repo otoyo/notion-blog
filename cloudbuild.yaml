@@ -1,4 +1,12 @@
 steps:
+  - id: 'Delete old Docker images'
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - -ceux
+      - |
+        gcloud artifacts docker images list ${_IMAGE_NAME} --include-tags --filter="TAGS!=latest" --format="value(DIGEST)" | xargs -n1 -I{} gcloud artifacts docker images delete ${_IMAGE_NAME}@{}
+
   - id: 'Build Docker image'
     name: 'gcr.io/cloud-builders/docker'
     args:
