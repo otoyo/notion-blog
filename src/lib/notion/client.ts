@@ -2,6 +2,12 @@ import { NOTION_API_SECRET, DATABASE_ID } from './server-constants'
 import {
   Post,
   Block,
+  Paragraph,
+  Heading1,
+  Heading2,
+  Heading3,
+  BulletedListItem,
+  NumberedListItem,
   Image,
   Code,
   Quote,
@@ -227,21 +233,60 @@ export async function getAllBlocksByBlockId(blockId) {
     const data = await client.blocks.children.list(params)
 
     const blocks = data.results.map(item => {
-      let block = null
+      const block: Block = {
+        Id: item.id,
+        Type: item.type,
+        HasChildren: item.has_children,
+      }
 
       switch (item.type) {
         case 'paragraph':
-        case 'heading_1':
-        case 'heading_2':
-        case 'heading_3':
-        case 'bulleted_list_item':
-        case 'numbered_list_item':
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            RichTexts: item[item.type].rich_text.map(_buildRichText),
+          const paragraph: Paragraph = {
+            RichTexts: item.paragraph.rich_text.map(_buildRichText),
+            Color: item.paragraph.color,
           }
+
+          block.Paragraph = paragraph
+          break
+        case 'heading_1':
+          const heading1: Heading1 = {
+            RichTexts: item.heading_1.rich_text.map(_buildRichText),
+            Color: item.heading_1.color,
+          }
+
+          block.Heading1 = heading1
+          break
+        case 'heading_2':
+          const heading2: Heading2 = {
+            RichTexts: item.heading_2.rich_text.map(_buildRichText),
+            Color: item.heading_2.color,
+          }
+
+          block.Heading2 = heading2
+          break
+        case 'heading_3':
+          const heading3: Heading3 = {
+            RichTexts: item.heading_3.rich_text.map(_buildRichText),
+            Color: item.heading_3.color,
+          }
+
+          block.Heading3 = heading3
+          break
+        case 'bulleted_list_item':
+          const bulletedListItem: BulletedListItem = {
+            RichTexts: item.bulleted_list_item.rich_text.map(_buildRichText),
+            Color: item.bulleted_list_item.color,
+          }
+
+          block.BulletedListItem = bulletedListItem
+          break
+        case 'numbered_list_item':
+          const numberedListItem: NumberedListItem = {
+            RichTexts: item.numbered_list_item.rich_text.map(_buildRichText),
+            Color: item.numbered_list_item.color,
+          }
+
+          block.NumberedListItem = numberedListItem
           break
         case 'image':
           const image: Image = {
@@ -255,12 +300,7 @@ export async function getAllBlocksByBlockId(blockId) {
             image.File = { Url: item.image.file.url }
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Image: image,
-          }
+          block.Image = image
           break
         case 'code':
           const code: Code = {
@@ -269,24 +309,15 @@ export async function getAllBlocksByBlockId(blockId) {
             Language: item.code.language,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Code: code,
-          }
+          block.Code = code
           break
         case 'quote':
           const quote: Quote = {
             Text: item[item.type].rich_text.map(_buildRichText),
+            Color: item[item.type].color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Quote: quote,
-          }
+          block.Quote = quote
           break
         case 'callout':
           const callout: Callout = {
@@ -294,50 +325,31 @@ export async function getAllBlocksByBlockId(blockId) {
             Icon: {
               Emoji: item[item.type].icon.emoji,
             },
+            Color: item[item.type].color,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Callout: callout,
-          }
+          block.Callout = callout
           break
         case 'embed':
           const embed: Embed = {
             Url: item.embed.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Embed: embed,
-          }
+          block.Embed = embed
           break
         case 'bookmark':
           const bookmark: Bookmark = {
             Url: item.bookmark.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Bookmark: bookmark,
-          }
+          block.Bookmark = bookmark
           break
         case 'link_preview':
           const linkPreview: LinkPreview = {
             Url: item.link_preview.url,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            LinkPreview: linkPreview,
-          }
+          block.LinkPreview = linkPreview
           break
         case 'table':
           const table: Table = {
@@ -347,12 +359,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Rows: [],
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            Table: table,
-          }
+          block.Table = table
           break
         case 'table_row':
           const cells: TableCell[] = item.table_row.cells.map(cell => {
@@ -367,19 +374,7 @@ export async function getAllBlocksByBlockId(blockId) {
             Cells: cells,
           }
 
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-            TableRow: tableRow,
-          }
-          break
-        default:
-          block = {
-            Id: item.id,
-            Type: item.type,
-            HasChildren: item.has_children,
-          }
+          block.TableRow = tableRow
           break
       }
 
@@ -401,13 +396,10 @@ export async function getAllBlocksByBlockId(blockId) {
     if (block.Type === 'table') {
       // Fetch table_row
       block.Table.Rows = await getAllBlocksByBlockId(block.Id)
-    } else if (
-      (block.Type === 'bulleted_list_item' ||
-        block.Type === 'numbered_list_item') &&
-      block.HasChildren
-    ) {
-      // Fetch nested list_item
-      block.Children = await getAllBlocksByBlockId(block.Id)
+    } else if (block.Type === 'bulleted_list_item' && block.HasChildren) {
+      block.BulletedListItem.Children = await getAllBlocksByBlockId(block.Id)
+    } else if (block.Type === 'numbered_list_item' && block.HasChildren) {
+      block.NumberedListItem.Children = await getAllBlocksByBlockId(block.Id)
     }
   }
 
