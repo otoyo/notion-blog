@@ -9,6 +9,7 @@ import {
   NoContents,
   PostBody,
   PostDate,
+  PostFooter,
   PostTags,
   PostTitle,
   PostsNotFound,
@@ -102,6 +103,7 @@ const RenderPost = ({
           <PostBody blocks={blocks} />
 
           <footer>
+            <PostFooter />
             {NEXT_PUBLIC_URL && (
               <SocialButtons
                 title={post.Title}
