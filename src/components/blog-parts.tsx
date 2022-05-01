@@ -59,6 +59,29 @@ export const PostBody = ({ blocks }) => (
   </div>
 )
 
+export const PostFooter = () => (
+  <div className={styles.postFooter}>
+    <div>
+      <img
+        src="/images/site-logo@128x128.jpeg"
+        alt="logo"
+        width="64"
+        height="64"
+        className={styles.logo}
+      />
+    </div>
+    <div>
+      <p>Notion Blogやプログラミング、マネジメントについて毎週月曜更新。</p>
+      <p>
+        <Link href="/subscribe" passHref>
+          <a>読者になる</a>
+        </Link>
+        からご購読ください。
+      </p>
+    </div>
+  </div>
+)
+
 export const ReadMoreLink = ({ post }) => (
   <div className={styles.readMoreLink}>
     <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>

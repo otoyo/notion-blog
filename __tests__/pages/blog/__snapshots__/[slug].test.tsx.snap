@@ -227,6 +227,32 @@ exports[`RenderPost renders the page unchanged 1`] = `
           </figure>
         </div>
         <footer>
+          <div
+            class="postFooter"
+          >
+            <div>
+              <img
+                alt="logo"
+                class="logo"
+                height="64"
+                src="/images/site-logo@128x128.jpeg"
+                width="64"
+              />
+            </div>
+            <div>
+              <p>
+                Notion Blogやプログラミング、マネジメントについて毎週月曜更新。
+              </p>
+              <p>
+                <a
+                  href="/subscribe"
+                >
+                  読者になる
+                </a>
+                からご購読ください。
+              </p>
+            </div>
+          </div>
           <ul
             class="socialButtons"
           >
