@@ -227,15 +227,6 @@ export async function getPostsByTagBefore(
   date: string,
   pageSize = 100
 ) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts
-      .filter(post => {
-        return post.Tags.includes(tag) && new Date(post.Date) < new Date(date)
-      })
-      .slice(0, pageSize)
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter([
@@ -270,11 +261,6 @@ export async function getPostsByTagBefore(
 }
 
 export async function getFirstPostByTag(tag: string) {
-  if (blogIndexCache.exists()) {
-    const allPosts = await getAllPosts()
-    return allPosts.filter(post => post.Tags.includes(tag))[allPosts.length - 1]
-  }
-
   const params = {
     database_id: DATABASE_ID,
     filter: _buildFilter([

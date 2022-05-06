@@ -1,5 +1,3 @@
-jest.mock('../../../../../../src/lib/notion/blog-index-cache')
-
 import { render } from '@testing-library/react'
 import RenderPostsByTagsBeforeDate from '../../../../../../src/pages/blog/tag/[tag]/before/[date]'
 
@@ -14,8 +12,8 @@ import {
 jest.mock('next/router', () => ({
   useRouter() {
     return {
-      asPath: '/blog/tag/Diary',
-      pathname: '/blog/tag/[tag]',
+      asPath: '/blog/tag/Diary/before/2022-05-01',
+      pathname: '/blog/tag/[tag]/before/[date]',
     }
   },
 }))

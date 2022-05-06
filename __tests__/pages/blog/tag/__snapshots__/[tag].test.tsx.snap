@@ -152,7 +152,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
           <a
             href="/blog/tag/Diary/before/2021-11-01"
           >
-            Next page ＞
+            次のページ ＞
           </a>
         </div>
       </footer>
