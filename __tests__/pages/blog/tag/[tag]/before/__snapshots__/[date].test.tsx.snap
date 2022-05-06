@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RenderPostsByTags renders the page unchanged 1`] = `
+exports[`RenderPostsByTagsBeforeDate renders the page unchanged 1`] = `
 <div>
   <div
     class="container"
@@ -53,7 +53,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
             class="readMore"
             href="/blog/ihatov"
           >
-            続きを読む
+            Read more
           </a>
         </div>
       </div>
@@ -97,7 +97,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
             class="readMore"
             href="/blog/supported-blocks"
           >
-            続きを読む
+            Read more
           </a>
         </div>
       </div>
@@ -141,7 +141,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
             class="readMore"
             href="/blog/my-first-post"
           >
-            続きを読む
+            Read more
           </a>
         </div>
       </div>
@@ -164,7 +164,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
         class="blogPostLink"
       >
         <h3>
-          おすすめ記事
+          Recommended
         </h3>
         <ul>
           <li>
@@ -194,7 +194,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
         class="blogPostLink"
       >
         <h3>
-          最新記事
+          Latest Posts
         </h3>
         <ul>
           <li>
@@ -224,7 +224,7 @@ exports[`RenderPostsByTags renders the page unchanged 1`] = `
         class="blogTagLink"
       >
         <h3>
-          カテゴリー
+          Categories
         </h3>
         <ul>
           <li>
