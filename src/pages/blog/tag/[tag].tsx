@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { NUMBER_OF_POSTS_PER_PAGE } from '../../../lib/notion/server-constants'
 import DocumentHead from '../../../components/document-head'
 import {
   BlogPostLink,
@@ -18,11 +19,12 @@ import {
   getPosts,
   getRankedPosts,
   getPostsByTag,
+  getFirstPostByTag,
   getAllTags,
 } from '../../../lib/notion/client'
 
 export async function getServerSideProps({ res, params: { tag } }) {
-  const posts = await getPostsByTag(tag)
+  const posts = await getPostsByTag(tag, NUMBER_OF_POSTS_PER_PAGE)
 
   if (posts.length === 0) {
     return { notFound: true }
