@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios'
 
-import * as gtag from '../lib/gtag'
 import styles from '../styles/like-button.module.css'
 import Heart from './svgs/heart'
 
@@ -8,34 +8,21 @@ type Props = {
   id: string
 }
 
-type State = {
-  active: number
-}
+const LikeButton = (props: Props) => {
+  const [active, setActive] = useState(false)
 
-class LikeButton extends React.Component<Props, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      active: 0,
+  const handleClick = () => {
+    if (!active) {
+      axios.put(`/api/like?slug=${props.id}`, {})
+      setActive(true)
     }
-    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick() {
-    gtag.like({
-      contentType: 'article',
-      itemId: this.props.id,
-    })
-    this.setState({ active: 1 })
-  }
-
-  render() {
-    return (
-      <button className={styles.likeButton} onClick={this.handleClick}>
-        <Heart width={32} height={32} active={this.state.active} />
-      </button>
-    )
-  }
+  return (
+    <button className={styles.likeButton} onClick={handleClick}>
+      <Heart width={32} height={32} active={active} />
+    </button>
+  )
 }
 
 export default LikeButton
