@@ -5,7 +5,7 @@ import {
   incrementLikes,
 } from '../../lib/notion/client'
 
-const ApiBlogSlug = async function(req: NextApiRequest, res: NextApiResponse) {
+const ApiLike = async function(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'PUT') {
     res.statusCode = 400
     res.end()
@@ -36,4 +36,4 @@ const ApiBlogSlug = async function(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default ApiBlogSlug
+export default ApiLike
