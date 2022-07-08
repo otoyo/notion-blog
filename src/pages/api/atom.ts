@@ -1,11 +1,11 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { getBlogLink } from '../../lib/blog-helpers'
 import { getPosts } from '../../lib/notion/client'
+import { Post } from '../../lib/notion/interfaces'
 
-function decode(string) {
-  return string
+function decode(s: string) {
+  return s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -13,7 +13,7 @@ function decode(string) {
     .replace(/'/g, '&apos;')
 }
 
-function mapToEntry(post) {
+function mapToEntry(post: Post) {
   const date = new Date(post.Date)
   return `
     <entry>
@@ -28,17 +28,17 @@ function mapToEntry(post) {
       </author>
       <content type="xhtml">
         <div xmlns="http://www.w3.org/1999/xhtml">
-          ${renderToStaticMarkup(post.Excerpt)}
+          ${post.Excerpt}
         </div>
       </content>
     </entry>`
 }
 
-function concat(total, item) {
+function concat(total: string, item: string) {
   return total + item
 }
 
-function createRSS(posts = []) {
+function createRSS(posts: Array<Post> = []) {
   const postsString = posts.map(mapToEntry).reduce(concat, '')
   const updated =
     posts.length > 0
@@ -56,7 +56,7 @@ function createRSS(posts = []) {
   </feed>`
 }
 
-const Atom = async function(req: IncomingMessage, res: ServerResponse) {
+const Atom = async function(_req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader(
     'Cache-Control',

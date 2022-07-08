@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { NEXT_PUBLIC_URL } from '../../lib/notion/server-constants'
+import { Post } from '../../lib/notion/interfaces'
 import DocumentHead from '../../components/document-head'
 import {
   BlogPostLink,
@@ -59,7 +60,7 @@ export async function getServerSideProps({ res, params: { slug } }) {
       rankedPosts,
       recentPosts,
       tags,
-      sameTagPosts: sameTagPosts.filter(p => p.Slug !== post.Slug),
+      sameTagPosts: sameTagPosts.filter((p: Post) => p.Slug !== post.Slug),
     },
   }
 }
