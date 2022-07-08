@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 import { getTagLink } from '../../lib/blog-helpers'
 import { getAllTags } from '../../lib/notion/client'
 
-function mapToURL(tag) {
+function mapToURL(tag: string) {
   return `
     <url>
       <loc>https://alpacat.com${getTagLink(tag)}</loc>
@@ -11,11 +11,11 @@ function mapToURL(tag) {
     </url>`
 }
 
-function concat(total, item) {
+function concat(total: string, item: string) {
   return total + item
 }
 
-function createSitemap(tags = []) {
+function createSitemap(tags: Array<string> = []) {
   const tagsString = tags.map(mapToURL).reduce(concat, '')
 
   return `<?xml version="1.0" encoding="utf-8"?>
@@ -33,7 +33,7 @@ function createSitemap(tags = []) {
   </urlset>`
 }
 
-const Sitemap = async function(req: IncomingMessage, res: ServerResponse) {
+const Sitemap = async function(_req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader(
     'Cache-Control',

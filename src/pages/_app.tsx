@@ -15,7 +15,7 @@ import styles from '../styles/shared.module.css'
 const App = ({ Component, pageProps }) => {
   const router = useRouter()
   useEffect(() => {
-    const handleRouteChange = url => {
+    const handleRouteChange = (url: string) => {
       if (location.host === new URL(NEXT_PUBLIC_URL).hostname) {
         gtag.pageview(pageProps.title, url)
       }
