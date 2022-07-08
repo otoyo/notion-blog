@@ -34,6 +34,7 @@ exports[`RenderPost renders the page unchanged 1`] = `
           class="postBody"
         >
           <a
+            class="heading"
             href="#Heading 1"
             id="Heading 1"
           >
@@ -42,6 +43,7 @@ exports[`RenderPost renders the page unchanged 1`] = `
             </h4>
           </a>
           <a
+            class="heading"
             href="#Heading 2"
             id="Heading 2"
           >
@@ -50,6 +52,7 @@ exports[`RenderPost renders the page unchanged 1`] = `
             </h5>
           </a>
           <a
+            class="heading"
             href="#Heading 3"
             id="Heading 3"
           >
