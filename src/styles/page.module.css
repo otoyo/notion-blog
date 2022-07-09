@@ -17,11 +17,65 @@
   font-weight: 400;
 }
 
+.container h3 {
+  margin: 0;
+  color: var(--fg);
+  font-weight: 400;
+}
+.container h4 {
+  margin: 0.8rem 0 0.8rem;
+  color: var(--fg);
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+.container > a:first-child > h4,
+.container > a:first-child > h5,
+.container > a:first-child > h6 {
+  margin: 0 0 0.8rem;
+}
+.container h4:after {
+  color: var(--accents-1);
+  font-size: 0.9rem;
+  content: '▼';
+  padding-left: 0.2rem;
+}
+.container h5 {
+  margin: 1.8rem 0 0.8rem;
+  color: var(--fg);
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+.container h5:after {
+  color: var(--accents-1);
+  font-size: 0.9rem;
+  content: '▼';
+  padding-left: 0.2rem;
+}
+.container h6 {
+  margin: 0.8rem 0 0.8rem;
+  color: var(--fg);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.container :global(h6):after {
+  color: var(--accents-1);
+  font-size: 0.9rem;
+  content: '▼';
+  padding-left: 0.2rem;
+}
+
 .container p {
   margin: 0.3rem auto;
   line-height: 2rem;
 }
 
-.profile {
-  margin: 10px 0;
+.container figure {
+  margin: 0;
+  padding: 0;
+}
+.container figure > div:first-child {
+  text-align: left;
+}
+.container figure > div img {
+  max-width: 100%;
 }
