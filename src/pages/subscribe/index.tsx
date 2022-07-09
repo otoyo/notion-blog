@@ -1,26 +1,29 @@
 import DocumentHead from '../../components/document-head'
-import ExtLink from '../../components/ext-link'
+import { SUBSCRIPTION_PAGE_ID } from '../../lib/notion/server-constants'
+import { getAllBlocksByBlockId } from '../../lib/notion/client'
+import NotionBlocks from '../../components/notion-block'
+
 import styles from '../../styles/page.module.css'
 
-const RenderSubscribePage = () => (
+export async function getServerSideProps({ res }) {
+  const blocks = await getAllBlocksByBlockId(SUBSCRIPTION_PAGE_ID)
+
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=900'
+  )
+
+  return {
+    props: {
+      blocks,
+    },
+  }
+}
+
+const RenderSubscribePage = ({ blocks }) => (
   <div className={styles.container}>
     <DocumentHead title="購読する" description="アルパカログを購読する" />
-
-    <div>
-      <h2>RSSフィードを購読する</h2>
-      <p>
-        <code>https://alpacat.com/atom</code>
-      </p>
-      <p>お使いのRSSリーダーに上記のフィードURLをご登録ください。</p>
-    </div>
-
-    <div>
-      <h2>Twitterでフォローする</h2>
-      <p>
-        <ExtLink href="https://twitter.com/otoyo0122">@otoyo0122</ExtLink>
-      </p>
-      <p>Twitterでフォローして更新情報を受け取ることもできます。</p>
-    </div>
+    <NotionBlocks blocks={blocks} />
   </div>
 )
 
