@@ -104,7 +104,7 @@ const Heading = ({ heading, level = 1 }) => {
   )
 
   return (
-    <a href={`#${id}`} id={id}>
+    <a href={`#${id}`} id={id} className={styles.heading}>
       {htag}
     </a>
   )

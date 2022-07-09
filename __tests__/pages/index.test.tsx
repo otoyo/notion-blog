@@ -1,5 +1,7 @@
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import RenderPage from '../../src/pages/index'
+
+import { getAllBlocksByBlockId } from '../../src/lib/notion/client'
 
 jest.mock('next/router', () => ({
   useRouter() {
@@ -11,8 +13,11 @@ jest.mock('next/router', () => ({
 }))
 
 describe('RenderPage', () => {
-  it('renders the page unchanged', () => {
-    const { container } = render(<RenderPage />)
-    expect(container).toMatchSnapshot()
+  it('renders the page unchanged', async () => {
+    const blocks = await getAllBlocksByBlockId("")
+    const { container } = render(<RenderPage blocks={blocks} />)
+    await waitFor(() => {
+      expect(container).toMatchSnapshot()
+    })
   })
 })

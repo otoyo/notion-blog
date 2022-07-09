@@ -5,120 +5,201 @@ exports[`RenderPage renders the page unchanged 1`] = `
   <div
     class="container"
   >
-    <div>
-      <h2>
-        About
-      </h2>
-      <p>
-        アルパカログは Notion Blog が好きな Web エンジニアの個人ブログです。
-      </p>
-      <p>
-        下記のような話題がよく登場します。
-      </p>
-      <ul>
-        <li>
-          Notion Blog のカスタマイズ
-        </li>
-        <li>
-          Web アプリケーション開発
-        </li>
-        <li>
-          ピープルマネジメント
-        </li>
-        <li>
-          プログラミング (Ruby, Python, Go, TypeScript etc.)
-        </li>
-      </ul>
-      <p>
-        更新は毎週月曜です。
-      </p>
-      <p>
-        このブログも Notion で書かれています。興味がある方は下記をご覧ください。
-      </p>
-      <ul>
-        <li>
-          <a
-            href="/blog/easy-notion-blog"
-          >
-            Notion Blog 始めたい人に向けてスタートキットを作ったので紹介する
-          </a>
-        </li>
-      </ul>
+    <a
+      class="heading"
+      href="#Heading 1"
+      id="Heading 1"
+    >
+      <h4>
+        Heading 1
+      </h4>
+    </a>
+    <a
+      class="heading"
+      href="#Heading 2"
+      id="Heading 2"
+    >
+      <h5>
+        Heading 2
+      </h5>
+    </a>
+    <a
+      class="heading"
+      href="#Heading 3"
+      id="Heading 3"
+    >
+      <h6>
+        Heading 3
+      </h6>
+    </a>
+    <p>
+      Paragraph
+    </p>
+    <p>
+      <b>
+        bold
+      </b>
+    </p>
+    <p>
+      <i>
+        italic
+      </i>
+    </p>
+    <p>
+      <u>
+        Underline
+      </u>
+    </p>
+    <p>
+      <s>
+        Strike
+      </s>
+    </p>
+    <p>
+      <a
+        href="https://github.com/otoyo/easy-notion-blog"
+      >
+        link
+      </a>
+    </p>
+    <p>
+      <code>
+        code
+      </code>
+    </p>
+    <p />
+    <ul>
+      <li>
+        Bulleted List
+      </li>
+      <li>
+        Uni
+      </li>
+      <li>
+        Tako
+        <ul>
+          <li>
+            aaa
+          </li>
+          <li>
+            bbb
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p />
+    <ol>
+      <li>
+        Numbered List
+      </li>
+      <li>
+        Kani
+      </li>
+      <li>
+        Ika
+        <ol
+          type="a"
+        >
+          <li>
+            111
+          </li>
+          <li>
+            222
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p />
+    <p>
+      Divider
+    </p>
+    <hr
+      class="divider"
+    />
+    <p />
+    <div
+      class="callout"
+    >
+      <div>
+        ℹ️
+      </div>
+      <div>
+        Callout
+      </div>
     </div>
-    <div>
-      <h2>
-        Profile
-      </h2>
-      <figure>
+    <p />
+    <p />
+    <blockquote>
+      Quote Block
+    </blockquote>
+    <p />
+    <table>
+      <tbody>
+        <tr>
+          <th>
+            Simple
+          </th>
+          <th>
+            Table
+          </th>
+        </tr>
+        <tr>
+          <td>
+            1
+          </td>
+          <td>
+            Tako
+          </td>
+        </tr>
+        <tr>
+          <td>
+            2
+          </td>
+          <td>
+            Ika
+          </td>
+        </tr>
+        <tr>
+          <td>
+            3
+          </td>
+          <td>
+            Uni
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p />
+    <figure
+      class="image"
+    >
+      <div>
         <img
-          alt="profile"
-          class="profile"
-          height="64"
-          src="/images/profile.png"
-          width="64"
+          alt="画像が読み込まれない場合はページを更新してみてください。"
+          src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5d04be89-54da-482a-9391-efd465f74082/profile.png"
         />
-      </figure>
-      <p>
-        渋谷の Web 系企業で働くソフトウェアエンジニア兼エンジニアリング・マネージャー兼 Customer Reliability Engineer(CRE)。
-      </p>
-      <p>
-        ブログが好きすぎて気がつけば自分で作っていた。
-      </p>
-      <p>
-        アルパカがトレードマーク。
-      </p>
-    </div>
-    <div>
-      <h2>
-        Social accounts
-      </h2>
-      <ul>
-        <li>
-          <a
-            href="https://github.com/otoyo"
-            rel="noopener"
-            target="_blank"
-          >
-            GitHub
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://twitter.com/otoyo0122"
-            rel="noopener"
-            target="_blank"
-          >
-            Twitter
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://www.wantedly.com/id/otoyo"
-            rel="noopener"
-            target="_blank"
-          >
-            Wantedly
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <h2>
-        Contact
-      </h2>
-      <p>
-        GitHub で公開しているソフトウェアに関しては GitHub Issues でお願いします。
-      </p>
-      <p>
-        リクルーティングに関しては Wantedly からお願いします(現在求職中ではありません)。
-      </p>
-      <p>
-        その他は Twitter でご連絡ください。
-      </p>
-      <p>
-        メールはご遠慮ください。
-      </p>
-    </div>
+      </div>
+      <figcaption
+        class="caption"
+      >
+        This is image caption.
+      </figcaption>
+    </figure>
+    <figure
+      class="image"
+    >
+      <div>
+        <img
+          alt="画像が読み込まれない場合はページを更新してみてください。"
+          src="https://images.unsplash.com/photo-1512070679279-8988d32161be?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb"
+        />
+      </div>
+      <figcaption
+        class="caption"
+      >
+        External images from Unsplash
+      </figcaption>
+    </figure>
   </div>
 </div>
 `;
