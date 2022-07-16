@@ -21,13 +21,12 @@ const ApiLike = async function(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    getPostBySlug(slug as string)
-      .then(post => {
-        if (!post) throw new Error(`post not found. slug: ${slug}`)
-        return post
-      })
-      .then(post => incrementLikes(post))
-      .catch(e => console.log(e))
+    const post = await getPostBySlug(slug as string)
+    if (!post) {
+      throw new Error(`post not found. slug: ${slug}`)
+    }
+
+    await incrementLikes(post)
 
     res.statusCode = 200
     res.end()
