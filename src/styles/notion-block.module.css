@@ -30,7 +30,7 @@ a.heading {
   overflow: auto;
   margin: 5px;
   padding: 0.8rem;
-  background: #f1f1f1;
+  background: rgb(247, 246, 243);
   font-size: 0.9rem;
   line-height: 1.2rem;
   border-radius: var(--radius);
@@ -38,6 +38,7 @@ a.heading {
 .code pre code {
   color: var(--fg);
   padding: 0;
+  background: rgb(247, 246, 243) !important;
 }
 .gray {
   color: rgba(120, 119, 116, 1);
