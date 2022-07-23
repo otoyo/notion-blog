@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "@dhaiwat10/react-link-preview": "^1.14.0",
-    "@notionhq/client": "1.0.4",
-    "@types/mermaid": "^8.2.9",
+    "@notionhq/client": "^1.0.4",
     "axios": "^0.27.2",
     "mermaid": "^9.1.2",
     "next": "12",
