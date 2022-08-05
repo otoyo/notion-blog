@@ -74,11 +74,11 @@ const RenderPostsBeforeDate = ({
 
   return (
     <div className={styles.container}>
-      <DocumentHead description={`${date}より前の記事`} />
+      <DocumentHead description={`${date.split('T')[0]}より前の記事`} />
 
       <div className={styles.mainContent}>
         <header>
-          <h2>{date}より前の記事</h2>
+          <h2>{date.split('T')[0]}より前の記事</h2>
         </header>
 
         <NoContents contents={posts} />
