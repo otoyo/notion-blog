@@ -5,11 +5,18 @@ import * as interfaces from '../lib/notion/interfaces'
 const Code = dynamic(() => import('./notion-blocks/code'))
 const Embed = dynamic(() => import('./notion-blocks/embed'))
 const Bookmark = dynamic(() => import('./notion-blocks/bookmark'))
+const InlineEquation = dynamic(() => import('./notion-blocks/inline-equation'))
+const BlockEquation = dynamic(() => import('./notion-blocks/block-equation'))
 
 import styles from '../styles/notion-block.module.css'
 
 const RichText = ({ richText }) => {
-  let element = richText.Text.Content
+  let element
+  if (richText.Text) {
+    element = richText.Text.Content
+  } else if (richText.Equation) {
+    element = <InlineEquation equation={richText.Equation} />
+  }
 
   if (richText.Annotation.Bold) {
     element = <b>{element}</b>
@@ -275,6 +282,8 @@ const NotionBlock = ({ block }) => {
     return <Code block={block} />
   } else if (block.Type === 'quote') {
     return <Quote block={block} />
+  } else if (block.Type === 'equation') {
+    return <BlockEquation block={block} />
   } else if (block.Type === 'callout') {
     return <Callout block={block} />
   } else if (block.Type === 'embed') {

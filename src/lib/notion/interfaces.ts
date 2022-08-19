@@ -24,6 +24,7 @@ export interface Block {
   Image?: Image
   Code?: Code
   Quote?: Quote
+  Equation?: Equation
   Callout?: Callout
   Embed?: Embed
   Bookmark?: Bookmark
@@ -93,6 +94,10 @@ export interface Quote {
   Color: string
 }
 
+export interface Equation {
+  Expression: string
+}
+
 export interface Callout {
   RichTexts: RichText[]
   Icon: Icon
@@ -132,10 +137,11 @@ export interface List {
 }
 
 export interface RichText {
-  Text: Text
+  Text?: Text
   Annotation: Annotation
   PlainText: string
   Href?: string
+  Equation?: Equation
 }
 
 export interface Text {
