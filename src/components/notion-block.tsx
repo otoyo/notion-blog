@@ -160,33 +160,35 @@ const Callout = ({ block }) => {
 }
 
 const Table = ({ block }) => (
-  <table>
-    <tbody>
-      {block.Table.Rows.map((rowBlock: interfaces.Block, j: number) => {
-        return (
-          <tr key={`${rowBlock.Id}-${j}`}>
-            {rowBlock.TableRow.Cells.map((cell: interfaces.TableCell, i: number) => {
-              let tag = 'td'
-              if (
-                (block.Table.HasRowHeader && i === 0) ||
-                (block.Table.HasColumnHeader && j === 0)
-              ) {
-                tag = 'th'
-              }
+  <div className={styles.table}>
+    <table>
+      <tbody>
+        {block.Table.Rows.map((tableRow: interfaces.TableRow, j: number) => {
+          return (
+            <tr key={`${tableRow.Id}-${j}`}>
+              {tableRow.Cells.map((cell: interfaces.TableCell, i: number) => {
+                let tag = 'td'
+                if (
+                  (block.Table.HasRowHeader && i === 0) ||
+                  (block.Table.HasColumnHeader && j === 0)
+                ) {
+                  tag = 'th'
+                }
 
-              return React.createElement(
-                tag,
-                { key: `${rowBlock.Id}-${j}-${i}` },
-                cell.RichTexts.map((richText: interfaces.RichText, k: number) => (
-                  <RichText richText={richText} key={`${rowBlock.Id}-${j}-${i}-${k}`} />
-                ))
-              )
-            })}
-          </tr>
-        )
-      })}
-    </tbody>
-  </table>
+                return React.createElement(
+                  tag,
+                  { key: `${tableRow.Id}-${j}-${i}` },
+                  cell.RichTexts.map((richText: interfaces.RichText, k: number) => (
+                    <RichText richText={richText} key={`${tableRow.Id}-${j}-${i}-${k}`} />
+                  ))
+                )
+              })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  </div>
 )
 
 const List = ({ block }) => {
