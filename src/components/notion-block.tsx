@@ -191,6 +191,18 @@ const Table = ({ block }) => (
   </div>
 )
 
+const ColumnList = ({ block }) => (
+  <div className={styles.columnList}>
+    {block.ColumnList.Columns.map((column: interfaces.Column) => (
+      <div key={column.Id}>
+        {column.Children.map((b: interfaces.Block) => (
+          <NotionBlock block={b} key={b.Id} />
+        ))}
+      </div>
+    ))}
+  </div>
+)
+
 const List = ({ block }) => {
   if (block.Type === 'bulleted_list') {
     return (
@@ -296,6 +308,8 @@ const NotionBlock = ({ block }) => {
     return <hr className="divider" />
   } else if (block.Type === 'table') {
     return <Table block={block} />
+  } else if (block.Type === 'column_list') {
+    return <ColumnList block={block} />
   } else if (block.Type === 'bulleted_list' || block.Type === 'numbered_list') {
     return <List block={block} />
   }
