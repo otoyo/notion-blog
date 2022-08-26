@@ -12,8 +12,6 @@ a.heading {
 }
 
 .image {
-  padding: 1rem 0;
-  width: 90%;
   margin: 0 auto;
 }
 .image > div:first-child {
@@ -125,16 +123,25 @@ a.heading {
   white-space: nowrap;
 }
 
+.columnList {
+  display: flex;
+  width: 100%;
+  margin: 1rem auto;
+  gap: 0 1rem;
+}
+.columnList > div {
+  flex: 1 1 180px;
+  width: 180px;
+}
+
 .bookmark {
   display: flex;
   overflow: hidden;
   width: 100%;
   max-width: 100%;
-  margin: 20px auto;
   font-size: 0.9rem;
 }
 .bookmark > a {
-  margin: 4px 0;
   width: 100%;
   box-sizing: border-box;
   text-decoration: none;
