@@ -26,6 +26,7 @@ export interface Block {
   Quote?: Quote
   Equation?: Equation
   Callout?: Callout
+  SyncedBlock?: SyncedBlock
   Embed?: Embed
   Bookmark?: Bookmark
   LinkPreview?: LinkPreview
@@ -102,6 +103,15 @@ export interface Callout {
   RichTexts: RichText[]
   Icon: Icon
   Color: string
+}
+
+export interface SyncedBlock {
+  SyncedFrom: SyncedFrom
+  Children?: Block[]
+}
+
+export interface SyncedFrom {
+  BlockId: string
 }
 
 export interface Embed {
