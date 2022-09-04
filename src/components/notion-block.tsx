@@ -283,6 +283,19 @@ const NumberedListItems = ({ blocks, level = 1 }) =>
 
 const SyncedBlock = ({ block }) => block.SyncedBlock.Children.map((child: interfaces.Block) => <NotionBlock block={child} key={child.Id} />)
 
+const Toggle = ({ block }) => (
+  <details className={styles.toggle}>
+    <summary>
+      {block.Toggle.RichTexts.map((richText: interfaces.RichText, i: number) => (
+        <RichText richText={richText} key={`summary-${block.Id}-${i}`} />
+      ))}
+    </summary>
+    <div>
+      {block.Toggle.Children.map((child: interfaces.Block) => <NotionBlock block={child} key={child.Id} />)}
+    </div>
+  </details>
+)
+
 const NotionBlock = ({ block }) => {
   if (block.Type === 'paragraph') {
     return <Paragraph block={block} />
@@ -316,6 +329,8 @@ const NotionBlock = ({ block }) => {
     return <List block={block} />
   } else if (block.Type === 'synced_block') {
     return <SyncedBlock block={block} />
+  } else if (block.Type === 'toggle') {
+    return <Toggle block={block} />
   }
 
   return null
