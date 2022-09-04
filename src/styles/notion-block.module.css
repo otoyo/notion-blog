@@ -215,6 +215,10 @@ a.heading {
 .toggle {
 }
 
+.toggle > summary {
+  cursor: pointer;
+}
+
 .toggle > div {
   margin-left: 1em;
 }
