@@ -18,6 +18,10 @@ a.heading {
   text-align: center;
 }
 
+.equation {
+  overflow-x: scroll;
+}
+
 .code {
   display: block;
   width: 100%;
