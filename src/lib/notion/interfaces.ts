@@ -22,6 +22,7 @@ export interface Block {
   BulletedListItem?: BulletedListItem
   NumberedListItem?: NumberedListItem
   ToDo?: ToDo
+  Video?: Video
   Image?: Image
   Code?: Code
   Quote?: Quote
@@ -77,6 +78,11 @@ export interface ToDo {
   Children?: Block[]
 }
 
+export interface Video {
+  Type: string
+  External?: External
+}
+
 export interface Image {
   Caption: RichText[]
   Type: string
@@ -88,6 +94,7 @@ export interface Image {
 
 export interface File {
   Url: string
+  ExpiryTime?: string
 }
 
 export interface External {

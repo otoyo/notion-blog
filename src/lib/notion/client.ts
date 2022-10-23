@@ -9,6 +9,7 @@ import {
   BulletedListItem,
   NumberedListItem,
   ToDo,
+  Video,
   Image,
   Code,
   Quote,
@@ -413,6 +414,17 @@ function _buildBlock(item) {
 
       block.ToDo = toDo
       break
+    case 'video':
+      const video: Video = {
+        Type: item.video.type,
+      }
+
+      if (item.video.type === 'external') {
+        video.External = { Url: item.video.external.url }
+      }
+
+      block.Video = video
+      break
     case 'image':
       const image: Image = {
         Caption: item.image.caption.map(_buildRichText),
@@ -422,7 +434,7 @@ function _buildBlock(item) {
       if (item.image.type === 'external') {
         image.External = { Url: item.image.external.url }
       } else {
-        image.File = { Url: item.image.file.url }
+        image.File = { Url: item.image.file.url, ExpiryTime: item.image.file.expiry_time }
       }
 
       block.Image = image
