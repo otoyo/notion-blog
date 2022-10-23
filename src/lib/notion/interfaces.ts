@@ -96,12 +96,12 @@ export interface External {
 
 export interface Code {
   Caption: RichText[]
-  Text: RichText[]
+  RichTexts: RichText[]
   Language: string
 }
 
 export interface Quote {
-  Text: RichText[]
+  RichTexts: RichText[]
   Color: string
 }
 
