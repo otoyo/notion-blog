@@ -1,4 +1,5 @@
 import { NOTION_API_SECRET, DATABASE_ID } from './server-constants'
+import * as responses from './responses'
 import {
   Post,
   Block,
@@ -52,7 +53,7 @@ export async function getPosts(pageSize = 10) {
     page_size: pageSize,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   return data.results
     .filter(item => _validPost(item))
@@ -76,7 +77,7 @@ export async function getAllPosts() {
   }
 
   while (true) {
-    const data = await client.databases.query(params)
+    const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
     results = results.concat(data.results)
 
@@ -110,7 +111,7 @@ export async function getRankedPosts(pageSize = 10) {
     page_size: pageSize,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   return data.results
     .filter(item => _validPost(item))
@@ -138,7 +139,7 @@ export async function getPostsBefore(date: string, pageSize = 10) {
     page_size: pageSize,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   return data.results
     .filter(item => _validPost(item))
@@ -159,7 +160,7 @@ export async function getFirstPost() {
     page_size: 1,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   if (!data.results.length) {
     return null
@@ -173,7 +174,7 @@ export async function getFirstPost() {
 }
 
 export async function getPostBySlug(slug: string) {
-  const data = await client.databases.query({
+  const data: responses.QueryDatabaseResponse = await client.databases.query({
     database_id: DATABASE_ID,
     filter: _buildFilter([
       {
@@ -226,7 +227,7 @@ export async function getPostsByTag(tag: string | undefined, pageSize = 100) {
     page_size: pageSize,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   return data.results
     .filter(item => _validPost(item))
@@ -264,7 +265,7 @@ export async function getPostsByTagBefore(
     page_size: pageSize,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   return data.results
     .filter(item => _validPost(item))
@@ -292,7 +293,7 @@ export async function getFirstPostByTag(tag: string) {
     page_size: 1,
   }
 
-  const data = await client.databases.query(params)
+  const data: responses.QueryDatabaseResponse = await client.databases.query(params)
 
   if (!data.results.length) {
     return null
@@ -313,7 +314,7 @@ export async function getAllBlocksByBlockId(blockId: string) {
   }
 
   while (true) {
-    const data = await client.blocks.children.list(params)
+    const data: responses.RetrieveBlockChildrenResponse = await client.blocks.children.list(params)
 
     const blocks = data.results.map(item => _buildBlock(item))
 
@@ -555,7 +556,7 @@ async function _getTableRows(blockId: string): Promise<TableRow[]> {
   }
 
   while (true) {
-    const data = await client.blocks.children.list(params)
+    const data: responses.RetrieveBlockChildrenResponse = await client.blocks.children.list(params)
 
     const blocks = data.results.map(item => {
       const tableRow: TableRow = {
@@ -600,7 +601,7 @@ async function _getColumns(blockId: string): Promise<Column[]> {
   }
 
   while (true) {
-    const data = await client.blocks.children.list(params)
+    const data: responses.RetrieveBlockChildrenResponse = await client.blocks.children.list(params)
 
     const blocks = await Promise.all(data.results.map(async item => {
       const children = await getAllBlocksByBlockId(item.id)
@@ -638,7 +639,7 @@ async function _getSyncedBlockChildren(block: Block): Promise<Block[]> {
 }
 
 async function _getBlock(blockId: string): Promise<Block> {
-  const data = await client.blocks.retrieve({
+  const data: responses.RetrieveBlockResponse = await client.blocks.retrieve({
     block_id: blockId,
   })
 
@@ -646,7 +647,7 @@ async function _getBlock(blockId: string): Promise<Block> {
 }
 
 export async function getAllTags() {
-  const data = await client.databases.retrieve({
+  const data: responses.RetrieveDatabaseResponse = await client.databases.retrieve({
     database_id: DATABASE_ID,
   })
   return data.properties.Tags.multi_select.options
