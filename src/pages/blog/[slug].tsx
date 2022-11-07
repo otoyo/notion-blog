@@ -27,7 +27,7 @@ import {
   getAllBlocksByBlockId,
 } from '../../lib/notion/client'
 
-export async function getServerSideProps({ res, params: { slug } }) {
+export async function getServerSideProps({ params: { slug } }) {
   const post = await getPostBySlug(slug)
 
   if (!post) {
@@ -47,11 +47,6 @@ export async function getServerSideProps({ res, params: { slug } }) {
     getPostsByTag(post.Tags[0], 6),
     getAllTags(),
   ])
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900'
-  )
 
   return {
     props: {

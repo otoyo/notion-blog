@@ -18,18 +18,13 @@ import {
   getAllTags,
 } from '../../lib/notion/client'
 
-export async function getServerSideProps({ res }) {
+export async function getServerSideProps() {
   const [posts, firstPost, rankedPosts, tags] = await Promise.all([
     getPosts(),
     getFirstPost(),
     getRankedPosts(),
     getAllTags(),
   ])
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900'
-  )
 
   return {
     props: {

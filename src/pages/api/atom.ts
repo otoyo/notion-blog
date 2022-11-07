@@ -57,12 +57,6 @@ function createRSS(posts: Array<Post> = []) {
 }
 
 const Atom = async function(_req: IncomingMessage, res: ServerResponse) {
-  res.setHeader('Content-Type', 'text/xml')
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=1800'
-  )
-
   try {
     const posts = await getPosts()
     res.write(createRSS(posts))

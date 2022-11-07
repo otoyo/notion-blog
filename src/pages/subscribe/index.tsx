@@ -5,13 +5,8 @@ import NotionBlocks from '../../components/notion-block'
 
 import styles from '../../styles/page.module.css'
 
-export async function getServerSideProps({ res }) {
+export async function getServerSideProps() {
   const blocks = await getAllBlocksByBlockId(SUBSCRIPTION_PAGE_ID)
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900'
-  )
 
   return {
     props: {

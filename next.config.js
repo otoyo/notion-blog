@@ -12,7 +12,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate=86400',
+            value: 'public, s-maxage=2592000, max-age=2592000, stale-while-revalidate=86400',
           },
         ],
       },
@@ -21,7 +21,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=2592000, stale-while-revalidate=86400',
+            value: 'public, s-maxage=2592000, max-age=2592000, stale-while-revalidate=86400',
           },
         ],
       },
@@ -30,7 +30,7 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, stale-while-revalidate=86400',
+            value: 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400',
           },
         ],
       },
@@ -39,7 +39,69 @@ module.exports = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, stale-while-revalidate=86400',
+            value: 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/blog',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=900, max-age=900',
+          },
+        ],
+      },
+      {
+        source: '/blog/:slug',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=900, max-age=900',
+          },
+        ],
+      },
+      {
+        source: '/blog/before/:date',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=900, max-age=900',
+          },
+        ],
+      },
+      {
+        source: '/blog/tag/:tag*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=900, max-age=900',
+          },
+        ],
+      },
+      {
+        source: '/atom',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/xml',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=1800, max-age=1800',
+          },
+        ],
+      },
+      {
+        source: '/sitemap',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/xml',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=3600, max-age=3600',
           },
         ],
       },

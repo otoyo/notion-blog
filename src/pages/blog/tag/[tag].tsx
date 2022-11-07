@@ -24,7 +24,7 @@ import {
   getAllTags,
 } from '../../../lib/notion/client'
 
-export async function getServerSideProps({ res, params: { tag } }) {
+export async function getServerSideProps({ params: { tag } }) {
   const posts = await getPostsByTag(tag, NUMBER_OF_POSTS_PER_PAGE)
 
   if (posts.length === 0) {
@@ -37,11 +37,6 @@ export async function getServerSideProps({ res, params: { tag } }) {
     getPosts(5),
     getAllTags(),
   ])
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900'
-  )
 
   return {
     props: {
