@@ -25,7 +25,7 @@ import {
   getAllTags,
 } from '../../../../../lib/notion/client'
 
-export async function getServerSideProps({ res, params: { tag, date } }) {
+export async function getServerSideProps({ params: { tag, date } }) {
   if (!Date.parse(date) || !/\d{4}-\d{2}-\d{2}/.test(date)) {
     return { notFound: true }
   }
@@ -48,11 +48,6 @@ export async function getServerSideProps({ res, params: { tag, date } }) {
     getPosts(5),
     getAllTags(),
   ])
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900, stale-while-revalidate=86400'
-  )
 
   return {
     props: {

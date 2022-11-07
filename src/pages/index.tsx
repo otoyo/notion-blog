@@ -4,13 +4,8 @@ import { INDEX_PAGE_ID } from '../lib/notion/server-constants'
 import { getAllBlocksByBlockId } from '../lib/notion/client'
 import NotionBlocks from '../components/notion-block'
 
-export async function getServerSideProps({ res }) {
+export async function getServerSideProps() {
   const blocks = await getAllBlocksByBlockId(INDEX_PAGE_ID)
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=900'
-  )
 
   return {
     props: {
