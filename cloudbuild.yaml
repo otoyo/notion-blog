@@ -27,16 +27,6 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', '${_IMAGE_NAME}']
 
-  - id: 'Delete all objects from GCS'
-    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gsutil'
-    args: ['rm', '-a', 'gs://${_BACKEND_BUCKET_NAME}/**']
-
-  - id: 'Upload public files to GCS'
-    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gsutil'
-    args: ['cp', '-r', 'public/*', 'gs://${_BACKEND_BUCKET_NAME}/']
-
   - id: 'Deploy to Cloud Run'
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -56,7 +46,6 @@ substitutions:
   _REPOSITORY: alpacat
   _SERVICE_NAME: notion-blog
   _IMAGE_NAME: '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}'
-  _BACKEND_BUCKET_NAME: ''
   _NEXT_PUBLIC_URL: ''
   _NEXT_PUBLIC_GA_TRACKING_ID: ''
 
