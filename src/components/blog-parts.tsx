@@ -46,6 +46,12 @@ export const PostTags = ({ post }) => (
   </div>
 )
 
+export const PostThumbnail = ({ post }) => (
+  <div className={styles.postThumbnail}>
+    <img src={`/api/og-image/${post.Slug}`} alt="thumbnail" />
+  </div>
+)
+
 export const PostExcerpt = ({ post }) => (
   <div className={styles.postExcerpt}>
     <p>{post.Excerpt ? post.Excerpt : ''}</p>
