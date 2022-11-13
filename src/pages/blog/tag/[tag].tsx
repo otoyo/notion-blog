@@ -8,6 +8,7 @@ import {
   NextPageLink,
   NoContents,
   PostDate,
+  PostThumbnail,
   PostExcerpt,
   PostTags,
   PostTitle,
@@ -88,6 +89,7 @@ const RenderPostsByTags = ({
               <PostDate post={post} />
               <PostTags post={post} />
               <PostTitle post={post} />
+              {post.OGImage ? <PostThumbnail post={post} /> : null}
               <PostExcerpt post={post} />
               <ReadMoreLink post={post} />
             </div>
