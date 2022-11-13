@@ -105,6 +105,24 @@ module.exports = {
           },
         ],
       },
+      {
+        source: '/api/like',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache',
+          },
+        ],
+      },
+      {
+        source: '/api/url-metadata',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache',
+          },
+        ],
+      },
     ]
   },
 
