@@ -1,8 +1,19 @@
 .likeButton {
+  font: inherit;
+}
+
+.likeButton span {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.likeButton button {
   background-color: transparent;
   border: none;
   padding: 0;
-  font: inherit;
   line-height: 1.8rem;
   font-size: 0.8rem;
   color: inherit;
