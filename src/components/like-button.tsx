@@ -19,9 +19,12 @@ const LikeButton = (props: Props) => {
   }
 
   return (
-    <button className={styles.likeButton} onClick={handleClick}>
-      <Heart width={32} height={32} active={active} />
-    </button>
+    <div className={styles.likeButton}>
+      {active ? <span>Thank you!＞</span> : null}
+      <button onClick={handleClick}>
+        <Heart width={32} height={32} active={active} />
+      </button>
+    </div>
   )
 }
 
