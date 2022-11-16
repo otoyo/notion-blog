@@ -20,6 +20,7 @@ import { useEffect } from 'react'
 import {
   getPosts,
   getRankedPosts,
+  getPopularPosts,
   getPostsByTag,
   getFirstPostByTag,
   getAllTags,
@@ -32,9 +33,10 @@ export async function getServerSideProps({ params: { tag } }) {
     return { notFound: true }
   }
 
-  const [firstPost, rankedPosts, recentPosts, tags] = await Promise.all([
+  const [firstPost, rankedPosts, popularPosts, recentPosts, tags] = await Promise.all([
     getFirstPostByTag(tag),
     getRankedPosts(),
+    getPopularPosts(5),
     getPosts(5),
     getAllTags(),
   ])
@@ -44,6 +46,7 @@ export async function getServerSideProps({ params: { tag } }) {
       posts,
       firstPost,
       rankedPosts,
+      popularPosts,
       recentPosts,
       tags,
       tag,
@@ -56,6 +59,7 @@ const RenderPostsByTags = ({
   posts = [],
   firstPost,
   rankedPosts = [],
+  popularPosts = [],
   recentPosts = [],
   tags = [],
   redirect,
@@ -103,6 +107,7 @@ const RenderPostsByTags = ({
 
       <div className={styles.subContent}>
         <BlogPostLink heading="おすすめ記事" posts={rankedPosts} />
+        <BlogPostLink heading="人気の記事" posts={popularPosts} />
         <BlogPostLink heading="最新記事" posts={recentPosts} />
         <BlogTagLink heading="カテゴリー" tags={tags} />
       </div>

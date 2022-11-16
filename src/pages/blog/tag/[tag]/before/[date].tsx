@@ -21,6 +21,7 @@ import styles from '../../../../../styles/blog.module.css'
 import {
   getPosts,
   getRankedPosts,
+  getPopularPosts,
   getPostsByTagBefore,
   getFirstPostByTag,
   getAllTags,
@@ -43,9 +44,10 @@ export async function getServerSideProps({ params: { tag, date } }) {
     }
   }
 
-  const [firstPost, rankedPosts, recentPosts, tags] = await Promise.all([
+  const [firstPost, rankedPosts, popularPosts, recentPosts, tags] = await Promise.all([
     getFirstPostByTag(tag),
     getRankedPosts(),
+    getPopularPosts(5),
     getPosts(5),
     getAllTags(),
   ])
@@ -56,6 +58,7 @@ export async function getServerSideProps({ params: { tag, date } }) {
       posts,
       firstPost,
       rankedPosts,
+      popularPosts,
       recentPosts,
       tags,
       tag,
@@ -68,6 +71,7 @@ const RenderPostsByTagBeforeDate = ({
   posts = [],
   firstPost,
   rankedPosts = [],
+  popularPosts = [],
   recentPosts = [],
   tags = [],
   tag,
@@ -115,9 +119,10 @@ const RenderPostsByTagBeforeDate = ({
       </div>
 
       <div className={styles.subContent}>
-        <BlogPostLink heading="Recommended" posts={rankedPosts} />
-        <BlogPostLink heading="Latest Posts" posts={recentPosts} />
-        <BlogTagLink heading="Categories" tags={tags} />
+        <BlogPostLink heading="おすすめ記事" posts={rankedPosts} />
+        <BlogPostLink heading="人気の記事" posts={popularPosts} />
+        <BlogPostLink heading="最新記事" posts={recentPosts} />
+        <BlogTagLink heading="カテゴリー" tags={tags} />
       </div>
     </div>
   )

@@ -16,14 +16,16 @@ import {
   getPosts,
   getFirstPost,
   getRankedPosts,
+  getPopularPosts,
   getAllTags,
 } from '../../lib/notion/client'
 
 export async function getServerSideProps() {
-  const [posts, firstPost, rankedPosts, tags] = await Promise.all([
+  const [posts, firstPost, rankedPosts, popularPosts, tags] = await Promise.all([
     getPosts(),
     getFirstPost(),
     getRankedPosts(),
+    getPopularPosts(5),
     getAllTags(),
   ])
 
@@ -32,6 +34,7 @@ export async function getServerSideProps() {
       posts,
       firstPost,
       rankedPosts,
+      popularPosts,
       tags,
     },
   }
@@ -41,6 +44,7 @@ const RenderPosts = ({
   posts = [],
   firstPost,
   rankedPosts = [],
+  popularPosts = [],
   tags = [],
 }) => {
   return (
@@ -70,6 +74,7 @@ const RenderPosts = ({
 
       <div className={styles.subContent}>
         <BlogPostLink heading="おすすめ記事" posts={rankedPosts} />
+        <BlogPostLink heading="人気の記事" posts={popularPosts} />
         <BlogTagLink heading="カテゴリー" tags={tags} />
       </div>
     </div>

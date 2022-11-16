@@ -20,6 +20,7 @@ import styles from '../../../styles/blog.module.css'
 
 import {
   getRankedPosts,
+  getPopularPosts,
   getPostsBefore,
   getFirstPost,
   getAllTags,
@@ -30,10 +31,11 @@ export async function getServerSideProps({ params: { date } }) {
     return { notFound: true }
   }
 
-  const [posts, firstPost, rankedPosts, tags] = await Promise.all([
+  const [posts, firstPost, rankedPosts, popularPosts, tags] = await Promise.all([
     getPostsBefore(date, NUMBER_OF_POSTS_PER_PAGE),
     getFirstPost(),
     getRankedPosts(),
+    getPopularPosts(5),
     getAllTags(),
   ])
 
@@ -43,6 +45,7 @@ export async function getServerSideProps({ params: { date } }) {
       posts,
       firstPost,
       rankedPosts,
+      popularPosts,
       tags,
     },
   }
@@ -53,6 +56,7 @@ const RenderPostsBeforeDate = ({
   posts = [],
   firstPost,
   rankedPosts = [],
+  popularPosts = [],
   tags = [],
   redirect,
 }) => {
@@ -99,6 +103,7 @@ const RenderPostsBeforeDate = ({
 
       <div className={styles.subContent}>
         <BlogPostLink heading="おすすめ記事" posts={rankedPosts} />
+        <BlogPostLink heading="人気の記事" posts={popularPosts} />
         <BlogTagLink heading="カテゴリー" tags={tags} />
       </div>
     </div>
