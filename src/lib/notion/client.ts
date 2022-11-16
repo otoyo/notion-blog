@@ -120,6 +120,33 @@ export async function getRankedPosts(pageSize = 10): Promise<Post[]> {
     .map(pageObject => _buildPost(pageObject))
 }
 
+export async function getPopularPosts(pageSize = 10): Promise<Post[]> {
+  const params = {
+    database_id: DATABASE_ID,
+    filter: _buildFilter([
+      {
+        property: 'Like',
+        number: {
+          is_not_empty: true,
+        },
+      },
+    ]),
+    sorts: [
+      {
+        property: 'Like',
+        direction: 'descending',
+      },
+    ],
+    page_size: pageSize,
+  }
+
+  const res: responses.QueryDatabaseResponse = await client.databases.query(params)
+
+  return res.results
+    .filter(pageObject => _validPageObject(pageObject))
+    .map(pageObject => _buildPost(pageObject))
+}
+
 export async function getPostsBefore(date: string, pageSize = 10): Promise<Post[]> {
   const params = {
     database_id: DATABASE_ID,
