@@ -21,6 +21,7 @@ import { getBlogLink } from '../../lib/blog-helpers'
 import {
   getPosts,
   getRankedPosts,
+  getPopularPosts,
   getPostBySlug,
   getPostsByTag,
   getAllTags,
@@ -37,12 +38,14 @@ export async function getServerSideProps({ params: { slug } }) {
   const [
     blocks,
     rankedPosts,
+    popularPosts,
     recentPosts,
     sameTagPosts,
     tags,
   ] = await Promise.all([
     getAllBlocksByBlockId(post.PageId),
     getRankedPosts(),
+    getPopularPosts(5),
     getPosts(5),
     getPostsByTag(post.Tags[0], 6),
     getAllTags(),
@@ -53,6 +56,7 @@ export async function getServerSideProps({ params: { slug } }) {
       post,
       blocks,
       rankedPosts,
+      popularPosts,
       recentPosts,
       tags,
       sameTagPosts: sameTagPosts.filter((p: Post) => p.Slug !== post.Slug),
@@ -64,6 +68,7 @@ const RenderPost = ({
   post,
   blocks = [],
   rankedPosts = [],
+  popularPosts = [],
   recentPosts = [],
   sameTagPosts = [],
   tags = [],
@@ -117,6 +122,7 @@ const RenderPost = ({
       <div className={styles.subContent}>
         <BlogPostLink heading="同じカテゴリーの記事" posts={sameTagPosts} />
         <BlogPostLink heading="おすすめ記事" posts={rankedPosts} />
+        <BlogPostLink heading="人気の記事" posts={popularPosts} />
         <BlogPostLink heading="最新記事" posts={recentPosts} />
         <BlogTagLink heading="カテゴリー" tags={tags} />
       </div>
