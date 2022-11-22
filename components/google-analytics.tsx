@@ -1,7 +1,21 @@
+'use client'
+
+import { useEffect } from 'react'
+import { usePathname, useSearchParams } from "next/navigation"
 import Script from 'next/script'
+import * as gtag from '../lib/gtag'
 import { NEXT_PUBLIC_GA_TRACKING_ID } from '../app/server-constants'
 
-const GoogleAnalytics = () => {
+const GoogleAnalytics = ({ pageTitle }) => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (location.host !== 'localhost') {
+      gtag.pageview(pageTitle, pathname + searchParams.toString())
+    }
+  }, [pathname, searchParams, pageTitle])
+
   if (!NEXT_PUBLIC_GA_TRACKING_ID) {
     return null
   }
