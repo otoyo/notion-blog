@@ -80,7 +80,7 @@ module.exports = {
         ],
       },
       {
-        source: '/atom',
+        source: '/feed',
         headers: [
           {
             key: 'Content-Type',
@@ -128,7 +128,8 @@ module.exports = {
 
   async rewrites() {
     return [
-      { source: '/atom', destination: '/api/atom' },
+      { source: '/feed', destination: '/api/feed' },
+      { source: '/atom', destination: '/api/feed' },
       { source: '/sitemap', destination: '/api/sitemap' },
     ]
   },
