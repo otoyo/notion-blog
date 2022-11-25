@@ -50,13 +50,13 @@ function createRSS(posts: Array<Post> = []) {
   <feed xmlns="http://www.w3.org/2005/Atom">
     <title>アルパカログ</title>
     <subtitle>アルパカログの更新情報</subtitle>
-    <link href="https://alpacat.com/atom" rel="self" type="application/rss+xml"/>
+    <link href="https://alpacat.com/feed" rel="self" type="application/rss+xml"/>
     <link href="https://alpacat.com" />${updated}
-    <id>https://alpacat.com/atom</id>${postsString}
+    <id>https://alpacat.com/feed</id>${postsString}
   </feed>`
 }
 
-const Atom = async function(_req: IncomingMessage, res: ServerResponse) {
+const Feed = async function(_req: IncomingMessage, res: ServerResponse) {
   try {
     const posts = await getPosts()
     res.write(createRSS(posts))
@@ -68,4 +68,4 @@ const Atom = async function(_req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-export default Atom
+export default Feed

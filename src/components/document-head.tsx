@@ -68,7 +68,7 @@ const DocumentHead = ({ title = '', description = '', urlOgImage = '' }) => {
       <link
         rel="alternate"
         type="application/atom+xml"
-        href="/atom"
+        href="/feed"
         title="アルパカログのフィード"
       />
     </Head>
