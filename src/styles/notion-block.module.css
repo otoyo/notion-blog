@@ -123,6 +123,9 @@ a.heading {
 .table {
   overflow-x: auto;
 }
+.table tbody {
+  -webkit-text-size-adjust: 100%;
+}
 .table th,
 .table td {
   white-space: pre;
