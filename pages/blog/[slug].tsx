@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { NEXT_PUBLIC_URL } from '../../lib/notion/server-constants'
+import { NEXT_PUBLIC_URL } from '../../app/server-constants'
 import { Post } from '../../lib/notion/interfaces'
 import DocumentHead from '../../components/document-head'
 import {
