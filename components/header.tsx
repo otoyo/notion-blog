@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
 
-import { SITE_TITLE } from '../components/document-head'
+import { NEXT_PUBLIC_SITE_TITLE } from '../lib/notion/server-constants'
 import styles from '../styles/header.module.css'
 
 interface NavItem {
@@ -32,7 +32,7 @@ const Header = () => {
             height="64"
             className={styles.logo}
           />
-          <h1>{SITE_TITLE}</h1>
+          <h1>{NEXT_PUBLIC_SITE_TITLE}</h1>
         </a>
       </Link>
 
