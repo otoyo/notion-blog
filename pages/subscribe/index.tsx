@@ -1,5 +1,5 @@
 import DocumentHead from '../../components/document-head'
-import { SUBSCRIPTION_PAGE_ID } from '../../lib/notion/server-constants'
+import { SUBSCRIPTION_PAGE_ID } from '../../app/server-constants'
 import { getAllBlocksByBlockId } from '../../lib/notion/client'
 import NotionBlocks from '../../components/notion-block'
 

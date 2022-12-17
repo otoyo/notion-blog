@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { NUMBER_OF_POSTS_PER_PAGE } from '../../../../../lib/notion/server-constants'
+import { NUMBER_OF_POSTS_PER_PAGE } from '../../../../../app/server-constants'
 import DocumentHead from '../../../../../components/document-head'
 import {
   BlogPostLink,

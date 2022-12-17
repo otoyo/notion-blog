@@ -1,6 +1,6 @@
 import DocumentHead from '../components/document-head'
 import styles from '../styles/page.module.css'
-import { INDEX_PAGE_ID } from '../lib/notion/server-constants'
+import { INDEX_PAGE_ID } from '../app/server-constants'
 import { getAllBlocksByBlockId } from '../lib/notion/client'
 import NotionBlocks from '../components/notion-block'
 

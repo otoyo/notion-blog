@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
+import { NEXT_PUBLIC_URL } from '../app/server-constants'
 
-import { NEXT_PUBLIC_SITE_TITLE } from '../lib/notion/server-constants'
+import { NEXT_PUBLIC_SITE_TITLE } from '../app/server-constants'
 import styles from '../styles/header.module.css'
 
 interface NavItem {
