@@ -3,13 +3,13 @@ import {
   getAllBlocksByBlockId,
   getAllTags,
   incrementLikes,
-} from '../../../src/lib/notion/client'
+} from '../../../lib/notion/client'
 
 import {
   Post,
   Block,
   Annotation,
-} from '../../../src/lib/notion/interfaces'
+} from '../../../lib/notion/interfaces'
 
 describe('getPosts', () => {
   const expected: Post[] = [
