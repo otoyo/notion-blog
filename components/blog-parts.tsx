@@ -24,8 +24,8 @@ export const PostTitle = ({ post, enableLink = true }) => {
   return (
     <h3 className={styles.postTitle}>
       {enableLink ? (
-        <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>
-          <a>{postTitle}</a>
+        <Link href={getBlogLink(post.Slug)}>
+          {postTitle}
         </Link>
       ) : (
         postTitle
@@ -39,8 +39,8 @@ export const PostTags = ({ post }) => (
     {post.Tags &&
       post.Tags.length > 0 &&
       post.Tags.map((tag: string) => (
-        <Link href="/blog/tag/[tag]" as={getTagLink(tag)} key={tag} passHref>
-          <a>{tag}</a>
+        <Link href={getTagLink(tag)} key={tag}>
+          {tag}
         </Link>
       ))}
   </div>
@@ -78,8 +78,8 @@ export const PostFooter = () => (
     <div>
       <p>Notion Blogやプログラミング、マネジメントについて毎週月曜更新。</p>
       <p>
-        <Link href="/subscribe" passHref>
-          <a>読者になる</a>
+        <Link href="/subscribe">
+          読者になる
         </Link>
         からご購読ください。
       </p>
@@ -89,8 +89,8 @@ export const PostFooter = () => (
 
 export const ReadMoreLink = ({ post }) => (
   <div className={styles.readMoreLink}>
-    <Link href="/blog/[slug]" as={getBlogLink(post.Slug)} passHref>
-      <a className={styles.readMore}>続きを読む</a>
+    <Link href={getBlogLink(post.Slug)} className={styles.readMore}>
+      続きを読む
     </Link>
   </div>
 )
@@ -106,15 +106,13 @@ export const NextPageLink = ({ firstPost, posts, tag = '' }) => {
   return (
     <div className={styles.nextPageLink}>
       <Link
-        href={tag ? '/blog/tag/[tag]/before/[date]' : '/blog/before/[date]'}
-        as={
+        href={
           tag
             ? getTagBeforeLink(tag, lastPost.Date)
             : getBeforeLink(lastPost.Date)
         }
-        passHref
       >
-        <a>次のページ ＞</a>
+        次のページ ＞
       </Link>
     </div>
   )
@@ -151,12 +149,9 @@ export const PostLinkList = ({ posts }) => {
         return (
           <li key={post.Slug}>
             <Link
-              href="/blog/[slug]"
-              as={getBlogLink(post.Slug)}
-              passHref
-              prefetch={false}
+              href={getBlogLink(post.Slug)}
             >
-              <a>{post.Title}</a>
+              {post.Title}
             </Link>
           </li>
         )
@@ -174,12 +169,9 @@ export const TagLinkList = ({ tags }) => {
         return (
           <li key={tag}>
             <Link
-              href="/blog/tag/[tag]"
-              as={getTagLink(tag)}
-              passHref
-              prefetch={false}
+              href={getTagLink(tag)}
             >
-              <a>{tag}</a>
+              {tag}
             </Link>
           </li>
         )
