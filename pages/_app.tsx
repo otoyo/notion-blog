@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import NextNprogress from 'nextjs-progressbar'
 
 import * as gtag from '../lib/gtag'
-import { NEXT_PUBLIC_URL } from '../lib/notion/server-constants'
+import { NEXT_PUBLIC_URL } from '../app/server-constants'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import GoogleAnalytics from '../components/google-analytics'

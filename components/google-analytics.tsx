@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import { NEXT_PUBLIC_GA_TRACKING_ID } from '../lib/notion/server-constants'
+import { NEXT_PUBLIC_GA_TRACKING_ID } from '../app/server-constants'
 
 const GoogleAnalytics = () => {
   if (!NEXT_PUBLIC_GA_TRACKING_ID) {
