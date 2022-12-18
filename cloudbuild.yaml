@@ -22,7 +22,6 @@ steps:
         '--cache-from', '${_IMAGE_NAME}:latest',
         '.',
       ]
-    secretEnv: ['_NOTION_API_SECRET', '_DATABASE_ID', '_INDEX_PAGE_ID', '_SUBSCRIPTION_PAGE_ID']
 
   - id: 'Push Docker image'
     name: 'gcr.io/cloud-builders/docker'
