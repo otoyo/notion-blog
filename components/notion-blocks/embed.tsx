@@ -1,5 +1,7 @@
-import TweetEmbed from './tweet-embed'
-import Bookmark from './bookmark'
+import dynamic from 'next/dynamic'
+
+const TweetEmbed = dynamic(() => import('./tweet-embed'))
+const Bookmark = dynamic(() => import('./bookmark'))
 
 const Embed = ({ block }) => {
   if (/^https:\/\/twitter\.com/.test(block.Embed.Url)) {
