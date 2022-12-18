@@ -12,17 +12,17 @@ steps:
     args:
       [
         'build',
-        '--build-arg',  'NOTION_API_SECRET=${_NOTION_API_SECRET}',
-        '--build-arg',  'DATABASE_ID=${_DATABASE_ID}',
-        '--build-arg',  'INDEX_PAGE_ID=${_INDEX_PAGE_ID}',
-        '--build-arg',  'SUBSCRIPTION_PAGE_ID=${_SUBSCRIPTION_PAGE_ID}',
+        '--build-arg',  'NOTION_API_SECRET=$$NOTION_API_SECRET',
+        '--build-arg',  'DATABASE_ID=$$DATABASE_ID',
+        '--build-arg',  'INDEX_PAGE_ID=$$INDEX_PAGE_ID',
+        '--build-arg',  'SUBSCRIPTION_PAGE_ID=$$SUBSCRIPTION_PAGE_ID',
         '--build-arg',  'NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}',
         '--build-arg',  'NEXT_PUBLIC_GA_TRACKING_ID=${_NEXT_PUBLIC_GA_TRACKING_ID}',
         '-t',           '${_IMAGE_NAME}',
         '--cache-from', '${_IMAGE_NAME}:latest',
         '.',
       ]
-    secretEnv: ['_NOTION_API_SECRET', '_DATABASE_ID', '_INDEX_PAGE_ID', '_SUBSCRIPTION_PAGE_ID']
+    secretEnv: ['NOTION_API_SECRET', 'DATABASE_ID', 'INDEX_PAGE_ID', 'SUBSCRIPTION_PAGE_ID']
 
   - id: 'Push Docker image'
     name: 'gcr.io/cloud-builders/docker'
@@ -51,13 +51,13 @@ substitutions:
 availableSecrets:
   secretManager:
   - versionName: 'projects/${PROJECT_ID}/secrets/NOTION_API_SECRET/versions/latest'
-    env: _NOTION_API_SECRET
+    env: NOTION_API_SECRET
   - versionName: 'projects/${PROJECT_ID}/secrets/DATABASE_ID/versions/latest'
-    env: _DATABASE_ID
+    env: DATABASE_ID
   - versionName: 'projects/${PROJECT_ID}/secrets/INDEX_PAGE_ID/versions/latest'
-    env: _INDEX_PAGE_ID
+    env: INDEX_PAGE_ID
   - versionName: 'projects/${PROJECT_ID}/secrets/SUBSCRIPTION_PAGE_ID/versions/latest'
-    env: _SUBSCRIPTION_PAGE_ID
+    env: SUBSCRIPTION_PAGE_ID
 
 options:
   dynamic_substitutions: true
