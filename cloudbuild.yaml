@@ -9,20 +9,19 @@ steps:
 
   - id: 'Build Docker image'
     name: 'gcr.io/cloud-builders/docker'
-    entrypoint: bash
     args:
-      - -ceux
-      - >-
-        build
-        --build-arg  NOTION_API_SECRET=$$NOTION_API_SECRET
-        --build-arg  DATABASE_ID=$$DATABASE_ID
-        --build-arg  INDEX_PAGE_ID=$$INDEX_PAGE_ID
-        --build-arg  SUBSCRIPTION_PAGE_ID=$$SUBSCRIPTION_PAGE_ID
-        --build-arg  NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}
-        --build-arg  NEXT_PUBLIC_GA_TRACKING_ID=${_NEXT_PUBLIC_GA_TRACKING_ID}
-        -t           ${_IMAGE_NAME}
-        --cache-from ${_IMAGE_NAME}:latest
-        .
+      [
+        'build',
+        '--build-arg',  'NOTION_API_SECRET=$$NOTION_API_SECRET',
+        '--build-arg',  'DATABASE_ID=$$DATABASE_ID',
+        '--build-arg',  'INDEX_PAGE_ID=$$INDEX_PAGE_ID',
+        '--build-arg',  'SUBSCRIPTION_PAGE_ID=$$SUBSCRIPTION_PAGE_ID',
+        '--build-arg',  'NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}',
+        '--build-arg',  'NEXT_PUBLIC_GA_TRACKING_ID=${_NEXT_PUBLIC_GA_TRACKING_ID}',
+        '-t',           '${_IMAGE_NAME}',
+        '--cache-from', '${_IMAGE_NAME}:latest',
+        '.',
+      ]
     secretEnv: ['NOTION_API_SECRET', 'DATABASE_ID', 'INDEX_PAGE_ID', 'SUBSCRIPTION_PAGE_ID']
 
   - id: 'Push Docker image'
