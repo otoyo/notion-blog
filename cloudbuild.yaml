@@ -12,10 +12,14 @@ steps:
     args:
       [
         'build',
-        '--build-arg',  'NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}',
-        '--build-arg',  'NEXT_PUBLIC_GA_TRACKING_ID=${_NEXT_PUBLIC_GA_TRACKING_ID}',
-        '-t',           '${_IMAGE_NAME}',
-        '--cache-from', '${_IMAGE_NAME}:latest',
+        '--build-arg',
+        'NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}',
+        '--build-arg',
+        'NEXT_PUBLIC_GA_TRACKING_ID=${_NEXT_PUBLIC_GA_TRACKING_ID}',
+        '-t',
+        '${_IMAGE_NAME}',
+        '--cache-from',
+        '${_IMAGE_NAME}:latest',
         '.',
       ]
 
@@ -31,8 +35,10 @@ steps:
         'run',
         'deploy',
         '${_SERVICE_NAME}',
-        '--image',  '${_IMAGE_NAME}',
-        '--region', '${_REGION}',
+        '--image',
+        '${_IMAGE_NAME}',
+        '--region',
+        '${_REGION}',
       ]
 
 substitutions:
