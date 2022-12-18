@@ -13,7 +13,6 @@ steps:
     args:
       - -ceux
       - >-
-        docker
         build
         --build-arg  NOTION_API_SECRET=$$NOTION_API_SECRET
         --build-arg  DATABASE_ID=$$DATABASE_ID
