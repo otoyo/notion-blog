@@ -1,4 +1,4 @@
-FROM node:18 AS builder
+FROM node:16 AS builder
 
 ARG NOTION_API_SECRET
 ARG DATABASE_ID
@@ -28,7 +28,7 @@ COPY . .
 RUN yarn build
 
 
-FROM node:18-slim AS runner
+FROM node:16-slim AS runner
 
 ENV NODE_ENV=production
 
