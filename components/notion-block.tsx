@@ -1,11 +1,12 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import * as interfaces from '../lib/notion/interfaces'
 
-import Code from './notion-blocks/code'
-import Embed from './notion-blocks/embed'
-import Bookmark from './notion-blocks/bookmark'
-import InlineEquation from './notion-blocks/inline-equation'
-import BlockEquation from './notion-blocks/block-equation'
+const Code = dynamic(() => import('./notion-blocks/code'))
+const Embed = dynamic(() => import('./notion-blocks/embed'))
+const Bookmark = dynamic(() => import('./notion-blocks/bookmark'))
+const InlineEquation = dynamic(() => import('./notion-blocks/inline-equation'))
+const BlockEquation = dynamic(() => import('./notion-blocks/block-equation'))
 
 import styles from '../styles/notion-block.module.css'
 

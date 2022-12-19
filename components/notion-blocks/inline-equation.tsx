@@ -1,5 +1,3 @@
-'use client'
-
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
 
