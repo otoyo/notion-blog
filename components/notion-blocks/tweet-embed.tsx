@@ -1,5 +1,3 @@
-'use client'
-
 import { TwitterTweetEmbed } from 'react-twitter-embed'
 
 import styles from '../../styles/notion-block.module.css'

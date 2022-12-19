@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import ExtLink from './ext-link'
 
 import styles from '../styles/footer.module.css'
 
@@ -9,9 +9,9 @@ const Footer = () => (
     </div>
     <div>
       <span>Powered by </span>
-      <Link href="https://github.com/otoyo/easy-notion-blog">
+      <ExtLink href="https://github.com/otoyo/easy-notion-blog">
         easy-notion-blog
-      </Link>
+      </ExtLink>
     </div>
   </footer>
 )
