@@ -75,10 +75,10 @@ availableSecrets:
     env: INDEX_PAGE_ID
   - versionName: 'projects/${PROJECT_ID}/secrets/SUBSCRIPTION_PAGE_ID/versions/latest'
     env: SUBSCRIPTION_PAGE_ID
-#  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_API_TOKEN/versions/latest'
-#    env: CLOUDFLARE_API_TOKEN
-#  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_ZONE_ID/versions/latest'
-#    env: CLOUDFLARE_ZONE_ID
+  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_API_TOKEN/versions/latest'
+    env: CLOUDFLARE_API_TOKEN
+  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_ZONE_ID/versions/latest'
+    env: CLOUDFLARE_ZONE_ID
 
 options:
   dynamic_substitutions: true
