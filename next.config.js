@@ -133,4 +133,8 @@ module.exports = {
       { source: '/sitemap', destination: '/api/sitemap' },
     ]
   },
+
+  experimental: {
+    appDir: true,
+  },
 }
