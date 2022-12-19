@@ -41,6 +41,19 @@ steps:
         '${_REGION}',
       ]
 
+  - id: 'Purge Cloudflare cache'
+    name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
+    entrypoint: bash
+    args:
+      - -ceux
+      - >-
+        curl
+        -d '{"purge_everything":true}'
+        -H 'Content-Type:application/json'
+        -H 'Authorization: Bearer $$CLOUDFLARE_API_TOKEN'
+        -X POST 'https://api.cloudflare.com/client/v4/zones/$$CLOUDFLARE_ZONE_ID/purge_cache'
+    secretEnv: ['CLOUDFLARE_ZONE_ID', 'CLOUDFLARE_API_TOKEN']
+
 substitutions:
   _REGION: asia-northeast1
   _REPOSITORY: alpacat
@@ -48,6 +61,13 @@ substitutions:
   _IMAGE_NAME: '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}'
   _NEXT_PUBLIC_URL: ''
   _NEXT_PUBLIC_GA_TRACKING_ID: ''
+
+availableSecrets:
+  secretManager:
+  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_API_TOKEN/versions/latest'
+    env: CLOUDFLARE_API_TOKEN
+  - versionName: 'projects/${PROJECT_ID}/secrets/CLOUDFLARE_ZONE_ID/versions/latest'
+    env: CLOUDFLARE_ZONE_ID
 
 options:
   dynamic_substitutions: true
