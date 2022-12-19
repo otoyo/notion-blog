@@ -5,6 +5,8 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
+    "start:docker": "docker run --rm -e NOTION_API_SECRET=${NOTION_API_SECRET} -e DATABASE_ID=${DATABASE_ID} -e INDEX_PAGE_ID=${INDEX_PAGE_ID} -e SUBSCRIPTION_PAGE_ID=${SUBSCRIPTION_PAGE_ID} -p 127.0.0.1:3000:3000 notion-blog",
+    "build:docker": "docker build --platform linux/amd64 --build-arg NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL} --build-arg NEXT_PUBLIC_GA_TRACKING_ID=${NEXT_PUBLIC_GA_TRACKING_ID} -t notion-blog .",
     "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\" --ignore-path .gitignore",
     "lint": "next lint",
     "test": "jest --watch"
