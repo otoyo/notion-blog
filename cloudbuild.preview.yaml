@@ -57,7 +57,7 @@ steps:
 substitutions:
   _REGION: asia-northeast1
   _REPOSITORY: alpacat
-  _SERVICE_NAME: notion-blog
+  _SERVICE_NAME: notion-blog-preview
   _IMAGE_NAME: '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}'
   _NEXT_PUBLIC_URL: ''
   _NEXT_PUBLIC_GA_TRACKING_ID: ''
@@ -72,7 +72,7 @@ availableSecrets:
 options:
   dynamic_substitutions: true
 
-timeout: 1200s
+timeout: 900s
 
 images:
   - '${_IMAGE_NAME}'
