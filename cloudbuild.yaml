@@ -72,7 +72,7 @@ availableSecrets:
 options:
   dynamic_substitutions: true
 
-timeout: 900s
+timeout: 1200s
 
 images:
   - '${_IMAGE_NAME}'
