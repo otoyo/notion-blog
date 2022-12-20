@@ -29,5 +29,6 @@ yarn-error.log*
 
 .now
 .vercel
+.vscode
 
 tmp/
