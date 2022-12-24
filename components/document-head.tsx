@@ -7,11 +7,32 @@ import {
 const DocumentHead = ({ title = '', description = '', path = '', urlOgImage = '' }) => {
   const elements = path.split('/')
   const isSlugPath = elements[0] === '' && elements[1] === 'blog' && elements.length === 3
+  const isRootPath = path === '' || path === '/'
 
   return (
     <>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="robots" content="max-image-preview:large" />
+      <meta charSet="utf-8" />
       <title>{title ? `${title} - ${NEXT_PUBLIC_SITE_TITLE}` : NEXT_PUBLIC_SITE_TITLE}</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      {NEXT_PUBLIC_URL ? (
+        <link
+          rel="canonical"
+          href={new URL(path, NEXT_PUBLIC_URL).toString()}
+        />
+      ) : null}
+      <meta itemProp="name" content={title ? `${title} - ${NEXT_PUBLIC_SITE_TITLE}` : NEXT_PUBLIC_SITE_TITLE} />
+      {urlOgImage ? (
+        <meta itemProp="image" content={urlOgImage} />
+      ) : NEXT_PUBLIC_URL ? (
+        <meta
+          itemProp="image"
+          content={new URL(
+            '/images/site-logo.jpeg',
+            NEXT_PUBLIC_URL
+          ).toString()}
+        />
+      ) : null}
       <meta
         name="description"
         content={description ? description : NEXT_PUBLIC_SITE_DESCRIPTION}
@@ -27,6 +48,14 @@ const DocumentHead = ({ title = '', description = '', path = '', urlOgImage = ''
         property="og:description"
         content={description ? description : NEXT_PUBLIC_SITE_DESCRIPTION}
       />
+      <meta property="og:site_name" content={NEXT_PUBLIC_SITE_TITLE} />
+      <meta property="og:type" content={
+          isRootPath
+          ? 'website'
+          : isSlugPath
+            ? 'article'
+            : 'blog'
+      } />
       {urlOgImage ? (
         <meta property="og:image" content={urlOgImage} />
       ) : NEXT_PUBLIC_URL ? (
@@ -58,12 +87,11 @@ const DocumentHead = ({ title = '', description = '', path = '', urlOgImage = ''
           ).toString()}
         />
       ) : null}
-      {NEXT_PUBLIC_URL ? (
-        <link
-          rel="canonical"
-          href={new URL(path, NEXT_PUBLIC_URL).toString()}
-        />
-      ) : null}
+      <meta name="twitter:title" content={title ? `${title} - ${NEXT_PUBLIC_SITE_TITLE}` : NEXT_PUBLIC_SITE_TITLE} />
+      <meta
+        name="twitter:description"
+        content={description ? description : NEXT_PUBLIC_SITE_DESCRIPTION}
+      />
       <link
         rel="alternate"
         type="application/atom+xml"
