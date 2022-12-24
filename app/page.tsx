@@ -9,7 +9,7 @@ const RootPage = async () => {
   const blocks = await getAllBlocksByBlockId(INDEX_PAGE_ID)
   return (
     <>
-      <GoogleAnalytics pageTitle={NEXT_PUBLIC_SITE_TITLE} />
+      <GoogleAnalytics />
       <div className={styles.container}>
         <NotionBlocks blocks={blocks} />
       </div>
