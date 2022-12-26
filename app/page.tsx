@@ -1,4 +1,3 @@
-import { NEXT_PUBLIC_SITE_TITLE } from './server-constants'
 import GoogleAnalytics from '../components/google-analytics'
 import { INDEX_PAGE_ID } from './server-constants'
 import { getAllBlocksByBlockId } from '../lib/notion/client'
