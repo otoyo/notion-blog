@@ -8,6 +8,8 @@ import GoogleAnalytics from '../../components/google-analytics'
 
 import styles from '../../styles/page.module.css'
 
+export const revalidate = 86400
+
 const SubscribePage = async () => {
   const blocks = await getAllBlocksByBlockId(SUBSCRIPTION_PAGE_ID)
 

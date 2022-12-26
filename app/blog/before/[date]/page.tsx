@@ -22,6 +22,8 @@ import {
 } from '../../../../components/blog-parts'
 import styles from '../../../../styles/blog.module.css'
 
+export const revalidate = 900
+
 const BlogBeforeDatePage = async ({ params: { date: encodedDate } }) => {
   const date = decodeURIComponent(encodedDate)
 

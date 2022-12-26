@@ -26,60 +26,6 @@ module.exports = {
         ],
       },
       {
-        source: '/',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400',
-          },
-        ],
-      },
-      {
-        source: '/subscribe',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400',
-          },
-        ],
-      },
-      {
-        source: '/blog',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=900, max-age=900',
-          },
-        ],
-      },
-      {
-        source: '/blog/:slug',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=900, max-age=900',
-          },
-        ],
-      },
-      {
-        source: '/blog/before/:date',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=900, max-age=900',
-          },
-        ],
-      },
-      {
-        source: '/blog/tag/:tag*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=900, max-age=900',
-          },
-        ],
-      },
-      {
         source: '/feed',
         headers: [
           {
@@ -120,6 +66,15 @@ module.exports = {
           {
             key: 'Cache-Control',
             value: 'no-cache',
+          },
+        ],
+      },
+      {
+        source: '/api/og-image/:slug',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400',
           },
         ],
       },

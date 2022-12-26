@@ -24,6 +24,8 @@ import {
   getAllBlocksByBlockId,
 } from '../../../lib/notion/client'
 
+export const revalidate = 900
+
 const BlogSlugPage = async ({ params: { slug } }) => {
   const post = await getPostBySlug(slug)
 
