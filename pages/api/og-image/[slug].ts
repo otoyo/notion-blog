@@ -34,7 +34,6 @@ const ApiOgImage = async function(req: NextApiRequest, res: NextApiResponse) {
     const { rawBody: image, headers: headers } = await got(post.OGImage)
 
     res.setHeader('Content-Type', headers['content-type'])
-    res.setHeader('Cache-Control', 'public, s-maxage=86400, max-age=86400, stale-while-revalidate=86400')
     res.write(image)
     res.statusCode = 200
     res.end()

@@ -22,6 +22,8 @@ import {
   getAllTags,
 } from '../../../../lib/notion/client'
 
+export const revalidate = 900
+
 const BlogTagPage = async ({ params: { tag: encodedTag } }) => {
   const tag = decodeURIComponent(encodedTag)
 

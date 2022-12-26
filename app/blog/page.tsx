@@ -21,6 +21,8 @@ import {
   getAllTags,
 } from '../../lib/notion/client'
 
+export const revalidate = 900
+
 const BlogPage = async () => {
   const [posts, firstPost, rankedPosts, popularPosts, tags] = await Promise.all([
     getPosts(NUMBER_OF_POSTS_PER_PAGE),

@@ -23,6 +23,8 @@ import {
 } from '../../../../../../lib/notion/client'
 import styles from '../../../../../../styles/blog.module.css'
 
+export const revalidate = 900
+
 const BlogTagBeforeDatePage = async ({ params: { tag: encodedTag, date: encodedDate } }) => {
   const tag = decodeURIComponent(encodedTag)
   const date = decodeURIComponent(encodedDate)
