@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { NEXT_PUBLIC_URL } from '../../server-constants'
 import { getPostBySlug } from '../../../lib/notion/client'
 import { getBlogLink } from '../../../lib/blog-helpers'
@@ -5,6 +6,11 @@ import DocumentHead from '../../../components/document-head'
 
 const BlogSlugHead = async ({ params: { slug } }) => {
   const post = await getPostBySlug(slug)
+
+  if (!post) {
+    console.log(`Failed to find post for slug: ${slug}`)
+    redirect('/blog')
+  }
 
   return (
     <DocumentHead
