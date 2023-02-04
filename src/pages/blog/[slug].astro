@@ -61,10 +61,10 @@ const [
     </main>
 
     <aside>
-      <BlogPostsLink heading="Posts in the same category" posts={postsHavingSameTag.filter((p: interfaces.Post) => p.Slug !== post.Slug)} />
-      <BlogPostsLink heading="Recommended" posts={rankedPosts} />
-      <BlogPostsLink heading="Latest posts" posts={recentPosts} />
-      <BlogTagsLink heading="Categories" tags={tags} />
+      <BlogPostsLink heading="同じカテゴリーの記事" posts={postsHavingSameTag.filter((p: interfaces.Post) => p.Slug !== post.Slug)} />
+      <BlogPostsLink heading="おすすめ記事" posts={rankedPosts} />
+      <BlogPostsLink heading="最新記事" posts={recentPosts} />
+      <BlogTagsLink heading="カテゴリー" tags={tags} />
     </aside>
   </div>
 </Layout>
