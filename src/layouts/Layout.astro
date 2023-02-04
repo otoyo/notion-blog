@@ -18,11 +18,12 @@ const { title = '', description = '', path = '/' } = Astro.props
 const siteTitle = title ? `${title} - ${PUBLIC_SITE_TITLE}` : PUBLIC_SITE_TITLE
 const siteDescription = description ? description : PUBLIC_SITE_DESCRIPTION
 const siteURL = new URL(path, Astro.site).toString()
-const siteOGImage = new URL('/default-og-image.png', Astro.site)
+const siteOGImage = new URL('/site-logo.jpeg', Astro.site)
 
 const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Blog', path: '/blog' },
+  { label: 'ホーム',     path: '/' },
+  { label: 'ブログ',     path: '/blog' },
+  { label: '読者になる', path: '/subscribe' },
 ]
 ---
 
@@ -43,16 +44,22 @@ const navItems = [
     <meta property="og:image" content={siteOGImage} />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={siteDescription} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content={siteOGImage} />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
   </head>
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
     <header class="header">
-      <h1>
-        <a href="/">{PUBLIC_SITE_TITLE}</a>
-      </h1>
+      <a href="/">
+        <img
+          src="/site-logo@128x128.jpeg"
+          alt="logo"
+          width="64"
+          height="64"
+        />
+        <h1>{PUBLIC_SITE_TITLE}</h1>
+      </a>
 
       <ul>
         {navItems.map(({ label, path: p }) => (
@@ -80,13 +87,21 @@ const navItems = [
     padding: 15px 0;
     text-align: center;
   }
-  .header h1 {
+  .header > a {
+    display: flex;
+    justify-content: center;
     padding: 0.5rem 0;
-    font-weight: 400;
-    color: #000;
   }
-  .header h1 a {
-    color: inherit;
+  .header > a h1 {
+    padding-top: 10px;
+    color: #000;
+    font-weight: 400;
+  }
+  @media (max-width: 640px) {
+    .header > a h1 {
+      margin-right: 14px;
+      padding-top: 14px;
+    }
   }
   .header ul {
     list-style: none;
@@ -134,8 +149,8 @@ const navItems = [
 
     --bg: #fff;
     --fg: #333;
-    --accents-1: #ff7e33;
-    --accents-2: #f26000;
+    --accents-1: #0070f3;
+    --accents-2: #3291ff;
     --accents-3: #666;
     --geist-foreground: #000;
     --geist-success: #690;
