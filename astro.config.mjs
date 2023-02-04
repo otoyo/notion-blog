@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config'
 
 
-const CUSTOM_DOMAIN = '' // <- Set your costom domain if you have. e.g. alpacat.com
+const CUSTOM_DOMAIN = 'alpacat.com' // <- Set your costom domain if you have. e.g. alpacat.com
 
 
 const getSite = function() {
