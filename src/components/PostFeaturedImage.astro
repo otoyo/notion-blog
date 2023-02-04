@@ -1,0 +1,31 @@
+---
+import { Post } from '../lib/interfaces.ts'
+
+export interface Props {
+  post: Post
+  urlMap: { [key: string]: string }
+}
+
+const { post, urlMap } = Astro.props
+
+let image = ''
+if (post.FeaturedImage) {
+  image = urlMap[post.FeaturedImage]
+}
+---
+
+{image && (
+  <div class="post-featured-image">
+    <img src={image} alt="post-featured-image" />
+  </div>
+  )}
+
+<style>
+  .post-featured-image {
+    padding: 0.6rem 0 0.2rem;
+  }
+  .post-featured-image img {
+    display: block;
+    max-height: 20rem;
+  }
+</style>

@@ -1,54 +1,68 @@
 {
-  "name": "notion-blog",
-  "version": "0.1.0",
+  "name": "astro-notion-blog",
+  "type": "module",
+  "version": "0.2.0",
+  "private": true,
   "scripts": {
-    "dev": "next dev",
-    "start": "next start",
-    "build": "next build",
-    "start:docker": "docker run --rm -e NOTION_API_SECRET=${NOTION_API_SECRET} -e DATABASE_ID=${DATABASE_ID} -e INDEX_PAGE_ID=${INDEX_PAGE_ID} -e SUBSCRIPTION_PAGE_ID=${SUBSCRIPTION_PAGE_ID} -p 127.0.0.1:3000:3000 notion-blog",
-    "build:docker": "docker build --platform linux/amd64 --build-arg NOTION_API_SECRET=${NOTION_API_SECRET} --build-arg DATABASE_ID=${DATABASE_ID} --build-arg INDEX_PAGE_ID=${INDEX_PAGE_ID} --build-arg SUBSCRIPTION_PAGE_ID=${SUBSCRIPTION_PAGE_ID} --build-arg NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL} --build-arg NEXT_PUBLIC_GA_TRACKING_ID=${NEXT_PUBLIC_GA_TRACKING_ID} -t notion-blog .",
-    "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\" --ignore-path .gitignore",
-    "lint": "next lint",
-    "test": "jest --watch"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "build:cached": "npm run cache:fetch && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint --ext .js,.ts,.astro src",
+    "cache:fetch": "node scripts/blog-contents-cache.cjs",
+    "cache:purge": "nx reset && rm -f tmp/*",
+    "_fetch-notion-blocks": "node scripts/retrieve-block-children.cjs"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.2",
-    "axios": "^1.2.1",
-    "got": "^12.5.3",
+    "@astrojs/react": "^1.2.2",
+    "@astrojs/rss": "^2.0.0",
+    "@notionhq/client": "^2.2.3",
+    "@supercharge/promise-pool": "^2.3.2",
+    "astro": "^1.9.0",
+    "katex": "^0.16.4",
     "mermaid": "^9.3.0",
-    "metascraper": "^5.32.3",
-    "metascraper-description": "^5.32.3",
-    "metascraper-image": "^5.32.3",
-    "metascraper-title": "^5.32.3",
-    "next": "^13.0.7",
-    "nextjs-progressbar": "^0.0.14",
+    "metascraper": "^5.33.4",
+    "metascraper-description": "^5.33.4",
+    "metascraper-image": "^5.33.4",
+    "metascraper-title": "^5.33.4",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-katex": "^3.0.1",
-    "react-share": "^4.4.1",
-    "react-twitter-embed": "^4.0.4",
-    "shell-quote": "^1.7.4"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@types/node": "^18.11.17",
-    "@types/prismjs": "^1.26.0",
-    "@types/react": "^18.0.26",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "eslint": "8.30.0",
-    "eslint-config-next": "^13.0.7",
-    "husky": "^8.0.2",
-    "jest": "^29.3.1",
-    "jest-environment-jsdom": "29.3.1",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1",
-    "typescript": "^4.8.4"
+    "@nrwl/nx-cloud": "^15.0.2",
+    "@types/js-base64": "^3.3.1",
+    "@types/metascraper": "^5.14.1",
+    "@types/metascraper-description": "^5.14.1",
+    "@types/metascraper-image": "^5.14.0",
+    "@types/metascraper-title": "^5.14.0",
+    "@types/node-fetch": "^2.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "cli-progress": "^3.11.2",
+    "eslint": "^8.31.0",
+    "eslint-plugin-astro": "^0.21.1",
+    "nx": "15.5.3"
+  },
+  "nx": {
+    "targets": {
+      "_fetch-notion-blocks": {
+        "inputs": [
+          "!{projectRoot}/**/*",
+          "!{projectRoot}/**/.*",
+          {
+            "env": "DATABASE_ID"
+          }
+        ],
+        "outputs": [
+          "{projectRoot}/tmp"
+        ]
+      }
+    },
+    "includedScripts": [
+      "_fetch-notion-blocks"
+    ]
   }
 }

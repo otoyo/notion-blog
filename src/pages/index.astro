@@ -1,0 +1,59 @@
+---
+import { INDEX_PAGE_ID } from '../server-constants.ts'
+import { getAllBlocksByBlockId } from '../lib/notion/client.ts'
+import Layout from '../layouts/Layout.astro'
+import NotionBlocks from '../components/NotionBlocks.astro'
+
+const blocks = await getAllBlocksByBlockId(INDEX_PAGE_ID)
+---
+
+<Layout>
+  <main>
+    <NotionBlocks blocks={blocks} isRoot={true} />
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 640px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  main :global(h4) {
+    margin: 0.8rem 0 0.8rem;
+    color: var(--fg);
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+  main :global(h4):after {
+    color: var(--accents-1);
+    font-size: 0.9rem;
+    content: '▼';
+    padding-left: 0.2rem;
+  }
+  main :global(h5) {
+    margin: 1.8rem 0 0.8rem;
+    color: var(--fg);
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+  main :global(h5):after {
+    color: var(--accents-1);
+    font-size: 0.9rem;
+    content: '▼';
+    padding-left: 0.2rem;
+  }
+  main :global(h6) {
+    margin: 0.8rem 0 0.8rem;
+    color: var(--fg);
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  main :global(h6):after {
+    color: var(--accents-1);
+    font-size: 0.9rem;
+    content: '▼';
+    padding-left: 0.2rem;
+  }
+</style>

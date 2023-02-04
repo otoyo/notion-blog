@@ -4,4 +4,4 @@ otoyo's personal blog
 
 ## Getting started
 
-You can start notion-blog by using [easy-notion-blog](https://github.com/otoyo/easy-notion-blog). Please see it.
+You can start notion-blog by using [astro-notion-blog](https://github.com/otoyo/astro-notion-blog). Please see it.
