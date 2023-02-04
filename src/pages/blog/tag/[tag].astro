@@ -42,7 +42,7 @@ const imageURLs = buildPostFeaturedImageURLs(posts).filter(url => url)
 const imageURLMap = await buildURLToImageMap(imageURLs)
 ---
 
-<Layout title={`Posts in ${tag}`} path={`/blog/tag/${tag}`}>
+<Layout title={`${tag}を含む記事`} path={`/blog/tag/${tag}`}>
   <div className={styles.container}>
     <main>
       <header>

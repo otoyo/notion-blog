@@ -34,7 +34,7 @@ const imageURLs = buildPostFeaturedImageURLs(posts).filter(url => url)
 const imageURLMap = await buildURLToImageMap(imageURLs)
 ---
 
-<Layout title="Blog" path="/blog">
+<Layout title="ブログ" path="/blog">
   <div className={styles.container}>
     <main>
       {posts.length === 0 ? (
