@@ -11,8 +11,4 @@ jobs:
 
     steps:
     - name: curl
-      env:
-        DEPLOY_HOOK_URL: ${{secrets.DEPLOY_HOOK_URL}}
-      uses: wei/curl@v1
-      with:
-        args: -X POST "$DEPLOY_HOOK_URL"
+      run: curl -X POST '${{ secrets.DEPLOY_HOOK_URL }}'
