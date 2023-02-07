@@ -1,6 +1,7 @@
-const util = require('util');
-const childProcess = require('child_process');
-const exec = util.promisify(childProcess.exec);
+//const util = require('util');
+//const childProcess = require('child_process');
+//const exec = util.promisify(childProcess.exec);
+const { execSync } = require('child_process');
 const { Client } = require('@notionhq/client');
 const cliProgress = require('cli-progress');
 const { PromisePool } = require('@supercharge/promise-pool');
@@ -70,24 +71,31 @@ const getAllPages = async () => {
   const progressBar = new cliProgress.SingleBar({ stopOnComplete: true }, cliProgress.Presets.shades_classic);
   progressBar.start(pages.length, 0);
 
-  await PromisePool
-    .withConcurrency(concurrency)
-    .for(pages)
-    .process(async page => {
-      return new Promise(async (resolve) => {
-        const command = `NX_BRANCH=main npx nx run astro-notion-blog:_fetch-notion-blocks ${page.id} ${page.last_edited_time}`;
-        const options = { timeout: 60000 };
+  pages.forEach(page => {
+    const command = `NX_BRANCH=main npx nx run astro-notion-blog:_fetch-notion-blocks ${page.id} ${page.last_edited_time}`;
+    const options = { timeout: 60000 };
+    execSync(command, options);
+    progressBar.increment();
+  });
 
-        await retry(3, () => exec(command, options, (err, stdout, stderr) => {
-          if (err) {
-            console.error(`exec error: ${err}`);
-            console.error(`stderr: ${stderr}`);
-            progressBar.stop();
-            throw err;
-          }
-          progressBar.increment();
-          return resolve();
-        }));
-      });
-    });
+  //await PromisePool
+  //  .withConcurrency(concurrency)
+  //  .for(pages)
+  //  .process(async page => {
+  //    return new Promise(async (resolve) => {
+  //      const command = `NX_BRANCH=main npx nx run astro-notion-blog:_fetch-notion-blocks ${page.id} ${page.last_edited_time}`;
+  //      const options = { timeout: 60000 };
+
+  //      await retry(3, () => exec(command, options, (err, stdout, stderr) => {
+  //        if (err) {
+  //          console.error(`exec error: ${err}`);
+  //          console.error(`stderr: ${stderr}`);
+  //          progressBar.stop();
+  //          throw err;
+  //        }
+  //        progressBar.increment();
+  //        return resolve();
+  //      }));
+  //    });
+  //  });
 })();
