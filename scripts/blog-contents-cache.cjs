@@ -1,9 +1,20 @@
-const { exec } = require('child_process');
+const util = require('util');
+const childProcess = require('child_process');
+const exec = util.promisify(childProcess.exec);
 const { Client } = require('@notionhq/client');
 const cliProgress = require('cli-progress');
 const { PromisePool } = require('@supercharge/promise-pool');
 
 const notion = new Client({ auth: process.env.NOTION_API_SECRET });
+
+const retry = (maxRetries, fn) => {
+  return fn().catch(function(err) {
+    if (maxRetries <= 0) {
+      throw err;
+    }
+    return retry(maxRetries - 1, fn);
+  });
+};
 
 const getAllPages = async () => {
   const params = {
@@ -63,11 +74,11 @@ const getAllPages = async () => {
     .withConcurrency(concurrency)
     .for(pages)
     .process(async page => {
-      return new Promise((resolve) => {
+      return new Promise(async (resolve) => {
         const command = `NX_BRANCH=main npx nx run astro-notion-blog:_fetch-notion-blocks ${page.id} ${page.last_edited_time}`;
         const options = { timeout: 60000 };
 
-        exec(command, options, (err, stdout, stderr) => {
+        await retry(3, () => exec(command, options, (err, stdout, stderr) => {
           if (err) {
             console.error(`exec error: ${err}`);
           progressBar.stop();
@@ -75,7 +86,7 @@ const getAllPages = async () => {
           }
           progressBar.increment();
           return resolve();
-        });
+        }));
       });
     });
 })();
