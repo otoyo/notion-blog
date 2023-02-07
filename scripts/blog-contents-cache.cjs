@@ -81,7 +81,8 @@ const getAllPages = async () => {
         await retry(3, () => exec(command, options, (err, stdout, stderr) => {
           if (err) {
             console.error(`exec error: ${err}`);
-          progressBar.stop();
+            console.error(`stderr: ${stderr}`);
+            progressBar.stop();
             throw err;
           }
           progressBar.increment();
