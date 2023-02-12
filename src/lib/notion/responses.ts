@@ -52,7 +52,7 @@ interface External {
   url: string
 }
 
-interface Emoji {
+export interface Emoji {
   type: string
   emoji: string
 }
