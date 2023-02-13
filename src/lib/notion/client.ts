@@ -83,8 +83,9 @@ export async function getAllPosts(): Promise<Post[]> {
 
   let results: responses.PageObject[] = []
   while (true) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const res = await client.databases.query(params as any) as responses.QueryDatabaseResponse
+    const res = (await client.databases.query(
+      params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+    )) as responses.QueryDatabaseResponse
 
     results = results.concat(res.results)
 
@@ -184,8 +185,9 @@ export async function getAllBlocksByBlockId(blockId: string): Promise<Block[]> {
     }
 
     while (true) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await client.blocks.children.list(params as any) as responses.RetrieveBlockChildrenResponse
+      const res = (await client.blocks.children.list(
+        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+      )) as responses.RetrieveBlockChildrenResponse
 
       results = results.concat(res.results)
 
@@ -242,8 +244,9 @@ export async function getBlock(blockId: string): Promise<Block> {
   const params: requestParams.RetrieveBlock = {
     block_id: blockId,
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const res = await client.blocks.retrieve(params as any) as responses.RetrieveBlockResponse
+  const res = (await client.blocks.retrieve(
+    params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+  )) as responses.RetrieveBlockResponse
 
   return _buildBlock(res)
 }
@@ -491,8 +494,9 @@ async function _getTableRows(blockId: string): Promise<TableRow[]> {
     }
 
     while (true) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await client.blocks.children.list(params as any) as responses.RetrieveBlockChildrenResponse
+      const res = (await client.blocks.children.list(
+        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+      )) as responses.RetrieveBlockChildrenResponse
 
       results = results.concat(res.results)
 
@@ -539,8 +543,9 @@ async function _getColumns(blockId: string): Promise<Column[]> {
     }
 
     while (true) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await client.blocks.children.list(params as any) as responses.RetrieveBlockChildrenResponse
+      const res = (await client.blocks.children.list(
+        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+      )) as responses.RetrieveBlockChildrenResponse
 
       results = results.concat(res.results)
 
