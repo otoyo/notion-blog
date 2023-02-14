@@ -9,7 +9,11 @@ export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || ''
 
 export const PUBLIC_GA_TRACKING_ID = import.meta.env.PUBLIC_GA_TRACKING_ID
 export const NUMBER_OF_POSTS_PER_PAGE = 10
-export const REQUEST_TIMEOUT_MS = parseInt(import.meta.env.REQUEST_TIMEOUT_MS || '10000', 10)
+export const REQUEST_TIMEOUT_MS = parseInt(
+  import.meta.env.REQUEST_TIMEOUT_MS || '10000',
+  10
+)
 
 export const PUBLIC_SITE_TITLE = 'アルパカログ'
-export const PUBLIC_SITE_DESCRIPTION = 'Notion Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ'
+export const PUBLIC_SITE_DESCRIPTION =
+  'Notion Blogのカスタマイズ、マネジメント、プログラミングや読んだ本のまとめなどが中心のブログ'

@@ -3,7 +3,7 @@
 export interface QueryDatabaseResponse {
   object: string
   results: PageObject[]
-  next_cursor: null|string
+  next_cursor: null | string
   has_more: boolean
   type: string
   page?: Record<string, never>
@@ -24,12 +24,11 @@ export interface RetrieveBlockResponse extends BlockObject {}
 export interface RetrieveBlockChildrenResponse {
   object: string
   results: BlockObject[]
-  next_cursor: null|string
+  next_cursor: null | string
   has_more: boolean
   type: string
   block?: Record<string, never>
 }
-
 
 // common interfaces
 interface UserObject {
@@ -110,8 +109,8 @@ interface Reference {
 
 interface DateProperty {
   start: string
-  end?: null|string
-  timezone?: null|string
+  end?: null | string
+  timezone?: null | string
 }
 
 interface LinkPreview {
@@ -138,7 +137,7 @@ interface DatabaseObject {
   last_edited_by: UserObject
   title: RichTextObject[]
   description: RichTextObject[]
-  icon: FileObject|Emoji
+  icon: FileObject | Emoji
   cover: Cover
   properties: DatabaseProperties
   parent: Parent
@@ -244,7 +243,7 @@ export interface PageObject {
   last_edited_time: string
   last_edited_by: UserObject
   archived: boolean
-  icon: FileObject|Emoji
+  icon: FileObject | Emoji
   cover: Cover
   properties: PageProperties
   parent: Parent
@@ -448,7 +447,7 @@ interface LinkToPage {
 }
 
 interface SyncedBlock {
-  synced_from: null|SyncedFrom
+  synced_from: null | SyncedFrom
   children?: BlockObject[]
 }
 

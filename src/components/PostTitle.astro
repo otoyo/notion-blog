@@ -11,11 +11,7 @@ const { post, enableLink = true } = Astro.props
 ---
 
 <h3 class="post-title">
-  {enableLink ? (
-    <a href={getPostLink(post.Slug)}>
-      {post.Title}
-    </a>
-  ) : post.Title}
+  {enableLink ? <a href={getPostLink(post.Slug)}>{post.Title}</a> : post.Title}
 </h3>
 
 <style>
