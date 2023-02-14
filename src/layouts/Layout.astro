@@ -22,8 +22,8 @@ const siteURL = new URL(path, Astro.site).toString()
 const siteOGImage = new URL('/site-logo.jpeg', Astro.site)
 
 const navItems = [
-  { label: 'ホーム',     path: '/' },
-  { label: 'ブログ',     path: '/blog' },
+  { label: 'ホーム', path: '/' },
+  { label: 'ブログ', path: '/blog' },
   { label: '読者になる', path: '/subscribe' },
 ]
 ---
@@ -45,35 +45,44 @@ const navItems = [
     <meta property="og:image" content={ogImage || siteOGImage} />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={siteDescription} />
-    {ogImage
-      ? (
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={ogImage} />
+    {
+      ogImage ? (
+        <>
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:image" content={ogImage} />
+        </>
       ) : (
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:image" content={siteOGImage} />
-      )}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+        <>
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:image" content={siteOGImage} />
+        </>
+      )
+    }
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+      integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
     <header class="header">
       <a href="/">
-        <img
-          src="/site-logo@128x128.jpeg"
-          alt="logo"
-          width="64"
-          height="64"
-        />
+        <img src="/site-logo@128x128.jpeg" alt="logo" width="64" height="64" />
         <h1>{PUBLIC_SITE_TITLE}</h1>
       </a>
 
       <ul>
-        {navItems.map(({ label, path: p }) => (
-          <li key={label}>
-            <a href={p} class={p === path ? 'active' : null}>{label}</a>
-          </li>
-        ))}
+        {
+          navItems.map(({ label, path: p }) => (
+            <li key={label}>
+              <a href={p} class={p === path ? 'active' : null}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </header>
     <div class="container">
@@ -81,8 +90,10 @@ const navItems = [
     </div>
     <footer class="footer">
       <div>
-        <span>Powered by </span>
-        <a href="https://github.com/otoyo/astro-notion-blog">astro-notion-blog</a>
+        <span>Powered by</span>
+        <a href="https://github.com/otoyo/astro-notion-blog"
+          >astro-notion-blog</a
+        >
       </div>
     </footer>
   </body>
@@ -164,10 +175,11 @@ const navItems = [
 
     --radius: 4px;
 
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    --font-mono: SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+    --font-mono: SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono',
+      Courier, monospace;
   }
 
   * {
@@ -280,7 +292,8 @@ const navItems = [
     font-size: 1rem;
     line-height: 1.8rem;
   }
-  ul, ol {
+  ul,
+  ol {
     margin: 0;
     padding-inline-start: 1.5rem;
   }
