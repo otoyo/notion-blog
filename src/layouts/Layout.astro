@@ -1,10 +1,9 @@
 ---
 import {
-  PUBLIC_SITE_TITLE,
-  PUBLIC_SITE_DESCRIPTION,
   PUBLIC_GA_TRACKING_ID,
   ENABLE_LIGHTBOX,
 } from '../server-constants.ts'
+import { getDatabase } from '../lib/notion/client.ts'
 import {
   getNavLink,
   getStaticFilePath,
@@ -21,8 +20,10 @@ export interface Props {
 
 const { title = '', description = '', path = '/', ogImage = '' } = Astro.props
 
-const siteTitle = title ? `${title} - ${PUBLIC_SITE_TITLE}` : PUBLIC_SITE_TITLE
-const siteDescription = description ? description : PUBLIC_SITE_DESCRIPTION
+const database = await getDatabase()
+
+const siteTitle = title ? `${title} - ${database.Title}` : database.Title
+const siteDescription = description ? description : database.Description
 const siteURL = new URL(path, Astro.site).toString()
 const siteOGImage = new URL('/site-logo.jpeg', Astro.site)
 
@@ -46,7 +47,7 @@ const navItems = [
     <meta property="og:url" content={siteURL} />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
-    <meta property="og:site_name" content={PUBLIC_SITE_TITLE} />
+    <meta property="og:site_name" content={database.Title} />
     <meta property="og:image" content={ogImage || siteOGImage} />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={siteDescription} />
@@ -73,22 +74,12 @@ const navItems = [
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
     <header class="header">
-      <a href={getNavLink('/')}>
-        <img src="/site-logo@128x128.jpeg" alt="logo" width="64" height="64" />
-        <h1>{PUBLIC_SITE_TITLE}</h1>
-      </a>
-
-      <ul>
-        {
-          navItems.map(({ label, path: p }) => (
-            <li key={label}>
-              <a href={getNavLink(p)} class={p === path ? 'active' : null}>
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <h1>
+        <a href={getNavLink('/')}>{database.Title}</a>
+      </h1>
+      <div class="description">
+        {database.Description}
+      </div>
     </header>
     <div class="container">
       <slot />
