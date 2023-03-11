@@ -148,7 +148,11 @@ if (database.Icon && database.Icon.Type === 'file') {
       </aside>
     </div>
 
-    {ENABLE_LIGHTBOX && <script src={getStaticFilePath('/scripts/fslightbox.js')} />}
+    {
+      ENABLE_LIGHTBOX && (
+        <script src={getStaticFilePath('/scripts/fslightbox.js')} />
+      )
+    }
   </body>
 </html>
 
