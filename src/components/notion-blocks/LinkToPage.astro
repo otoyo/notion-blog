@@ -21,7 +21,7 @@ if (block.LinkToPage.Type === 'page_id') {
     <p>
       <a href={`${getPostLink(post.Slug)}`} class="link">
         <span class="icon">
-          {post.Icon.Emoji ? post.Icon.Emoji : '📄'}
+          {post.Icon?.Emoji ? post.Icon.Emoji : '📄'}
           <img src={arrow} class="icon-link" alt="" />
         </span>
         <span class="text">{post.Title}</span>
