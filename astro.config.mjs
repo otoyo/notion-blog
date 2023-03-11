@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { CUSTOM_DOMAIN, BASE_PATH } from './src/server-constants';
-import BlogMetadataSetter from './src/integrations/blog-metadata-setter';
+import CoverImageDownloader from './src/integrations/cover-image-downloader';
+import CustomIconDownloader from './src/integrations/custom-icon-downloader';
 import FeaturedImageDownloader from './src/integrations/featured-image-downloader';
 import PublicNotionCopier from './src/integrations/public-notion-copier';
 
@@ -31,7 +32,8 @@ export default defineConfig({
   site: getSite(),
   base: BASE_PATH,
   integrations: [
-    BlogMetadataSetter(),
+    CoverImageDownloader(),
+    CustomIconDownloader(),
     FeaturedImageDownloader(),
     PublicNotionCopier(),
   ],
