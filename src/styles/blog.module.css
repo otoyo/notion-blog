@@ -12,6 +12,14 @@
   }
 }
 
+.aside {
+}
+@media (max-width: 640px) {
+  .aside {
+    padding: 20px 0;
+  }
+}
+
 .post {
   margin: 0 auto 40px;
 }

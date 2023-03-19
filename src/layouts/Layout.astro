@@ -122,6 +122,12 @@ if (database.Icon && database.Icon.Type === 'file') {
             <div class="description">
               {database.Description}
             </div>
+
+            <ul>
+              <li><a href="/">🏠 <span class={path === '/' && 'inactive'}>ホーム</span></a></li>
+              <li><a href="/blog">📝 <span class={path === '/blog' && 'inactive'}>ブログ</span></a></li>
+              <li><a href="/subscribe">💁 <span class={path === '/subscribe' && 'inactive'}>読者になる</span></a></li>
+            </ul>
           </header>
 
           <slot name="main" />
@@ -138,12 +144,6 @@ if (database.Icon && database.Icon.Type === 'file') {
       </main>
 
       <aside>
-        <ul>
-          <li><a href="/">🏠 ホーム</a></li>
-          <li><a href="/blog">📝 ブログ</a></li>
-          <li><a href="/subscribe">💁 読者になる</a></li>
-        </ul>
-
         <slot name="aside" />
       </aside>
     </div>
@@ -188,7 +188,7 @@ if (database.Icon && database.Icon.Type === 'file') {
     aside {
       order: 2;
       width: 100%;
-      padding: 16px 20px 20px;
+      padding: 0 20px;
     }
   }
 
@@ -271,20 +271,48 @@ if (database.Icon && database.Icon.Type === 'file') {
     display: block;
     width: 120px;
     height: 120px;
-    margin: -120px 0 45px;
+    margin: -120px 0 12px;
     border-radius: var(--radius);
   }
   @media (max-width: 640px) {
     main header h1 a img.custom-icon {
       width: 72px;
       height: 72px;
-      margin: -66px 0 20px;
+      margin: -66px 0 8px;
     }
   }
 
   main header div.description {
     padding: 0.3rem 0 0.6rem;
     font-size: 0.95rem;
+  }
+
+  main header ul {
+    display: flex;
+    justify-content: start;
+    padding: 0;
+    list-style: none;
+  }
+  main header ul li {
+    width: 8em;
+  }
+  @media (max-width: 640px) {
+    main header ul li {
+      width: 33%;
+    }
+  }
+  main header ul li a {
+    display: block;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  main header ul li a span{
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  main header ul li a span.inactive{
+    color: #999;
+    text-decoration: none;
   }
 
   main footer {
