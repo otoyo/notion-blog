@@ -113,7 +113,7 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
     </div>
   </div>
 
-  <div slot="aside" class="aside">
+  <div slot="aside" class={styles.aside}>
     <BlogPostsLink
       heading="同じカテゴリーの記事"
       posts={postsHavingSameTag.filter(
