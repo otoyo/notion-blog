@@ -84,7 +84,7 @@ if (database.Icon && database.Icon.Type === 'file') {
   <body>
     <GoogleAnalytics trackingId={PUBLIC_GA_TRACKING_ID} />
     <div class="container">
-      <main>
+      <header>
         {
           coverImageURL && (
             <div class="cover">
@@ -92,7 +92,10 @@ if (database.Icon && database.Icon.Type === 'file') {
             </div>
           )
         }
+      </header>
 
+      <div>
+      <main>
         <div class="content">
           <header>
             <h1>
@@ -146,6 +149,7 @@ if (database.Icon && database.Icon.Type === 'file') {
       <aside>
         <slot name="aside" />
       </aside>
+      </div>
     </div>
 
     {
@@ -158,11 +162,13 @@ if (database.Icon && database.Icon.Type === 'file') {
 
 <style>
   .container {
-    display: flex;
     min-height: 100vh;
   }
+  .container > div {
+    display: flex;
+  }
   @media (max-width: 640px) {
-    .container {
+    .container > div {
       display: block;
     }
   }
