@@ -95,60 +95,74 @@ if (database.Icon && database.Icon.Type === 'file') {
       </header>
 
       <div>
-      <main>
-        <div class="content">
-          <header>
-            <h1>
-              <a href={getNavLink('/')}>
-                {
-                  database.Icon && database.Icon.Type === 'emoji' ? (
-                    <>
-                      <span>{database.Icon.Emoji}</span>
-                      {database.Title}
-                    </>
-                  ) : database.Icon && database.Icon.Type === 'external' ? (
-                    <>
-                      <img src={database.Icon.Url} />
-                      {database.Title}
-                    </>
-                  ) : database.Icon && database.Icon.Type === 'file' ? (
-                    <>
-                      <img src={customIconURL} class="custom-icon" />
-                      {database.Title}
-                    </>
-                  ) : (
-                    database.Title
-                  )
-                }
-              </a>
-            </h1>
-            <div class="description">
-              {database.Description}
-            </div>
+        <main>
+          <div class="content">
+            <header>
+              <h1>
+                <a href={getNavLink('/')}>
+                  {
+                    database.Icon && database.Icon.Type === 'emoji' ? (
+                      <>
+                        <span>{database.Icon.Emoji}</span>
+                        {database.Title}
+                      </>
+                    ) : database.Icon && database.Icon.Type === 'external' ? (
+                      <>
+                        <img src={database.Icon.Url} />
+                        {database.Title}
+                      </>
+                    ) : database.Icon && database.Icon.Type === 'file' ? (
+                      <>
+                        <img src={customIconURL} class="custom-icon" />
+                        {database.Title}
+                      </>
+                    ) : (
+                      database.Title
+                    )
+                  }
+                </a>
+              </h1>
+              <div class="description">
+                {database.Description}
+              </div>
 
-            <ul>
-              <li><a href="/">🏠 <span class={path === '/' && 'inactive'}>ホーム</span></a></li>
-              <li><a href="/blog">📝 <span class={path === '/blog' && 'inactive'}>ブログ</span></a></li>
-              <li><a href="/subscribe">💁 <span class={path === '/subscribe' && 'inactive'}>読者になる</span></a></li>
-            </ul>
-          </header>
+              <ul>
+                <li>
+                  <a href="/"
+                    >🏠 <span class={path === '/' && 'inactive'}>ホーム</span
+                    ></a>
+                </li>
+                <li>
+                  <a href="/blog"
+                    >📝 <span class={path === '/blog' && 'inactive'}
+                      >ブログ</span
+                    ></a>
+                </li>
+                <li>
+                  <a href="/subscribe"
+                    >💁 <span class={path === '/subscribe' && 'inactive'}
+                      >読者になる</span
+                    ></a>
+                </li>
+              </ul>
+            </header>
 
-          <slot name="main" />
+            <slot name="main" />
 
-          <footer>
-            <div>
-              <span>Powered by</span>
-              <a href="https://github.com/otoyo/astro-notion-blog"
-                >astro-notion-blog</a
-              >
-            </div>
-          </footer>
-        </div>
-      </main>
+            <footer>
+              <div>
+                <span>Powered by</span>
+                <a href="https://github.com/otoyo/astro-notion-blog"
+                  >astro-notion-blog</a
+                >
+              </div>
+            </footer>
+          </div>
+        </main>
 
-      <aside>
-        <slot name="aside" />
-      </aside>
+        <aside>
+          <slot name="aside" />
+        </aside>
       </div>
     </div>
 
@@ -313,11 +327,11 @@ if (database.Icon && database.Icon.Type === 'file') {
     color: var(--fg);
     font-weight: 500;
   }
-  main header ul li a span{
+  main header ul li a span {
     font-weight: 500;
     text-decoration: underline;
   }
-  main header ul li a span.inactive{
+  main header ul li a span.inactive {
     color: #999;
     text-decoration: none;
   }
