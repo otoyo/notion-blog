@@ -2,6 +2,7 @@ import fs, { createWriteStream } from 'node:fs'
 import { pipeline } from 'node:stream'
 import { promisify } from 'node:util'
 import fetch, { Response, AbortError } from 'node-fetch'
+import retry from 'async-retry'
 import {
   NOTION_API_SECRET,
   DATABASE_ID,
@@ -51,7 +52,7 @@ import type {
   Reference,
 } from '../interfaces'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import { Client } from '@notionhq/client'
+import { Client, APIResponseError } from '@notionhq/client'
 
 const client = new Client({
   auth: NOTION_API_SECRET,
@@ -59,6 +60,8 @@ const client = new Client({
 
 let postsCache: Post[] | null = null
 let dbCache: Database | null = null
+
+const numberOfRetry = 2
 
 export async function getAllPosts(): Promise<Post[]> {
   if (postsCache !== null) {
@@ -94,9 +97,25 @@ export async function getAllPosts(): Promise<Post[]> {
 
   let results: responses.PageObject[] = []
   while (true) {
-    const res = (await client.databases.query(
-      params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-    )) as responses.QueryDatabaseResponse
+    const res = await retry(
+      async (bail) => {
+        try {
+          return (await client.databases.query(
+            params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+          )) as responses.QueryDatabaseResponse
+        } catch (error: unknown) {
+          if (error instanceof APIResponseError) {
+            if (error.status && error.status >= 400 && error.status < 500) {
+              bail(error)
+            }
+          }
+          throw error
+        }
+      },
+      {
+        retries: numberOfRetry,
+      }
+    )
 
     results = results.concat(res.results)
 
@@ -219,9 +238,25 @@ export async function getAllBlocksByBlockId(blockId: string): Promise<Block[]> {
     }
 
     while (true) {
-      const res = (await client.blocks.children.list(
-        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-      )) as responses.RetrieveBlockChildrenResponse
+      const res = await retry(
+        async (bail) => {
+          try {
+            return (await client.blocks.children.list(
+              params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+            )) as responses.RetrieveBlockChildrenResponse
+          } catch (error: unknown) {
+            if (error instanceof APIResponseError) {
+              if (error.status && error.status >= 400 && error.status < 500) {
+                bail(error)
+              }
+            }
+            throw error
+          }
+        },
+        {
+          retries: numberOfRetry,
+        }
+      )
 
       results = results.concat(res.results)
 
@@ -298,9 +333,26 @@ export async function getBlock(blockId: string): Promise<Block> {
   const params: requestParams.RetrieveBlock = {
     block_id: blockId,
   }
-  const res = (await client.blocks.retrieve(
-    params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-  )) as responses.RetrieveBlockResponse
+
+  const res = await retry(
+    async (bail) => {
+      try {
+        return (await client.blocks.retrieve(
+          params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+        )) as responses.RetrieveBlockResponse
+      } catch (error: unknown) {
+        if (error instanceof APIResponseError) {
+          if (error.status && error.status >= 400 && error.status < 500) {
+            bail(error)
+          }
+        }
+        throw error
+      }
+    },
+    {
+      retries: numberOfRetry,
+    }
+  )
 
   return _buildBlock(res)
 }
@@ -368,9 +420,25 @@ export async function getDatabase(): Promise<Database> {
     database_id: DATABASE_ID,
   }
 
-  const res = (await client.databases.retrieve(
-    params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-  )) as responses.RetrieveDatabaseResponse
+  const res = await retry(
+    async (bail) => {
+      try {
+        return (await client.databases.retrieve(
+          params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+        )) as responses.RetrieveDatabaseResponse
+      } catch (error: unknown) {
+        if (error instanceof APIResponseError) {
+          if (error.status && error.status >= 400 && error.status < 500) {
+            bail(error)
+          }
+        }
+        throw error
+      }
+    },
+    {
+      retries: numberOfRetry,
+    }
+  )
 
   let icon: FileObject | Emoji | null = null
   if (res.icon) {
@@ -705,9 +773,25 @@ async function _getTableRows(blockId: string): Promise<TableRow[]> {
     }
 
     while (true) {
-      const res = (await client.blocks.children.list(
-        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-      )) as responses.RetrieveBlockChildrenResponse
+      const res = await retry(
+        async (bail) => {
+          try {
+            return (await client.blocks.children.list(
+              params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+            )) as responses.RetrieveBlockChildrenResponse
+          } catch (error: unknown) {
+            if (error instanceof APIResponseError) {
+              if (error.status && error.status >= 400 && error.status < 500) {
+                bail(error)
+              }
+            }
+            throw error
+          }
+        },
+        {
+          retries: numberOfRetry,
+        }
+      )
 
       results = results.concat(res.results)
 
@@ -754,9 +838,25 @@ async function _getColumns(blockId: string): Promise<Column[]> {
     }
 
     while (true) {
-      const res = (await client.blocks.children.list(
-        params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-      )) as responses.RetrieveBlockChildrenResponse
+      const res = await retry(
+        async (bail) => {
+          try {
+            return (await client.blocks.children.list(
+              params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+            )) as responses.RetrieveBlockChildrenResponse
+          } catch (error: unknown) {
+            if (error instanceof APIResponseError) {
+              if (error.status && error.status >= 400 && error.status < 500) {
+                bail(error)
+              }
+            }
+            throw error
+          }
+        },
+        {
+          retries: numberOfRetry,
+        }
+      )
 
       results = results.concat(res.results)
 
