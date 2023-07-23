@@ -1,7 +1,5 @@
 import fs, { createWriteStream } from 'node:fs'
-import { pipeline } from 'node:stream'
-import { promisify } from 'node:util'
-import fetch, { Response, AbortError } from 'node-fetch'
+import axios, { AxiosResponse } from 'axios'
 import retry from 'async-retry'
 import {
   NOTION_API_SECRET,
@@ -376,26 +374,21 @@ export async function getAllTags(): Promise<SelectProperty[]> {
 }
 
 export async function downloadFile(url: URL) {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => {
-    controller.abort()
-  }, REQUEST_TIMEOUT_MS)
-
-  let res!: Response
+  let res!: AxiosResponse
   try {
-    res = (await fetch(url.toString(), {
-      signal: controller.signal,
-    })) as Response
+    res = await axios({
+      method: 'get',
+      url: url.toString(),
+      timeout: REQUEST_TIMEOUT_MS,
+      responseType: 'stream',
+    })
   } catch (err) {
-    if (err instanceof AbortError) {
-      console.log('File fetch request was aborted')
-      return Promise.resolve()
-    }
-  } finally {
-    clearTimeout(timeout)
+    console.log(err)
+    return Promise.resolve()
   }
 
-  if (!res || !res.body) {
+  if (!res || res.status != 200) {
+    console.log(res)
     return Promise.resolve()
   }
 
@@ -407,8 +400,8 @@ export async function downloadFile(url: URL) {
   const filename = decodeURIComponent(url.pathname.split('/').slice(-1)[0])
   const filepath = `${dir}/${filename}`
 
-  const streamPipeline = promisify(pipeline)
-  return streamPipeline(res.body, createWriteStream(filepath))
+  const writeStream = createWriteStream(filepath)
+  res.data.pipe(writeStream)
 }
 
 export async function getDatabase(): Promise<Database> {
