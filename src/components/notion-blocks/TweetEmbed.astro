@@ -4,10 +4,15 @@ export interface Props {
 }
 
 const { url } = Astro.props
+
+const postURL =
+  url.hostname === 'x.com' || url.hostname === 'www.x.com'
+    ? new URL(url.pathname, 'https://twitter.com')
+    : url
 ---
 
 <blockquote class="twitter-tweet">
-  <a href={url}></a>
+  <a href={postURL}></a>
 </blockquote>
 
 <script is:inline>
