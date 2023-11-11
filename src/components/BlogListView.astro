@@ -1,0 +1,70 @@
+---
+import { Post } from '../lib/interfaces.ts'
+import { getPostLink } from '../lib/blog-helpers.ts'
+import PostDate from './PostDate.astro'
+import PostTitle from './PostTitle.astro'
+
+export interface Props {
+  posts: Post[]
+}
+
+const { posts } = Astro.props
+---
+
+<ul>
+  {
+    posts.map((post) => (
+      <li key={post.Slug}>
+        <div class="post-date">
+          <PostDate post={post} />
+        </div>
+        <div class="post-title">
+          <a href={getPostLink(post.Slug)}>
+            <PostTitle post={post} />
+          </a>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    margin-bottom: 0.8rem;
+  }
+  @media (max-width: 640px) {
+    li {
+      display: block;
+      margin-bottom: 1.6rem;
+    }
+  }
+  .post-date {
+    color: #6b7280;
+  }
+  @media (max-width: 640px) {
+    .post-date {
+      line-height: 1rem;
+    }
+  }
+  div.post-title {
+    margin-left: 2.4rem;
+  }
+  div.post-title > a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  div.post-title > a:hover {
+    text-decoration-color: var(--anchor-border);
+    text-decoration-thickness: 2px;
+  }
+  @media (max-width: 640px) {
+    div.post-title {
+      margin-left: 0;
+    }
+  }
+</style>

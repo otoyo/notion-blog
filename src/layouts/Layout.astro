@@ -4,6 +4,9 @@ import { getDatabase } from '../lib/notion/client.ts'
 import { getNavLink, getStaticFilePath, filePath } from '../lib/blog-helpers.ts'
 import '../styles/syntax-coloring.css'
 import GoogleAnalytics from '../components/GoogleAnalytics.astro'
+import NavMenu from '../components/NavMenu.astro'
+import SearchModal from '../components/SearchModal.astro'
+import SearchButton from '../components/SearchButton.astro'
 
 export interface Props {
   title: string
@@ -94,27 +97,27 @@ if (database.Icon && database.Icon.Type === 'file') {
         }
       </header>
 
-      <div>
-        <main>
-          <div class="content">
-            <header>
+      <main>
+        <div class="content">
+          <header>
+            <div class="title-container">
               <h1>
                 <a href={getNavLink('/')}>
                   {
                     database.Icon && database.Icon.Type === 'emoji' ? (
                       <>
-                        <span>{database.Icon.Emoji}</span>
-                        {database.Title}
+                        <span class="emoji">{database.Icon.Emoji}</span>
+                        <span class="title">{database.Title}</span>
                       </>
                     ) : database.Icon && database.Icon.Type === 'external' ? (
                       <>
                         <img src={database.Icon.Url} />
-                        {database.Title}
+                        <span class="title">{database.Title}</span>
                       </>
                     ) : database.Icon && database.Icon.Type === 'file' ? (
                       <>
                         <img src={customIconURL} class="custom-icon" />
-                        {database.Title}
+                        <span class="title">{database.Title}</span>
                       </>
                     ) : (
                       database.Title
@@ -122,46 +125,33 @@ if (database.Icon && database.Icon.Type === 'file') {
                   }
                 </a>
               </h1>
-              <div class="description">
-                {database.Description}
-              </div>
+              <section>
+                <NavMenu />
+              </section>
+            </div>
+            <div class="search-button-container">
+              <SearchButton />
+            </div>
+          </header>
 
-              <ul>
-                <li>
-                  <a href="/"
-                    >🏠 <span class={path === '/' && 'inactive'}>ホーム</span
-                    ></a
-                  >
-                </li>
-                <li>
-                  <a href="/blog"
-                    >📝 <span class={path === '/blog' && 'inactive'}
-                      >ブログ</span
-                    ></a
-                  >
-                </li>
-              </ul>
-            </header>
+          <slot name="main" />
 
-            <slot name="main" />
-
-            <footer>
-              <div>
-                <span>Powered by</span>
-                <a href="https://github.com/otoyo/astro-notion-blog"
-                  >astro-notion-blog</a
-                >
-              </div>
-            </footer>
-          </div>
-        </main>
-
-        <aside>
-          <slot name="aside" />
-        </aside>
-      </div>
+          <footer>
+            <div class="copyright">
+              <span>&copy; アルパカログ</span>
+            </div>
+            <div class="powered-by">
+              <span>Powered by </span>
+              <a href="https://github.com/otoyo/astro-notion-blog"
+                >astro-notion-blog</a
+              >
+            </div>
+          </footer>
+        </div>
+      </main>
     </div>
 
+    <SearchModal />
     {
       ENABLE_LIGHTBOX && (
         <script src={getStaticFilePath('/scripts/fslightbox.js')} />
@@ -172,67 +162,11 @@ if (database.Icon && database.Icon.Type === 'file') {
 
 <style>
   .container {
+    max-width: 900px;
     min-height: 100vh;
+    margin: auto auto;
   }
-  .container > div {
-    display: flex;
-  }
-  @media (max-width: 640px) {
-    .container > div {
-      display: block;
-    }
-  }
-
-  main {
-    flex: 1;
-    order: 2;
-    justify-content: space-between;
-    max-width: 1024px;
-  }
-  @media (max-width: 640px) {
-    main {
-      order: 1;
-    }
-  }
-
-  aside {
-    order: 1;
-    width: 300px;
-    padding: 20px 20px;
-    background-color: #f4f4f4;
-  }
-  @media (max-width: 640px) {
-    aside {
-      order: 2;
-      width: 100%;
-      padding: 0 20px;
-    }
-  }
-
-  aside ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 0.4rem;
-    margin-block-end: 1rem;
-  }
-
-  aside ul li {
-  }
-
-  aside ul li a {
-    display: block;
-    border-radius: var(--radius);
-    padding: 0.4rem 0.4rem;
-    line-height: 1.2rem;
-    color: inherit;
-    font-size: 0.95rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  aside ul li a:hover {
-    color: inherit;
-    background-color: #ddd;
+  .container > header {
   }
 
   div.cover {
@@ -240,139 +174,135 @@ if (database.Icon && database.Icon.Type === 'file') {
   div.cover img {
     display: block;
     width: 100%;
-    height: 20vh;
+    height: 16vh;
     object-fit: cover;
-    object-position: center 60%;
+    object-position: center 20%;
+  }
+
+  main {
+    max-width: 100%;
+    padding: 1rem 2rem 0;
+  }
+  @media (max-width: 640px) {
+    main {
+      padding: 0.4rem 1.6rem 0;
+    }
   }
 
   div.content {
-    padding: 20px 40px;
-  }
-  @media (max-width: 640px) {
-    div.content {
-      padding: 0 18px;
-    }
   }
 
   main header {
-    margin: 20px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 50px;
   }
-  main header h1 {
-    font-weight: 700;
-    color: #333;
+  @media (max-width: 640px) {
+    main header {
+      margin: 0 0 40px;
+    }
   }
-  main header h1 a {
+  main header > div.title-container {
+  }
+  main header > div.title-container h1 {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  main header > div.title-container h1 a {
+    display: flex;
+  }
+  main header > div.title-container h1 a span,
+  main header > div.title-container h1 a img {
     display: block;
-    color: inherit;
   }
-  main header h1 a:hover {
-    color: inherit;
-  }
-  main header h1 a span,
-  main header h1 a img {
-    display: inline-block;
-    font-size: 1.1em;
-  }
-  main header h1 a span {
-    margin-right: 0.3em;
+  main header > div.title-container h1 a span.emoji {
+    margin-right: 1em;
     margin-left: -0.1rem;
   }
-  main header h1 a img {
-    width: 1.2em;
-    height: 1.2em;
-    margin-right: 0.2em;
-    margin-left: -0.3rem;
-    vertical-align: sub;
-  }
-  main header h1 a img.custom-icon {
-    display: block;
+  main header > div.title-container h1 a img {
     width: 120px;
     height: 120px;
-    margin: -120px 0 12px;
+    margin-top: -48px;
+    margin-right: 16px;
+  }
+  main header > div.title-container h1 a img.custom-icon {
     border-radius: var(--radius);
   }
+  main header > div.title-container h1 a span.title {
+    display: inline-block;
+    margin-top: 0.4rem;
+  }
+  main header > div.title-container > section {
+    margin: -40px 0 0 136px;
+  }
+  main header > div.search-button-container {
+    margin: 8px 0 0;
+  }
   @media (max-width: 640px) {
-    main header h1 a img.custom-icon {
+    main header > div.title-container h1 {
+      font-size: 1.6rem;
+    }
+    main header > div.title-container h1 a img {
       width: 72px;
       height: 72px;
-      margin: -66px 0 8px;
+      margin-top: -20px;
+      margin-right: 12px;
     }
-  }
-
-  main header div.description {
-    padding: 0.3rem 0 0.6rem;
-    font-size: 0.95rem;
-  }
-
-  main header ul {
-    display: flex;
-    justify-content: start;
-    padding: 0;
-    list-style: none;
-  }
-  main header ul li {
-    width: 8em;
-  }
-  @media (max-width: 640px) {
-    main header ul li {
-      width: 33%;
+    main header > div.title-container h1 a span.title {
+      margin-top: 0.3rem;
     }
-  }
-  main header ul li a {
-    display: block;
-    color: var(--fg);
-    font-weight: 500;
-  }
-  main header ul li a span {
-    font-weight: 500;
-    text-decoration: underline;
-  }
-  main header ul li a span.inactive {
-    color: #999;
-    text-decoration: none;
+    main header > div.title-container > section {
+      margin: -32px 0 0 84px;
+    }
+    main header > div.search-button-container {
+      margin: 2px 0 0;
+    }
   }
 
   main footer {
-    margin: 30px 0 10px;
-    text-align: center;
-    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 60px 0 10px;
   }
   @media (max-width: 640px) {
     main footer {
-      margin: 25px auto 20px;
+      display: block;
+      margin: 60px auto 20px;
     }
   }
-  main footer span {
-    color: #777;
+  main footer > div.copyright {
+    font-size: 0.9rem;
+    color: #6b7280;
   }
-  main footer a {
-    color: inherit;
+  main footer > div.powered-by {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  main footer > div.powered-by > a:hover {
+    color: var(--fg);
     text-decoration: underline;
+  }
+  @media (max-width: 640px) {
+    main footer > div.copyright {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    main footer > div.powered-by {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
   }
 </style>
 
 <style is:global>
   :root {
-    --gap-quarter: 0.25rem;
-    --gap-half: 0.5rem;
-    --gap: 1rem;
-    --gap-double: 2rem;
+    --fg: rgb(34, 39, 42);
+    --bg: rgb(250, 250, 250);
 
-    --bg: #fff;
-    --fg: #333;
-    --accents-1: #666;
-    --accents-2: #666;
-    --accents-3: #666;
-    --geist-foreground: #000;
-    --geist-success: #690;
+    --accent: rgb(203, 42, 66);
+    --anchor-border: hsl(172deg 18% 41%);
 
-    --radius: 4px;
-
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-      'Helvetica Neue', sans-serif;
-    --font-mono: SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono',
-      Courier, monospace;
+    --radius: 3px;
   }
 
   * {
@@ -384,17 +314,15 @@ if (database.Icon && database.Icon.Type === 'file') {
   body {
     padding: 0;
     margin: 0;
-    font-size: 16px;
+    font-size: 14px;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     min-height: 100vh;
     background: var(--bg);
     color: var(--fg);
-    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Helvetica, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
-      'Hiragino Sans GB', メイリオ, Meiryo, 'Apple Color Emoji', Arial,
-      sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 
     /*background-image: radial-gradient(#ddd 1px, transparent 1px),
       radial-gradient(#ddd 1px, transparent 1px);*/

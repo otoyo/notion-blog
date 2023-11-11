@@ -1,13 +1,10 @@
 ---
+import { Icon } from 'astro-icon'
 import * as interfaces from '../../lib/interfaces.ts'
 import {
-  getPosts,
   getAllPosts,
-  getRankedPosts,
   getPostBySlug,
-  getPostsByTag,
   getBlock,
-  getAllTags,
   getAllBlocksByBlockId,
   downloadFile,
 } from '../../lib/notion/client.ts'
@@ -21,9 +18,6 @@ import PostDate from '../../components/PostDate.astro'
 import PostTags from '../../components/PostTags.astro'
 import PostTitle from '../../components/PostTitle.astro'
 import PostBody from '../../components/PostBody.astro'
-import PostRelativeLink from '../../components/PostRelativeLink.astro'
-import BlogPostsLink from '../../components/BlogPostsLink.astro'
-import BlogTagsLink from '../../components/BlogTagsLink.astro'
 import styles from '../../styles/blog.module.css'
 
 export async function getStaticPaths() {
@@ -38,15 +32,7 @@ if (!post) {
   throw new Error('Post not found. slug: ${slug}')
 }
 
-const [blocks, allPosts, rankedPosts, recentPosts, tags, postsHavingSameTag] =
-  await Promise.all([
-    getAllBlocksByBlockId(post.PageId),
-    getAllPosts(),
-    getRankedPosts(),
-    getPosts(5),
-    getAllTags(),
-    getPostsByTag(post.Tags[0]?.name, 6),
-  ])
+const blocks = await getAllBlocksByBlockId(post.PageId)
 
 const fileAtacchedBlocks = extractTargetBlocks('image', blocks)
   .concat(extractTargetBlocks('file', blocks))
@@ -83,10 +69,6 @@ await Promise.all(
     .map((promise) => promise.then(downloadFile))
 )
 
-const currentPostIndex = allPosts.findIndex((post) => post.Slug === slug)
-const prevPost = allPosts[currentPostIndex + 1]
-const nextPost = allPosts[currentPostIndex - 1]
-
 let ogImage = ''
 if (post.FeaturedImage && post.FeaturedImage.Url) {
   ogImage = new URL(filePath(new URL(post.FeaturedImage.Url)), Astro.site)
@@ -100,28 +82,48 @@ if (post.FeaturedImage && post.FeaturedImage.Url) {
   ogImage={ogImage}
 >
   <div slot="main" class={styles.main}>
-    <div class={styles.post}>
-      <PostDate post={post} />
-      <PostTags post={post} />
-      <PostTitle post={post} enableLink={false} />
-      <PostBody blocks={blocks} />
-      <PostTags post={post} />
-
-      <footer>
-        <PostRelativeLink prevPost={prevPost} nextPost={nextPost} />
-      </footer>
+    <div class="post-title">
+      <PostTitle post={post} />
     </div>
-  </div>
-
-  <div slot="aside" class={styles.aside}>
-    <BlogPostsLink
-      heading="同じカテゴリーの記事"
-      posts={postsHavingSameTag.filter(
-        (p: interfaces.Post) => p.Slug !== post.Slug
-      )}
-    />
-    <BlogPostsLink heading="おすすめ記事" posts={rankedPosts} />
-    <BlogPostsLink heading="最新記事" posts={recentPosts} />
-    <BlogTagsLink heading="カテゴリー" tags={tags} />
+    <div class="post-date">
+      <PostDate post={post} />
+    </div>
+    <div class="post-tags-container">
+      <div class="tag-icon-container">
+        <Icon name="octicon:tag-24" />
+      </div>
+      <PostTags post={post} />
+    </div>
+    <PostBody blocks={blocks} />
   </div>
 </Layout>
+
+<style>
+  footer {
+    margin-top: 0.4rem;
+    padding: 0;
+    border: 0;
+  }
+  div.post-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  @media (max-width: 640px) {
+    div.post-title {
+      font-size: 1.4rem;
+    }
+  }
+  .post-date {
+    margin-bottom: 1.2rem;
+    color: var(--fg);
+  }
+  .post-tags-container {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+  .tag-icon-container {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 0.3rem;
+  }
+</style>

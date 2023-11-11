@@ -2,57 +2,76 @@
 import { NUMBER_OF_POSTS_PER_PAGE } from '../../server-constants.ts'
 import {
   getPosts,
-  getRankedPosts,
   getAllTags,
   getNumberOfPages,
+  getDatabase,
 } from '../../lib/notion/client.ts'
+import { getPageLink } from '../../lib/blog-helpers.ts'
 import Layout from '../../layouts/Layout.astro'
 import NoContents from '../../components/NoContents.astro'
-import PostDate from '../../components/PostDate.astro'
-import PostTags from '../../components/PostTags.astro'
-import PostTitle from '../../components/PostTitle.astro'
-import PostFeaturedImage from '../../components/PostFeaturedImage.astro'
-import PostExcerpt from '../../components/PostExcerpt.astro'
-import ReadMoreLink from '../../components/ReadMoreLink.astro'
-import Pagination from '../../components/Pagination.astro'
-import BlogPostsLink from '../../components/BlogPostsLink.astro'
+import BlogListView from '../../components/BlogListView.astro'
 import BlogTagsLink from '../../components/BlogTagsLink.astro'
 import styles from '../../styles/blog.module.css'
 
-const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
+const [posts, tags, numberOfPages, database] = await Promise.all([
   getPosts(NUMBER_OF_POSTS_PER_PAGE),
-  getRankedPosts(),
   getAllTags(),
   getNumberOfPages(),
+  getDatabase(),
 ])
 ---
 
-<Layout title="ブログ" path="/blog">
+<Layout title="Blog" path="/blog">
   <div slot="main" class={styles.main}>
     {
       posts.length === 0 ? (
         <NoContents contents={posts} />
       ) : (
-        posts.map((post) => (
-          <div className={styles.post} key={post.Slug}>
-            <PostDate post={post} />
-            <PostTags post={post} />
-            <PostTitle post={post} />
-            <PostFeaturedImage post={post} />
-            <PostExcerpt post={post} />
-            <ReadMoreLink post={post} />
-          </div>
-        ))
+        <>
+          <section class="site-description">
+            {database.Description}
+          </section>
+
+          <section aria-label="Blog latest post list" class="posts">
+            <h2>Posts</h2>
+            <BlogListView posts={posts} />
+            {numberOfPages > 1 && (
+              <div class="previous-post-link">
+                <a href={getPageLink(2)}>▶︎ Older posts</a>
+              </div>
+            )}
+          </section>
+
+          <section aria-label="Blog category list" class="categories">
+            <h2>Tags</h2>
+            <BlogTagsLink tags={tags} />
+          </section>
+        </>
       )
     }
-
-    <footer>
-      <Pagination currentPage={1} numberOfPages={numberOfPages} />
-    </footer>
-  </div>
-
-  <div slot="aside" class={styles.aside}>
-    <BlogPostsLink heading="おすすめ記事" posts={rankedPosts} />
-    <BlogTagsLink heading="カテゴリー" tags={tags} />
   </div>
 </Layout>
+
+<style>
+  section.site-description {
+  }
+  section.posts, section.categories {
+    margin: 40px 0 0;
+  }
+  section.posts > h2, section.categories > h2 {
+    margin: 1.4rem 0;
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+  div.previous-post-link {
+    margin: 1.4rem 0;
+  }
+  div.previous-post-link > a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  div.previous-post-link > a:hover {
+    text-decoration-color: var(--anchor-border);
+    text-decoration-thickness: 2px;
+  }
+</style>
