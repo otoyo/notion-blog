@@ -1,23 +1,18 @@
 ---
 import type { SelectProperty } from '../lib/interfaces.ts'
 import { getTagLink } from '../lib/blog-helpers.ts'
-import NoContents from './NoContents.astro'
 import '../styles/notion-color.css'
 
 export interface Props {
-  heading: string
   tags: SelectProperty[]
 }
 
-const { heading, tags } = Astro.props
+const { tags } = Astro.props
 ---
 
 <div class="blog-tags-link">
-  <h3>{heading}</h3>
   {
-    tags.length === 0 ? (
-      <NoContents contents={tags} />
-    ) : (
+    tags.length > 0 && (
       <ul>
         {tags.map((tag: SelectProperty) => (
           <li>
@@ -34,12 +29,6 @@ const { heading, tags } = Astro.props
 <style>
   .blog-tags-link {
   }
-  .blog-tags-link h3 {
-    margin: 0;
-    padding-left: 0.4rem;
-    color: #777;
-    font-size: 0.95rem;
-  }
   .blog-tags-link ul {
     list-style-type: none;
     padding: 0;
@@ -47,13 +36,12 @@ const { heading, tags } = Astro.props
     margin-block-end: 1rem;
   }
   .blog-tags-link ul li {
+    display: inline-block;
     position: relative;
+    margin-bottom: 0.6rem;
+    margin-right: 0.6rem;
     font-size: 1rem;
-    padding: 0.4rem;
     line-height: 1.2rem;
-
-    font-size: 0.9rem;
-    gap: 6px;
   }
   .blog-tags-link ul li a {
     min-width: 0;
