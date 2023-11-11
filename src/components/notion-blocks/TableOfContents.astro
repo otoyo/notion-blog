@@ -52,7 +52,8 @@ const { block, headings } = Astro.props
     text-decoration: underline;
   }
   .table-of-contents > a:hover {
-    background: rgba(241, 241, 239, 1) !important;
+    text-decoration-color: var(--anchor-border);
+    text-decoration-thickness: 2px;
   }
   .table-of-contents > a.indent-1 {
     padding-left: 1.5rem;
