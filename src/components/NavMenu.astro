@@ -1,0 +1,35 @@
+---
+---
+
+<div class="nav-menu">
+  <a href="/">Home</a>
+  <a href="/blog">Blog</a>
+</div>
+
+<style>
+  .nav-menu {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0.8rem auto 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav-menu a {
+    display: inline-block;
+    margin: 0.3rem 0;
+    border-left: 1px dashed var(--accent);
+    padding: 0 1rem;
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1.4rem;
+  }
+  .nav-menu a:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+  .nav-menu a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
