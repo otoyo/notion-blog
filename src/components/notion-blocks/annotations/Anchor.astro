@@ -20,5 +20,10 @@ const { richText } = Astro.props
 <style>
   a {
     text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  a:hover {
+    text-decoration-color: var(--anchor-border);
+    text-decoration-thickness: 2px;
   }
 </style>
