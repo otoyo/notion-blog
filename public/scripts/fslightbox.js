@@ -113,15 +113,15 @@
             0 === o
               ? function () {}
               : 1 === o
-              ? function () {
-                  0 === t.current
-                    ? ((t.next = 1), delete t.previous)
-                    : ((t.previous = 0), delete t.next);
-                }
-              : function () {
-                  (t.previous = n.getPreviousSlideIndex()),
-                    (t.next = n.getNextSlideIndex());
-                }),
+                ? function () {
+                    0 === t.current
+                      ? ((t.next = 1), delete t.previous)
+                      : ((t.previous = 0), delete t.next);
+                  }
+                : function () {
+                    (t.previous = n.getPreviousSlideIndex()),
+                      (t.next = n.getNextSlideIndex());
+                  }),
           (n.i =
             o <= 2
               ? function () {
@@ -804,20 +804,21 @@
               e.requestFullscreen
                 ? e.requestFullscreen()
                 : e.mozRequestFullScreen
-                ? e.mozRequestFullScreen()
-                : e.webkitRequestFullscreen
-                ? e.webkitRequestFullscreen()
-                : e.msRequestFullscreen && e.msRequestFullscreen();
+                  ? e.mozRequestFullScreen()
+                  : e.webkitRequestFullscreen
+                    ? e.webkitRequestFullscreen()
+                    : e.msRequestFullscreen && e.msRequestFullscreen();
             }),
               (o.x = function () {
                 t.xfs(),
                   document.exitFullscreen
                     ? document.exitFullscreen()
                     : document.mozCancelFullScreen
-                    ? document.mozCancelFullScreen()
-                    : document.webkitExitFullscreen
-                    ? document.webkitExitFullscreen()
-                    : document.msExitFullscreen && document.msExitFullscreen();
+                      ? document.mozCancelFullScreen()
+                      : document.webkitExitFullscreen
+                        ? document.webkitExitFullscreen()
+                        : document.msExitFullscreen &&
+                          document.msExitFullscreen();
               }),
               (o.t = function () {
                 n.ifs ? o.x() : o.o();
