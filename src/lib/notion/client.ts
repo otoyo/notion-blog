@@ -1,5 +1,7 @@
 import fs, { createWriteStream } from 'node:fs'
+import { pipeline } from 'node:stream/promises'
 import axios, { AxiosResponse } from 'axios'
+import sharp from 'sharp'
 import retry from 'async-retry'
 import ExifTransformer from 'exif-be-gone'
 import {
@@ -402,7 +404,20 @@ export async function downloadFile(url: URL) {
   const filepath = `${dir}/${filename}`
 
   const writeStream = createWriteStream(filepath)
-  res.data.pipe(new ExifTransformer()).pipe(writeStream)
+  const rotate = sharp().rotate()
+
+  let stream = res.data
+
+  if (res.headers['content-type'] === 'image/jpeg') {
+    stream = stream.pipe(rotate)
+  }
+  try {
+    return pipeline(stream, new ExifTransformer(), writeStream)
+  } catch (err) {
+    console.log(err)
+    writeStream.end()
+    return Promise.resolve()
+  }
 }
 
 export async function getDatabase(): Promise<Database> {
