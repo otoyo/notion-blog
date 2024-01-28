@@ -77,7 +77,7 @@ const retrieveAndWriteBlock = async (blockId) => {
 (async () => {
   const blockId = process.argv[2];
   const lastEditedTime = process.argv[3];
-  console.log(`blockId: ${blockId}, lastEditedTime: ${lastEditedTime}`)
+  console.log(`blockId: ${blockId}, lastEditedTime: ${lastEditedTime}`);
 
   await retrieveAndWriteBlockChildren(blockId);
 })();
